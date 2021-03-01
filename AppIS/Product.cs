@@ -32,5 +32,14 @@ namespace AppIS
             Type = null;
             Quantity = 0;
         }
+        public Product(int id)
+        {
+            Id = id;
+            Name = null;
+            Price = 0;
+            Description = null;
+            Type = null;
+            Quantity = 0;
+        }
     }
 }

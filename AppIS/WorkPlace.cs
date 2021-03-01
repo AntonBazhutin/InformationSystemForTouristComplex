@@ -23,5 +23,11 @@ namespace AppIS
             Building_id = null;
             Place_id = null;
         }
+        public WorkPlace(int id)
+        {
+            Id = id;
+            Building_id = null;
+            Place_id = null;
+        }
     }
 }

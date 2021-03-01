@@ -63,7 +63,19 @@
   <ItemGroup>
     <Compile Include="Building.cs" />
     <Compile Include="Equipment.cs" />
+    <Compile Include="EquipmentRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EquipmentRegisterForm.Designer.cs">
+      <DependentUpon>EquipmentRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Event.cs" />
+    <Compile Include="EventRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EventRegisterForm.Designer.cs">
+      <DependentUpon>EventRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogInForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,7 +91,19 @@
     <Compile Include="Order.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductRegisterForm.Designer.cs">
+      <DependentUpon>ProductRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Profession.cs" />
+    <Compile Include="ProfessionRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfessionRegisterForm.Designer.cs">
+      <DependentUpon>ProfessionRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Room.cs" />
     <Compile Include="Tourist.cs" />
     <Compile Include="TouristRegisterForm.cs">
@@ -89,6 +113,12 @@
       <DependentUpon>TouristRegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WorkDay.cs" />
+    <Compile Include="WorkDayRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkDayRegisterForm.Designer.cs">
+      <DependentUpon>WorkDayRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorkerRegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,11 +135,29 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Worker.cs" />
+    <Compile Include="WorkPlaceRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkPlaceRegisterForm.Designer.cs">
+      <DependentUpon>WorkPlaceRegisterForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="EquipmentRegisterForm.resx">
+      <DependentUpon>EquipmentRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EventRegisterForm.resx">
+      <DependentUpon>EventRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogInForm.resx">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ManagerialForm.resx">
       <DependentUpon>ManagerialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductRegisterForm.resx">
+      <DependentUpon>ProductRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfessionRegisterForm.resx">
+      <DependentUpon>ProfessionRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -126,8 +174,14 @@
     <EmbeddedResource Include="TouristsForm.resx">
       <DependentUpon>TouristsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WorkDayRegisterForm.resx">
+      <DependentUpon>WorkDayRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WorkerRegisterForm.resx">
       <DependentUpon>WorkerRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkPlaceRegisterForm.resx">
+      <DependentUpon>WorkPlaceRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

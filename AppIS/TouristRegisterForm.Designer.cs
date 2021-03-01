@@ -240,6 +240,8 @@ namespace AppIS
             this.btnSubmit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnSubmit.Location = new System.Drawing.Point(336, 191);
+            this.btnSubmit.MaximumSize = new System.Drawing.Size(105, 41);
+            this.btnSubmit.MinimumSize = new System.Drawing.Size(105, 41);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(105, 41);
             this.btnSubmit.TabIndex = 20;

@@ -20,5 +20,10 @@ namespace AppIS
             WorkerLogin = 0;
             WorkDay_ = null;
         }
+        public WorkDay(int id)
+        {
+            WorkerLogin = id;
+            WorkDay_ = null;
+        }
     }
 }

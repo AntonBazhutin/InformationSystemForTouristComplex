@@ -30,5 +30,13 @@ namespace AppIS
             SerialNumber = null;
             ProfessionId = 0;
         }
+        public Equipment(int id)
+        {
+            Id = id;
+            Name = null;
+            Quantity = 0;
+            SerialNumber = null;
+            ProfessionId = 0;
+        }
     }
 }

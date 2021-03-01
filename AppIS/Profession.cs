@@ -20,5 +20,10 @@ namespace AppIS
             Id = 0;
             Name = null;
         }
+        public Profession(int id)
+        {
+            Id = id;
+            Name = null;
+        }
     }
 }

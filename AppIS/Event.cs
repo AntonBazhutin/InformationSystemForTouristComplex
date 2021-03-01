@@ -32,5 +32,14 @@ namespace AppIS
             Date = null;
             WorkPlace_id = 0;
         }
+        public Event(int id)
+        {
+            Id = id;
+            Name = null;
+            Price = 0;
+            Description = null;
+            Date = null;
+            WorkPlace_id = 0;
+        }
     }
 }
