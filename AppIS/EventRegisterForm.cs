@@ -53,6 +53,7 @@ namespace AppIS
                 txtBxEventId.ReadOnly = true;
                 Text = "Добавление продукт";
                 btnSubmit.Text = "Добавить";
+                txtBxEventId.Text = AddingEvent.Id.ToString();
             }
         }
 

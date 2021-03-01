@@ -61,6 +61,7 @@ namespace AppIS
                 txtBxRoom.Text = AddingTourist.Room_id.ToString();
                 Text = "Заселение туриста";
                 btnSubmit.Text = "Заселить";
+                txtBxRoom.ReadOnly = true;
             }
         }
 

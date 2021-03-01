@@ -14,7 +14,7 @@ namespace AppIS
     public partial class LogInForm : Form
     {
         private Worker personalInfo;
-        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю";
         private SqlConnection sqlcon;
         private const string connectionString = @"Data Source=АНТОН-ПК;Initial Catalog=TouristComplex;Integrated Security=True;";
 
@@ -29,7 +29,7 @@ namespace AppIS
             sqlcon.ConnectionString = connectionString;
             //try
             //{
-                sqlcon.Open();
+            sqlcon.Open();
             //}
             //catch (Exception)
             //{

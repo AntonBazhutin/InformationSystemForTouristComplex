@@ -35,16 +35,19 @@ namespace AppIS
 
         private void WorkDayRegisterForm_Load(object sender, EventArgs e)
         {
+            txtBxId.ReadOnly = true;
+
+            txtBxId.Text = AddingWorkDay.Id.ToString();
+
             if (IsFilled)
             {
-                txtBxId.Text = AddingWorkDay.WorkerLogin.ToString();
+                txtBxWorkerId.Text = AddingWorkDay.WorkerLogin.ToString();
                 txtBxDay.Text = AddingWorkDay.WorkDay_;
                 Text = "Редатирование информации";
                 btnSubmit.Text = "ОК";
             }
             else
             {
-                txtBxId.Text = AddingWorkDay.WorkerLogin.ToString();
                 Text = "Добавление рабочей смены";
                 btnSubmit.Text = "Добавить";
             }
@@ -52,7 +55,7 @@ namespace AppIS
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            AddingWorkDay = new WorkDay(int.Parse(txtBxId.Text), txtBxDay.Text);
+            AddingWorkDay = new WorkDay(int.Parse(txtBxWorkerId.Text), txtBxDay.Text,int.Parse(txtBxId.Text));
         }
 
         private void txtBxId_TextChanged(object sender, EventArgs e)

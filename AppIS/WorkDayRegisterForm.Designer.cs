@@ -33,8 +33,10 @@ namespace AppIS
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxDay = new System.Windows.Forms.TextBox();
-            this.txtBxId = new System.Windows.Forms.TextBox();
+            this.txtBxWorkerId = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtBxId = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelWarning
@@ -64,7 +66,7 @@ namespace AppIS
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(82, 82);
+            this.label2.Location = new System.Drawing.Point(82, 94);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 18);
             this.label2.TabIndex = 52;
@@ -72,41 +74,61 @@ namespace AppIS
             // 
             // txtBxDay
             // 
-            this.txtBxDay.Location = new System.Drawing.Point(138, 80);
+            this.txtBxDay.Location = new System.Drawing.Point(138, 92);
             this.txtBxDay.Name = "txtBxDay";
             this.txtBxDay.Size = new System.Drawing.Size(100, 20);
             this.txtBxDay.TabIndex = 50;
             this.txtBxDay.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
-            // txtBxId
+            // txtBxWorkerId
             // 
-            this.txtBxId.Location = new System.Drawing.Point(138, 43);
-            this.txtBxId.Name = "txtBxId";
-            this.txtBxId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxId.TabIndex = 49;
-            this.txtBxId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
+            this.txtBxWorkerId.Location = new System.Drawing.Point(138, 55);
+            this.txtBxWorkerId.Name = "txtBxWorkerId";
+            this.txtBxWorkerId.Size = new System.Drawing.Size(100, 20);
+            this.txtBxWorkerId.TabIndex = 49;
+            this.txtBxWorkerId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(21, 42);
+            this.label1.Location = new System.Drawing.Point(21, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 18);
             this.label1.TabIndex = 51;
             this.label1.Text = "Код рабочего";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(21, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 18);
+            this.label3.TabIndex = 58;
+            this.label3.Text = "Код записи";
+            // 
+            // txtBxId
+            // 
+            this.txtBxId.Location = new System.Drawing.Point(138, 12);
+            this.txtBxId.Name = "txtBxId";
+            this.txtBxId.Size = new System.Drawing.Size(100, 20);
+            this.txtBxId.TabIndex = 57;
+            this.txtBxId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
             // WorkDayRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 229);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtBxId);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtBxDay);
-            this.Controls.Add(this.txtBxId);
+            this.Controls.Add(this.txtBxWorkerId);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(296, 268);
             this.MinimumSize = new System.Drawing.Size(296, 268);
@@ -125,7 +147,9 @@ namespace AppIS
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtBxDay;
-        private System.Windows.Forms.TextBox txtBxId;
+        private System.Windows.Forms.TextBox txtBxWorkerId;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtBxId;
     }
 }

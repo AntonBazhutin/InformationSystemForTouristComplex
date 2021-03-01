@@ -46,6 +46,7 @@ namespace AppIS
                 txtBxProductId.ReadOnly = true;
                 Text = "Добавление продукт";
                 btnSubmit.Text = "Добавить";
+                txtBxProductId.Text = AddingProduct.Id.ToString();
             }
         }
 

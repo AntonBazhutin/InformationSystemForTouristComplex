@@ -88,7 +88,7 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { (int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["type"].ToString(), int.Parse(dr["quantity"].ToString())) });
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["price"].ToString(), dr["description"].ToString(), dr["type"].ToString(), dr["quantity"].ToString() });
                     dataGridView1.Rows[i].Tag = new Product(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["type"].ToString(), int.Parse(dr["quantity"].ToString()));
                     i++;
                 }
@@ -115,7 +115,7 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { (int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["date"].ToString(), int.Parse(dr["workPlace_id"].ToString())) });
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["price"].ToString(), dr["description"].ToString(), dr["date"].ToString(), dr["workPlace_id"].ToString() });
                     dataGridView1.Rows[i].Tag = new Event(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["date"].ToString(), int.Parse(dr["workPlace_id"].ToString()));
                     i++;
                 }
@@ -195,7 +195,7 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), int.Parse(dr["quantity"].ToString()), dr["serialNumber"].ToString(), int.Parse(dr["profession_id"].ToString()) });
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["quantity"].ToString(), dr["serialNumber"].ToString(), dr["profession_id"].ToString() });
                     dataGridView1.Rows[i].Tag = new Equipment(int.Parse(dr["id"].ToString()), dr["name"].ToString(), int.Parse(dr["quantity"].ToString()), dr["serialNumber"].ToString(), int.Parse(dr["profession_id"].ToString()));
                     i++;
                 }
@@ -218,8 +218,8 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new WorkDay(int.Parse(dr["worker_login"].ToString()), dr["day"].ToString()));
-                    dataGridView1.Rows[i].Tag = new WorkDay(int.Parse(dr["worker_login"].ToString()), dr["day"].ToString());
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["worker_login"].ToString(), dr["day"].ToString() });
+                    dataGridView1.Rows[i].Tag = new WorkDay(int.Parse(dr["worker_login"].ToString()), dr["day"].ToString(), int.Parse(dr["id"].ToString()));
                     i++;
                 }
             }
@@ -227,7 +227,7 @@ namespace AppIS
 
         private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode.Tag is Room || treeView1.SelectedNode.Tag is WorkPlace)
+            if (treeView1.SelectedNode != null)
             {
                 if (treeView1.SelectedNode.Tag is Room)
                 {
@@ -347,109 +347,113 @@ namespace AppIS
 
         private void редактироватьToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode.Tag is Tourist)
+            if (treeView1.SelectedNode != null)
             {
-                Tourist addingTourist = treeView1.SelectedNode.Tag as Tourist;
-
-                TouristRegisterForm change = new TouristRegisterForm(addingTourist);
-
-                if (change.ShowDialog() == DialogResult.OK)
+                if (treeView1.SelectedNode.Tag is Tourist)
                 {
-                    addingTourist = change.AddingTourist;
-                    var cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
-                    cmd.Parameters.AddWithValue("@login", addingTourist.Login);
-                    cmd.ExecuteNonQuery();
-                    treeView1.SelectedNode.Remove();
+                    Tourist addingTourist = treeView1.SelectedNode.Tag as Tourist;
 
-                    cmd = new SqlCommand(
-                               "Insert into Tourists(login,password,email,name,surname,thirdname,dateOfBirth,dateOfComing,dateOfLeaving,country,room_id) " +
-                               "Values(@login,@password,@email,@name,@surname,@thirdname,@dateOfBirth,@dateOfComing,@dateOfLeaving,@country,@room_id)"
-                               , sqlcon);
+                    TouristRegisterForm change = new TouristRegisterForm(addingTourist);
 
-                    cmd.Parameters.AddWithValue("@login", addingTourist.Login);
-                    cmd.Parameters.AddWithValue("@password", addingTourist.Password);
-                    cmd.Parameters.AddWithValue("@email", addingTourist.Email);
-                    cmd.Parameters.AddWithValue("@name", addingTourist.Name);
-                    cmd.Parameters.AddWithValue("@surname", addingTourist.Surname);
-                    cmd.Parameters.AddWithValue("@thirdname", addingTourist.Thirdname);
-                    cmd.Parameters.AddWithValue("@dateOfBirth", addingTourist.DateOfBirth);
-                    cmd.Parameters.AddWithValue("@dateOfComing", addingTourist.DateOfComing);
-                    cmd.Parameters.AddWithValue("@dateOfLeaving", addingTourist.DateOfLeaving);
-                    cmd.Parameters.AddWithValue("@country", addingTourist.Country);
-                    cmd.Parameters.AddWithValue("@room_id", addingTourist.Room_id);
+                    if (change.ShowDialog() == DialogResult.OK)
+                    {
+                        addingTourist = change.AddingTourist;
+                        var cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", addingTourist.Login);
+                        cmd.ExecuteNonQuery();
+                        treeView1.SelectedNode.Remove();
 
-                    cmd.ExecuteNonQuery();
-                    CreateTreeViewOfTourists();
+                        cmd = new SqlCommand(
+                                   "Insert into Tourists(login,password,email,name,surname,thirdname,dateOfBirth,dateOfComing,dateOfLeaving,country,room_id) " +
+                                   "Values(@login,@password,@email,@name,@surname,@thirdname,@dateOfBirth,@dateOfComing,@dateOfLeaving,@country,@room_id)"
+                                   , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@login", addingTourist.Login);
+                        cmd.Parameters.AddWithValue("@password", addingTourist.Password);
+                        cmd.Parameters.AddWithValue("@email", addingTourist.Email);
+                        cmd.Parameters.AddWithValue("@name", addingTourist.Name);
+                        cmd.Parameters.AddWithValue("@surname", addingTourist.Surname);
+                        cmd.Parameters.AddWithValue("@thirdname", addingTourist.Thirdname);
+                        cmd.Parameters.AddWithValue("@dateOfBirth", addingTourist.DateOfBirth);
+                        cmd.Parameters.AddWithValue("@dateOfComing", addingTourist.DateOfComing);
+                        cmd.Parameters.AddWithValue("@dateOfLeaving", addingTourist.DateOfLeaving);
+                        cmd.Parameters.AddWithValue("@country", addingTourist.Country);
+                        cmd.Parameters.AddWithValue("@room_id", addingTourist.Room_id);
+
+                        cmd.ExecuteNonQuery();
+                        CreateTreeViewOfTourists();
+                    }
+
+
                 }
-
-
-            }
-            else
-            if (treeView1.SelectedNode.Tag is Worker)
-            {
-                Worker newWorker = treeView1.SelectedNode.Tag as Worker;
-
-                WorkerRegisterForm change = new WorkerRegisterForm(newWorker);
-
-                if (change.ShowDialog() == DialogResult.OK)
+                else
+                if (treeView1.SelectedNode.Tag is Worker)
                 {
-                    newWorker = change.AddingWorker;
-                    var cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
-                    cmd.Parameters.AddWithValue("@login", newWorker.Login);
-                    cmd.ExecuteNonQuery();
-                    treeView1.SelectedNode.Remove();
+                    Worker newWorker = treeView1.SelectedNode.Tag as Worker;
 
-                    cmd = new SqlCommand(
-                             "Insert into Workers(login,password,profession_id,name,surname,thirdname,dateOfBirth,workPlace_id,phoneNumber) " +
-                             "Values(@login,@password,@profession_id,@name,@surname,@thirdname,@dateOfBirth,@workPlace_id,@phoneNumber)"
-                             , sqlcon);
+                    WorkerRegisterForm change = new WorkerRegisterForm(newWorker);
 
-                    cmd.Parameters.AddWithValue("@login", newWorker.Login);
-                    cmd.Parameters.AddWithValue("@password", newWorker.Password);
-                    cmd.Parameters.AddWithValue("@profession_id", newWorker.Profession_id);
-                    cmd.Parameters.AddWithValue("@name", newWorker.Name);
-                    cmd.Parameters.AddWithValue("@surname", newWorker.Surname);
-                    cmd.Parameters.AddWithValue("@thirdname", newWorker.Thirdname);
-                    cmd.Parameters.AddWithValue("@dateOfBirth", newWorker.DateOfBirth);
-                    cmd.Parameters.AddWithValue("@workPlace_id", newWorker.WorkPlace_id);
-                    cmd.Parameters.AddWithValue("@phoneNumber", newWorker.DateOfBirth);
+                    if (change.ShowDialog() == DialogResult.OK)
+                    {
+                        newWorker = change.AddingWorker;
+                        var cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", newWorker.Login);
+                        cmd.ExecuteNonQuery();
+                        treeView1.SelectedNode.Remove();
 
-                    cmd.ExecuteNonQuery();
-                    CreateTreeViewOfWorkers();
+                        cmd = new SqlCommand(
+                                 "Insert into Workers(login,password,profession_id,name,surname,thirdname,dateOfBirth,workPlace_id,phoneNumber) " +
+                                 "Values(@login,@password,@profession_id,@name,@surname,@thirdname,@dateOfBirth,@workPlace_id,@phoneNumber)"
+                                 , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@login", newWorker.Login);
+                        cmd.Parameters.AddWithValue("@password", newWorker.Password);
+                        cmd.Parameters.AddWithValue("@profession_id", newWorker.Profession_id);
+                        cmd.Parameters.AddWithValue("@name", newWorker.Name);
+                        cmd.Parameters.AddWithValue("@surname", newWorker.Surname);
+                        cmd.Parameters.AddWithValue("@thirdname", newWorker.Thirdname);
+                        cmd.Parameters.AddWithValue("@dateOfBirth", newWorker.DateOfBirth);
+                        cmd.Parameters.AddWithValue("@workPlace_id", newWorker.WorkPlace_id);
+                        cmd.Parameters.AddWithValue("@phoneNumber", newWorker.DateOfBirth);
+
+                        cmd.ExecuteNonQuery();
+                        CreateTreeViewOfWorkers();
+                    }
                 }
             }
         }
 
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode.Tag is Tourist || treeView1.SelectedNode.Tag is Worker)
-            {
-                object obj = new object();
-                var cmd = new SqlCommand();
-
-                if (treeView1.SelectedNode.Tag is Tourist)
+            if (treeView1.SelectedNode != null)
+                if (treeView1.SelectedNode.Tag is Tourist || treeView1.SelectedNode.Tag is Worker)
                 {
-                    Tourist tourist = treeView1.SelectedNode.Tag as Tourist;
-                    obj = tourist as Tourist;
-                    cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
-                    cmd.Parameters.AddWithValue("@login", tourist.Login);
-                }
+                    object obj = new object();
+                    var cmd = new SqlCommand();
 
-                if (treeView1.SelectedNode.Tag is Worker)
-                {
-                    Worker worker = treeView1.SelectedNode.Tag as Worker;
-                    obj = worker as Worker;
-                    cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
-                    cmd.Parameters.AddWithValue("@login", worker.Login);
-                }
+                    if (treeView1.SelectedNode.Tag is Tourist)
+                    {
+                        Tourist tourist = treeView1.SelectedNode.Tag as Tourist;
+                        obj = tourist as Tourist;
+                        cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", tourist.Login);
+                    }
 
-                cmd.ExecuteNonQuery();
-                treeView1.SelectedNode.Remove();
-                if (obj is Worker)
-                    CreateTreeViewOfWorkers();
-                if (obj is Tourist)
-                    CreateTreeViewOfTourists();
-            }
+                    if (treeView1.SelectedNode.Tag is Worker)
+                    {
+                        Worker worker = treeView1.SelectedNode.Tag as Worker;
+                        obj = worker as Worker;
+                        cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", worker.Login);
+                    }
+
+                    cmd.ExecuteNonQuery();
+                    treeView1.SelectedNode.Remove();
+                    if (obj is Worker)
+                        CreateTreeViewOfWorkers();
+                    if (obj is Tourist)
+                        CreateTreeViewOfTourists();
+                }
         }
         private void CreateTreeViewOfOrders()
         {
@@ -657,29 +661,420 @@ namespace AppIS
 
         private void добавитьToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            var cmd = new SqlCommand();
+
             if (CurrentObject is WorkPlace)
             {
+                WorkPlace wp = new WorkPlace();
+                if (dataGridView1.RowCount > 0)
+                    wp = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as WorkPlace;
 
+                WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(wp.Id + 1);
+                if (wpRegister.ShowDialog() == DialogResult.OK)
+                {
+                    WorkPlace created = wpRegister.AddingWorkPlace;
+
+                    cmd = new SqlCommand(
+                           "Insert into WorkPlaces(id,place_id,building_id) " +
+                           "Values(@id,@place_id,@building_id)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", created.Id);
+                    cmd.Parameters.AddWithValue("@place_id", created.Place_id);
+                    cmd.Parameters.AddWithValue("@building_id", created.Building_id);
+
+                    cmd.ExecuteNonQuery();
+                    рабочиеМестаToolStripMenuItem_Click(this, e);
+                }
             }
             if (CurrentObject is Profession)
             {
+                Profession prof = new Profession();
+                if (dataGridView1.RowCount > 0)
+                    prof = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Profession;
 
+                ProfessionRegisterForm profRegister = new ProfessionRegisterForm(prof.Id + 1);
+
+                if (profRegister.ShowDialog() == DialogResult.OK)
+                {
+                    Profession created = profRegister.AddingProfession;
+
+                    cmd = new SqlCommand(
+                           "Insert into Professions(id,name) " +
+                           "Values(@id,@name)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", created.Id);
+                    cmd.Parameters.AddWithValue("@name", created.Name);
+                    cmd.ExecuteNonQuery();
+                    профессииToolStripMenuItem_Click(this, e);
+                }
             }
             if (CurrentObject is Equipment)
             {
+                Equipment eq = new Equipment();
+                if (dataGridView1.RowCount > 0)
+                    eq = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Equipment;
 
+                EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(eq.Id + 1);
+
+                if (equipRegister.ShowDialog() == DialogResult.OK)
+                {
+                    Equipment created = equipRegister.AddingEquipment;
+
+                    cmd = new SqlCommand(
+                           "Insert into Equipment(id,name,quantity,serialNumber,profession_id) " +
+                           "Values(@id,@name,@quantity,@serialNumber,@profession_id)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", created.Id);
+                    cmd.Parameters.AddWithValue("@name", created.Name);
+                    cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+                    cmd.Parameters.AddWithValue("@serialNumber", created.SerialNumber);
+                    cmd.Parameters.AddWithValue("@profession_id", created.ProfessionId);
+                    cmd.ExecuteNonQuery();
+                    оборудованиеToolStripMenuItem_Click(this, e);
+                }
             }
             if (CurrentObject is WorkDay)
-            { 
-            
+            {
+                WorkDay wd = new WorkDay();
+                if (dataGridView1.RowCount > 0)
+                    wd = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as WorkDay;
+
+                WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(wd.Id + 1);
+
+                if (equipRegister.ShowDialog() == DialogResult.OK)
+                {
+                    WorkDay created = equipRegister.AddingWorkDay;
+
+                    cmd = new SqlCommand(
+                           "Insert into WorkDays(worker_login,day) " +
+                           "Values(@worker_login,@day)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@worker_login", created.WorkerLogin);
+                    cmd.Parameters.AddWithValue("@day", created.WorkDay_);
+                    cmd.ExecuteNonQuery();
+                    рабочиеДниToolStripMenuItem_Click(this, e);
+                }
             }
-            if (CurrentObject is Product)
-            { 
-            
-            }
+            //if (CurrentObject is Product)
+            //{
+            //    Product pr = new Product();
+            //    if (dataGridView1.RowCount > 0)
+            //        pr = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Product;
+
+            //    ProductRegisterForm equipRegister = new ProductRegisterForm(pr.Id + 1);
+
+            //    if (equipRegister.ShowDialog() == DialogResult.OK)
+            //    {
+            //        Product created = equipRegister.AddingProduct;
+
+            //        cmd = new SqlCommand(
+            //               "Insert into Products(id,name,price,description,type,quantity) " +
+            //               "Values(@id,@name,@price,@description,@type,@quantity)"
+            //               , sqlcon);
+
+            //        cmd.Parameters.AddWithValue("@id", created.Id);
+            //        cmd.Parameters.AddWithValue("@name", created.Name);
+            //        cmd.Parameters.AddWithValue("@price", created.Price);
+            //        cmd.Parameters.AddWithValue("@description", created.Description);
+            //        cmd.Parameters.AddWithValue("@type", created.Type);
+            //        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+            //        cmd.ExecuteNonQuery();
+            //        продуктыToolStripMenuItem_Click(this, e);
+            //    }
+            //}
             if (CurrentObject is Event)
-            { 
-            
+            {
+                Event ev = new Event();
+                if (dataGridView1.RowCount > 0)
+                    ev = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Event;
+
+                EventRegisterForm equipRegister = new EventRegisterForm(ev.Id + 1);
+
+                if (equipRegister.ShowDialog() == DialogResult.OK)
+                {
+                    Event created = equipRegister.AddingEvent;
+
+                    cmd = new SqlCommand(
+                           "Insert into Events(id,name,price,description,date,workPlace_id) " +
+                           "Values(@id,@name,@price,@description,@date,@workPlace_id)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", created.Id);
+                    cmd.Parameters.AddWithValue("@name", created.Name);
+                    cmd.Parameters.AddWithValue("@price", created.Price);
+                    cmd.Parameters.AddWithValue("@description", created.Description);
+                    cmd.Parameters.AddWithValue("@date", created.Date);
+                    cmd.Parameters.AddWithValue("@workPlace_id", created.WorkPlace_id);
+                    cmd.ExecuteNonQuery();
+                    мероприятияToolStripMenuItem1_Click(this, e);
+                }
+            }
+        }
+
+        private void редактироватьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cmd = new SqlCommand();
+
+
+            if (dataGridView1.RowCount > 0)
+            {
+                object obj = dataGridView1.CurrentRow.Tag;
+
+                if (obj is WorkPlace)
+                {
+                    WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(obj as WorkPlace);
+                    if (wpRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        WorkPlace created = wpRegister.AddingWorkPlace;
+
+                        cmd = new SqlCommand(
+                              "delete from WorkPlaces where id=@id", sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                               "Insert into WorkPlaces(id,place_id,building_id) " +
+                               "Values(@id,@place_id,@building_id)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@place_id", created.Place_id);
+                        cmd.Parameters.AddWithValue("@building_id", created.Building_id);
+
+                        cmd.ExecuteNonQuery();
+                        рабочиеМестаToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is Profession)
+                {
+                    ProfessionRegisterForm profRegister = new ProfessionRegisterForm(obj as Profession);
+
+                    if (profRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Profession created = profRegister.AddingProfession;
+
+                        cmd = new SqlCommand(
+                             "delete from Professions where id=@id"
+                             , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                               "Insert into Professions(id,name) " +
+                               "Values(@id,@name)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@name", created.Name);
+                        cmd.ExecuteNonQuery();
+                        профессииToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is Equipment)
+                {
+                    EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(obj as Equipment);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Equipment created = equipRegister.AddingEquipment;
+                        cmd = new SqlCommand(
+                            "delete from Equipment where id=@id"
+                            , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                               "Insert into Equipment(id,name,quantity,serialNumber,profession_id) " +
+                               "Values(@id,@name,@quantity,@serialNumber,@profession_id)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@name", created.Name);
+                        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+                        cmd.Parameters.AddWithValue("@serialNumber", created.SerialNumber);
+                        cmd.Parameters.AddWithValue("@profession_id", created.ProfessionId);
+                        cmd.ExecuteNonQuery();
+                        оборудованиеToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is WorkDay)
+                {
+                    WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(obj as WorkDay);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        WorkDay created = equipRegister.AddingWorkDay;
+
+                        cmd = new SqlCommand(
+                            "delete from WorkDays where id=@id"
+                            , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                               "Insert into WorkDays(worker_login,day) " +
+                               "Values(@worker_login,@day)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@worker_login", created.WorkerLogin);
+                        cmd.Parameters.AddWithValue("@day", created.WorkDay_);
+                        cmd.ExecuteNonQuery();
+                        рабочиеДниToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is Product)
+                {
+                    ProductRegisterForm equipRegister = new ProductRegisterForm(obj as Product);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Product created = equipRegister.AddingProduct;
+
+                        cmd = new SqlCommand(
+                            "delete from Products where id=@id"
+                            , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                               "Insert into Products(id,name,price,description,type,quantity) " +
+                               "Values(@id,@name,@price,@description,@type,@quantity)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@name", created.Name);
+                        cmd.Parameters.AddWithValue("@price", created.Price);
+                        cmd.Parameters.AddWithValue("@description", created.Description);
+                        cmd.Parameters.AddWithValue("@type", created.Type);
+                        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+                        cmd.ExecuteNonQuery();
+                        продуктыToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is Event)
+                {
+                    EventRegisterForm equipRegister = new EventRegisterForm(obj as Event);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Event created = equipRegister.AddingEvent;
+
+                        cmd = new SqlCommand(
+                            "delete from Events where id=@id"
+                            , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                               "Insert into Events(id,name,price,description,date,workPlace_id) " +
+                               "Values(@id,@name,@price,@description,@date,@workPlace_id)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@name", created.Name);
+                        cmd.Parameters.AddWithValue("@price", created.Price);
+                        cmd.Parameters.AddWithValue("@description", created.Description);
+                        cmd.Parameters.AddWithValue("@date", created.Date);
+                        cmd.Parameters.AddWithValue("@workPlace_id", created.WorkPlace_id);
+                        cmd.ExecuteNonQuery();
+                        мероприятияToolStripMenuItem1_Click(this, e);
+                    }
+                }
+            }
+        }
+
+        private void удалитьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var cmd = new SqlCommand();
+
+
+            if (dataGridView1.RowCount > 0)
+            {
+                object obj = dataGridView1.CurrentRow.Tag;
+
+                if (obj is WorkPlace)
+                {
+                    WorkPlace wp = obj as WorkPlace;
+
+                    cmd = new SqlCommand(
+                          "delete from WorkPlaces where id=@id", sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", wp.Id);
+                    cmd.ExecuteNonQuery();
+                    рабочиеМестаToolStripMenuItem_Click(this, e);
+                }
+
+                if (obj is Profession)
+                {
+                    Profession prof = obj as Profession;
+
+                    cmd = new SqlCommand(
+                         "delete from Professions where id=@id"
+                         , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", prof.Id);
+                    cmd.ExecuteNonQuery();
+                    профессииToolStripMenuItem_Click(this, e);
+                }
+
+                if (obj is Equipment)
+                {
+                    Equipment eq = obj as Equipment;
+
+                    cmd = new SqlCommand(
+                        "delete from Equipment where id=@id"
+                        , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", eq.Id);
+                    cmd.ExecuteNonQuery();
+                    оборудованиеToolStripMenuItem_Click(this, e);
+                }
+                if (obj is WorkDay)
+                {
+                    WorkDay wd = obj as WorkDay;
+
+                    cmd = new SqlCommand(
+                        "delete from WorkDays where id=@id"
+                        , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", wd.Id);
+                    cmd.ExecuteNonQuery();
+                    рабочиеДниToolStripMenuItem_Click(this, e);
+                }
+                if (obj is Product)
+                {
+                    Product pr = obj as Product;
+
+                    cmd = new SqlCommand(
+                        "delete from Products where id=@id"
+                        , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", pr.Id);
+                    cmd.ExecuteNonQuery();
+                    продуктыToolStripMenuItem_Click(this, e);
+                }
+                if (obj is Event)
+                {
+                    Event ev = obj as Event;
+
+                    cmd = new SqlCommand(
+                        "delete from Events where id=@id"
+                        , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", ev.Id);
+                    cmd.ExecuteNonQuery();
+                    мероприятияToolStripMenuItem1_Click(this, e);
+                }
             }
         }
     }
