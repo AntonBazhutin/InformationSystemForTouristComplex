@@ -14,13 +14,6 @@ namespace AppIS
     public partial class ManagerialForm : Form
     {
         public object CurrentObject { get; set; }
-        List<Profession> profession = new List<Profession>();
-        List<WorkDay> workDays = new List<WorkDay>();
-        List<WorkPlace> workPlaces = new List<WorkPlace>();
-        List<Equipment> equipment = new List<Equipment>();
-        List<Product> products = new List<Product>();
-        List<Event> events = new List<Event>();
-
         public Worker PersonalInfo { get; set; }
         public ManagerialForm(Worker personalInfo)
         {
@@ -29,6 +22,8 @@ namespace AppIS
             InitializeComponent();
 
             Connect();
+
+            DefinePower();
         }
 
         private SqlConnection sqlcon;
@@ -55,6 +50,57 @@ namespace AppIS
         private void ManagerialForm_Load(object sender, EventArgs e)
         {
             toolStripTextBox1.Text = PersonalInfo.Surname + " " + PersonalInfo.Name + " " + PersonalInfo.Thirdname;
+        }
+
+        private void DefinePower()
+        {
+            Worker worker = PersonalInfo;
+
+            bool limitPower = false;
+            string isEmpty = string.Empty;
+            var cmd = new SqlCommand("Select * from UsersPower where profession_id=@profession_id", sqlcon);
+            cmd.Parameters.AddWithValue("@profession_id", worker.Profession_id);
+            cmd.ExecuteNonQuery();
+
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    isEmpty = dr["limitPower"].ToString();
+                }
+            }
+
+            if (isEmpty == string.Empty)
+            {
+                Text = "Форма рабочего";
+                туристыToolStripMenuItem.Enabled = false;
+                туристыToolStripMenuItem.Visible = false;
+                магазинToolStripMenuItem.Enabled = false;
+                магазинToolStripMenuItem.Visible = false;
+                dataGridView1.ContextMenuStrip.Enabled = false;
+                списокСотрудниковToolStripMenuItem.Visible = false;
+                списокСотрудниковToolStripMenuItem.Enabled = false;
+                оборудованиеToolStripMenuItem.Visible = false;
+                оборудованиеToolStripMenuItem.Enabled = false;
+                профессииToolStripMenuItem.Visible = false;
+                профессииToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                if (limitPower)
+                {
+                    Text = "Форма секретаря";
+                    списокСотрудниковToolStripMenuItem.Visible = false;
+                    списокСотрудниковToolStripMenuItem.Enabled = false;
+                    оборудованиеToolStripMenuItem.Visible = false;
+                    оборудованиеToolStripMenuItem.Enabled = false;
+                    профессииToolStripMenuItem.Visible = false;
+                    профессииToolStripMenuItem.Enabled = false;
+                }
+                Text = "Форма администратора";
+            }
+
+
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -211,6 +257,7 @@ namespace AppIS
             dataGridView1.Visible = true;
 
             var cmd = new SqlCommand("Select * from Workdays", sqlcon);
+            dataGridView1.Columns.Add("", "Код записи");
             dataGridView1.Columns.Add("", "Код рабочего");
             dataGridView1.Columns.Add("", "День недели");
             int i = 0;
@@ -1076,6 +1123,12 @@ namespace AppIS
                     мероприятияToolStripMenuItem1_Click(this, e);
                 }
             }
+        }
+
+        private void личныйКабинетToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Visible = false;
+            treeView1.Visible = false;
         }
     }
 }

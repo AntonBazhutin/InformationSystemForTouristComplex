@@ -31,8 +31,8 @@ namespace AppIS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagerialForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -237,7 +237,7 @@ namespace AppIS
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.ReadOnly = true;
             this.toolStripTextBox1.Size = new System.Drawing.Size(250, 25);
-            this.toolStripTextBox1.Text = "Manager351";
+            this.toolStripTextBox1.Text = "Иванов Иван Иванович";
             this.toolStripTextBox1.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripButton1
@@ -270,24 +270,24 @@ namespace AppIS
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip2;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.MultiSelect = false;
@@ -306,31 +306,31 @@ namespace AppIS
             this.toolStripMenuItem1,
             this.удалитьToolStripMenuItem1});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(181, 98);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(155, 76);
             // 
             // добавитьToolStripMenuItem1
             // 
             this.добавитьToolStripMenuItem1.Name = "добавитьToolStripMenuItem1";
-            this.добавитьToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.добавитьToolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
             this.добавитьToolStripMenuItem1.Text = "Добавить";
             this.добавитьToolStripMenuItem1.Click += new System.EventHandler(this.добавитьToolStripMenuItem1_Click);
             // 
             // редактироватьToolStripMenuItem
             // 
             this.редактироватьToolStripMenuItem.Name = "редактироватьToolStripMenuItem";
-            this.редактироватьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.редактироватьToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.редактироватьToolStripMenuItem.Text = "Редактировать";
             this.редактироватьToolStripMenuItem.Click += new System.EventHandler(this.редактироватьToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(151, 6);
             // 
             // удалитьToolStripMenuItem1
             // 
             this.удалитьToolStripMenuItem1.Name = "удалитьToolStripMenuItem1";
-            this.удалитьToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.удалитьToolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
             this.удалитьToolStripMenuItem1.Text = "Удалить";
             this.удалитьToolStripMenuItem1.Click += new System.EventHandler(this.удалитьToolStripMenuItem1_Click);
             // 
