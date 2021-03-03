@@ -31,7 +31,7 @@ namespace AppIS
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             AddingEvent = new Event(int.Parse(txtBxEventId.Text), txtBxName.Text,
-                decimal.Parse(txtBxPrice.Text), txtBxDescription.Text, txtBxDate.Text, int.Parse(txtBxWorkPlaceId.Text));
+                decimal.Parse(txtBxPrice.Text), txtBxDescription.Text, txtBxDate.Text, int.Parse(txtBxWorkPlaceId.Text),int.Parse(txtBxTickets.Text));
         }
 
         private void EventRegisterForm_Load(object sender, EventArgs e)
@@ -45,6 +45,7 @@ namespace AppIS
                 txtBxDate.Text = AddingEvent.Date;
                 txtBxWorkPlaceId.Text = AddingEvent.WorkPlace_id.ToString();
                 txtBxEventId.ReadOnly = true;
+                txtBxTickets.Text = AddingEvent.Quantity.ToString();
                 Text = "Редатирование информации";
                 btnSubmit.Text = "ОК";
             }

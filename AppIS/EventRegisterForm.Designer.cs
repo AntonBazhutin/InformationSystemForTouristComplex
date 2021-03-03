@@ -43,13 +43,15 @@ namespace AppIS
             this.txtBxEventId = new System.Windows.Forms.TextBox();
             this.labelWarning = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtBxTickets = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(15, 154);
+            this.label5.Location = new System.Drawing.Point(18, 146);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(139, 16);
             this.label5.TabIndex = 81;
@@ -57,7 +59,7 @@ namespace AppIS
             // 
             // txtBxWorkPlaceId
             // 
-            this.txtBxWorkPlaceId.Location = new System.Drawing.Point(158, 150);
+            this.txtBxWorkPlaceId.Location = new System.Drawing.Point(161, 142);
             this.txtBxWorkPlaceId.Name = "txtBxWorkPlaceId";
             this.txtBxWorkPlaceId.Size = new System.Drawing.Size(100, 20);
             this.txtBxWorkPlaceId.TabIndex = 80;
@@ -67,7 +69,7 @@ namespace AppIS
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.Location = new System.Drawing.Point(107, 125);
+            this.label11.Location = new System.Drawing.Point(110, 117);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(43, 18);
             this.label11.TabIndex = 79;
@@ -75,7 +77,7 @@ namespace AppIS
             // 
             // txtBxDate
             // 
-            this.txtBxDate.Location = new System.Drawing.Point(158, 123);
+            this.txtBxDate.Location = new System.Drawing.Point(161, 115);
             this.txtBxDate.Name = "txtBxDate";
             this.txtBxDate.Size = new System.Drawing.Size(100, 20);
             this.txtBxDate.TabIndex = 78;
@@ -85,7 +87,7 @@ namespace AppIS
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(78, 96);
+            this.label4.Location = new System.Drawing.Point(81, 88);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(76, 18);
             this.label4.TabIndex = 77;
@@ -93,7 +95,7 @@ namespace AppIS
             // 
             // txtBxDescription
             // 
-            this.txtBxDescription.Location = new System.Drawing.Point(158, 96);
+            this.txtBxDescription.Location = new System.Drawing.Point(161, 88);
             this.txtBxDescription.Name = "txtBxDescription";
             this.txtBxDescription.Size = new System.Drawing.Size(100, 20);
             this.txtBxDescription.TabIndex = 76;
@@ -103,7 +105,7 @@ namespace AppIS
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(107, 72);
+            this.label3.Location = new System.Drawing.Point(110, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 18);
             this.label3.TabIndex = 75;
@@ -111,7 +113,7 @@ namespace AppIS
             // 
             // txtBxPrice
             // 
-            this.txtBxPrice.Location = new System.Drawing.Point(158, 70);
+            this.txtBxPrice.Location = new System.Drawing.Point(161, 62);
             this.txtBxPrice.Name = "txtBxPrice";
             this.txtBxPrice.Size = new System.Drawing.Size(100, 20);
             this.txtBxPrice.TabIndex = 74;
@@ -121,7 +123,7 @@ namespace AppIS
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(79, 44);
+            this.label2.Location = new System.Drawing.Point(82, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 18);
             this.label2.TabIndex = 73;
@@ -129,7 +131,7 @@ namespace AppIS
             // 
             // txtBxName
             // 
-            this.txtBxName.Location = new System.Drawing.Point(158, 44);
+            this.txtBxName.Location = new System.Drawing.Point(161, 36);
             this.txtBxName.Name = "txtBxName";
             this.txtBxName.Size = new System.Drawing.Size(100, 20);
             this.txtBxName.TabIndex = 72;
@@ -139,7 +141,7 @@ namespace AppIS
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(114, 17);
+            this.label1.Location = new System.Drawing.Point(117, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 18);
             this.label1.TabIndex = 71;
@@ -147,7 +149,7 @@ namespace AppIS
             // 
             // txtBxEventId
             // 
-            this.txtBxEventId.Location = new System.Drawing.Point(158, 18);
+            this.txtBxEventId.Location = new System.Drawing.Point(161, 10);
             this.txtBxEventId.Name = "txtBxEventId";
             this.txtBxEventId.Size = new System.Drawing.Size(100, 20);
             this.txtBxEventId.TabIndex = 70;
@@ -176,11 +178,31 @@ namespace AppIS
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(43, 172);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(110, 16);
+            this.label6.TabIndex = 85;
+            this.label6.Text = "Кол-во билетов";
+            // 
+            // txtBxTickets
+            // 
+            this.txtBxTickets.Location = new System.Drawing.Point(161, 168);
+            this.txtBxTickets.Name = "txtBxTickets";
+            this.txtBxTickets.Size = new System.Drawing.Size(100, 20);
+            this.txtBxTickets.TabIndex = 84;
+            this.txtBxTickets.TextChanged += new System.EventHandler(this.txtBxEventId_TextChanged);
+            // 
             // EventRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 286);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtBxTickets);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label5);
@@ -223,5 +245,7 @@ namespace AppIS
         private System.Windows.Forms.TextBox txtBxEventId;
         private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtBxTickets;
     }
 }

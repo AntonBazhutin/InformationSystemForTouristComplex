@@ -8,13 +8,14 @@ namespace AppIS
 {
     public class Event
     {
+        public int Quantity { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string Date { get; set; }
         public int WorkPlace_id { get; set; }
-        public Event(int id, string name, decimal price, string description, string date, int workPlace_id)
+        public Event(int id, string name, decimal price, string description, string date, int workPlace_id,int quantity)
         {
             Id = id;
             Name = name;
@@ -22,6 +23,7 @@ namespace AppIS
             Description = description;
             Date = date;
             WorkPlace_id = workPlace_id;
+            Quantity = quantity;
         }
         public Event()
         {
@@ -31,6 +33,7 @@ namespace AppIS
             Description = null;
             Date = null;
             WorkPlace_id = 0;
+            Quantity = 0;
         }
         public Event(int id)
         {
@@ -40,6 +43,7 @@ namespace AppIS
             Description = null;
             Date = null;
             WorkPlace_id = 0;
+            Quantity = 0;
         }
     }
 }

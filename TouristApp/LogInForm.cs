@@ -72,7 +72,7 @@ namespace TouristApp
                     labelWarning.Visible = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

@@ -50,6 +50,7 @@ namespace AppIS
         private void ManagerialForm_Load(object sender, EventArgs e)
         {
             toolStripTextBox1.Text = PersonalInfo.Surname + " " + PersonalInfo.Name + " " + PersonalInfo.Thirdname;
+            списокСотрудниковToolStripMenuItem_Click(this, e);
         }
 
         private void DefinePower()
@@ -153,6 +154,7 @@ namespace AppIS
             dataGridView1.Columns.Add("", "Код");
             dataGridView1.Columns.Add("", "Название");
             dataGridView1.Columns.Add("", "Цена");
+            dataGridView1.Columns.Add("", "Кол-во билетов");
             dataGridView1.Columns.Add("", "Описание");
             dataGridView1.Columns.Add("", "Дата проведения");
             dataGridView1.Columns.Add("", "Код места проведения");
@@ -161,8 +163,8 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["price"].ToString(), dr["description"].ToString(), dr["date"].ToString(), dr["workPlace_id"].ToString() });
-                    dataGridView1.Rows[i].Tag = new Event(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["date"].ToString(), int.Parse(dr["workPlace_id"].ToString()));
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["price"].ToString(), dr["quantity"].ToString(), dr["description"].ToString(), dr["date"].ToString(), dr["workPlace_id"].ToString() });
+                    dataGridView1.Rows[i].Tag = new Event(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["date"].ToString(), int.Parse(dr["workPlace_id"].ToString()), int.Parse(dr["quantity"].ToString()));
                     i++;
                 }
             }
@@ -846,13 +848,14 @@ namespace AppIS
                     Event created = equipRegister.AddingEvent;
 
                     cmd = new SqlCommand(
-                           "Insert into Events(id,name,price,description,date,workPlace_id) " +
-                           "Values(@id,@name,@price,@description,@date,@workPlace_id)"
+                           "Insert into Events(id,name,price,description,date,workPlace_id,quantity) " +
+                           "Values(@id,@name,@price,@description,@date,@workPlace_id,@quantity)"
                            , sqlcon);
 
                     cmd.Parameters.AddWithValue("@id", created.Id);
                     cmd.Parameters.AddWithValue("@name", created.Name);
                     cmd.Parameters.AddWithValue("@price", created.Price);
+                    cmd.Parameters.AddWithValue("@quantity", created.Quantity);
                     cmd.Parameters.AddWithValue("@description", created.Description);
                     cmd.Parameters.AddWithValue("@date", created.Date);
                     cmd.Parameters.AddWithValue("@workPlace_id", created.WorkPlace_id);
@@ -1023,13 +1026,14 @@ namespace AppIS
                         cmd.ExecuteNonQuery();
 
                         cmd = new SqlCommand(
-                               "Insert into Events(id,name,price,description,date,workPlace_id) " +
-                               "Values(@id,@name,@price,@description,@date,@workPlace_id)"
+                               "Insert into Events(id,name,price,description,date,workPlace_id,quantity) " +
+                               "Values(@id,@name,@price,@description,@date,@workPlace_id,@quantity)"
                                , sqlcon);
 
                         cmd.Parameters.AddWithValue("@id", created.Id);
                         cmd.Parameters.AddWithValue("@name", created.Name);
                         cmd.Parameters.AddWithValue("@price", created.Price);
+                        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
                         cmd.Parameters.AddWithValue("@description", created.Description);
                         cmd.Parameters.AddWithValue("@date", created.Date);
                         cmd.Parameters.AddWithValue("@workPlace_id", created.WorkPlace_id);
@@ -1123,12 +1127,6 @@ namespace AppIS
                     мероприятияToolStripMenuItem1_Click(this, e);
                 }
             }
-        }
-
-        private void личныйКабинетToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Visible = false;
-            treeView1.Visible = false;
         }
     }
 }
