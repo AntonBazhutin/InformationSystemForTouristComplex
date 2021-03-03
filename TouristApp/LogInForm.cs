@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppIS;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,11 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AppIS
+namespace TouristApp
 {
     public partial class LogInForm : Form
     {
-        private Worker personalInfo;
+        private Tourist personalInfo;
         private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю";
         private SqlConnection sqlcon;
         private const string connectionString = @"Data Source=АНТОН-ПК;Initial Catalog=TouristComplex;Integrated Security=True;";
@@ -22,8 +23,12 @@ namespace AppIS
         {
             InitializeComponent();
         }
+        private void LogInForm_Load(object sender, EventArgs e)
+        {
+            labelWarning.Visible = false;
+        }
 
-        private void btnLogIn_Click(object sender, EventArgs e)
+        private void btnLogIn_Click_1(object sender, EventArgs e)
         {
             sqlcon = new SqlConnection();
             sqlcon.ConnectionString = connectionString;
@@ -36,7 +41,7 @@ namespace AppIS
 
                     if (txtBxLogin.ForeColor != Color.Red && txtBxPassword.ForeColor != Color.Red)
                     {
-                        var cmd = new SqlCommand("Select * from Workers where login=@login AND password=@password", sqlcon);
+                        var cmd = new SqlCommand("Select * from Tourists where login=@login AND password=@password", sqlcon);
                         cmd.Parameters.AddWithValue("@login", txtBxLogin.Text);
                         cmd.Parameters.AddWithValue("@password", txtBxPassword.Text);
                         cmd.ExecuteNonQuery();
@@ -45,7 +50,8 @@ namespace AppIS
                         {
                             while (dr.Read())
                             {
-                                personalInfo = new Worker(dr["name"].ToString(), dr["surname"].ToString(), dr["thirdname"].ToString(), dr["dateOfBirth"].ToString(), int.Parse(dr["profession_id"].ToString()), int.Parse(dr["workPlace_id"].ToString()), dr["phoneNumber"].ToString(), dr["login"].ToString(), dr["password"].ToString());
+                                personalInfo = new Tourist(dr["login"].ToString(), dr["password"].ToString(), dr["name"].ToString(), dr["surname"].ToString(), dr["thirdname"].ToString(), dr["dateOfBirth"].ToString(), dr["email"].ToString(),
+                                    dr["dateOfComing"].ToString(), dr["dateOfLeaving"].ToString(), dr["country"].ToString(), int.Parse(dr["room_id"].ToString()));
                             }
                         }
 
@@ -54,7 +60,7 @@ namespace AppIS
                         else
                         {
                             this.Hide();
-                            ManagerialForm mf = new ManagerialForm(personalInfo);
+                            TouristForm1 mf = new TouristForm1(personalInfo);
                             mf.ShowDialog();
                             this.Dispose();
                             this.Close();
@@ -66,14 +72,28 @@ namespace AppIS
                     labelWarning.Visible = true;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-        private void LogInForm_Load(object sender, EventArgs e)
+
+        private void txtBxPassword_TextChanged_1(object sender, EventArgs e)
         {
-            labelWarning.Visible = false;
+            int counter = 0;
+            for (int i = 0; i < txtBxPassword.Text.Length; i++)
+            {
+                if (safeString.Contains(txtBxPassword.Text[i]))
+                    counter++;
+            }
+            if (counter != txtBxPassword.Text.Length)
+            {
+                txtBxPassword.ForeColor = Color.Red;
+            }
+            else
+            {
+                txtBxPassword.ForeColor = Color.Black;
+            }
         }
 
         private void txtBxLogin_TextChanged(object sender, EventArgs e)
@@ -91,24 +111,6 @@ namespace AppIS
             else
             {
                 txtBxLogin.ForeColor = Color.Black;
-            }
-        }
-
-        private void txtBxPassword_TextChanged(object sender, EventArgs e)
-        {
-            int counter = 0;
-            for (int i = 0; i < txtBxPassword.Text.Length; i++)
-            {
-                if (safeString.Contains(txtBxPassword.Text[i]))
-                    counter++;
-            }
-            if (counter != txtBxPassword.Text.Length)
-            {
-                txtBxPassword.ForeColor = Color.Red;
-            }
-            else
-            {
-                txtBxPassword.ForeColor = Color.Black;
             }
         }
     }
