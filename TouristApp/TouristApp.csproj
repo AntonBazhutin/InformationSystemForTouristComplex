@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookedTicket.cs" />
     <Compile Include="CountChoosingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +59,6 @@
     <Compile Include="LogInForm.Designer.cs">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ShoppingCart.cs" />
     <Compile Include="TouristForm1.cs">
       <SubType>Form</SubType>
     </Compile>

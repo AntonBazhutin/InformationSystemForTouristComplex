@@ -31,8 +31,8 @@ namespace TouristApp
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TouristForm1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tooStripTxtBxName = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -41,13 +41,13 @@ namespace TouristApp
             this.ОпцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.мероприятияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.корзинаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.историяПокупокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.забронированныеБилетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -56,6 +56,7 @@ namespace TouristApp
             // 
             // tooStripTxtBxName
             // 
+            this.tooStripTxtBxName.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tooStripTxtBxName.Name = "tooStripTxtBxName";
             this.tooStripTxtBxName.ReadOnly = true;
             this.tooStripTxtBxName.Size = new System.Drawing.Size(250, 25);
@@ -110,18 +111,18 @@ namespace TouristApp
             this.ОпцииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.товарыToolStripMenuItem,
             this.мероприятияToolStripMenuItem,
-            this.корзинаToolStripMenuItem,
-            this.историяПокупокToolStripMenuItem});
+            this.историяПокупокToolStripMenuItem,
+            this.забронированныеБилетыToolStripMenuItem});
             this.ОпцииToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ОпцииToolStripMenuItem.Name = "ОпцииToolStripMenuItem";
-            this.ОпцииToolStripMenuItem.Size = new System.Drawing.Size(65, 24);
-            this.ОпцииToolStripMenuItem.Text = "Опции";
+            this.ОпцииToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.ОпцииToolStripMenuItem.Text = "Меню";
             // 
             // товарыToolStripMenuItem
             // 
             this.товарыToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
-            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(197, 24);
+            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(257, 24);
             this.товарыToolStripMenuItem.Text = "Товары";
             this.товарыToolStripMenuItem.Click += new System.EventHandler(this.товарыToolStripMenuItem_Click);
             // 
@@ -132,23 +133,15 @@ namespace TouristApp
             this.мероприятияToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.мероприятияToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.мероприятияToolStripMenuItem.Name = "мероприятияToolStripMenuItem";
-            this.мероприятияToolStripMenuItem.Size = new System.Drawing.Size(197, 24);
+            this.мероприятияToolStripMenuItem.Size = new System.Drawing.Size(257, 24);
             this.мероприятияToolStripMenuItem.Text = "Мероприятия";
             this.мероприятияToolStripMenuItem.Click += new System.EventHandler(this.мероприятияToolStripMenuItem_Click);
-            // 
-            // корзинаToolStripMenuItem
-            // 
-            this.корзинаToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.корзинаToolStripMenuItem.Name = "корзинаToolStripMenuItem";
-            this.корзинаToolStripMenuItem.Size = new System.Drawing.Size(197, 24);
-            this.корзинаToolStripMenuItem.Text = "Корзина";
-            this.корзинаToolStripMenuItem.Click += new System.EventHandler(this.корзинаToolStripMenuItem_Click);
             // 
             // историяПокупокToolStripMenuItem
             // 
             this.историяПокупокToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.историяПокупокToolStripMenuItem.Name = "историяПокупокToolStripMenuItem";
-            this.историяПокупокToolStripMenuItem.Size = new System.Drawing.Size(197, 24);
+            this.историяПокупокToolStripMenuItem.Size = new System.Drawing.Size(257, 24);
             this.историяПокупокToolStripMenuItem.Text = "История покупок";
             this.историяПокупокToolStripMenuItem.Click += new System.EventHandler(this.историяПокупокToolStripMenuItem_Click);
             // 
@@ -160,31 +153,32 @@ namespace TouristApp
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 66);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 28);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(903, 488);
+            this.dataGridView1.Size = new System.Drawing.Size(903, 526);
             this.dataGridView1.TabIndex = 13;
             // 
             // contextMenuStrip1
@@ -193,20 +187,20 @@ namespace TouristApp
             this.добавитьToolStripMenuItem,
             this.удалитьToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(176, 48);
             // 
             // добавитьToolStripMenuItem
             // 
             this.добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
-            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.добавитьToolStripMenuItem.Text = "Добавить";
+            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.добавитьToolStripMenuItem.Text = "Добавить в заказы";
             this.добавитьToolStripMenuItem.Click += new System.EventHandler(this.добавитьToolStripMenuItem_Click);
             // 
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.удалитьToolStripMenuItem.Text = "Удалить";
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.удалитьToolStripMenuItem.Text = "Удалить заказ";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
             // label1
@@ -215,11 +209,19 @@ namespace TouristApp
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 30);
+            this.label1.Location = new System.Drawing.Point(258, 140);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(87, 32);
             this.label1.TabIndex = 14;
             this.label1.Text = "Товары";
+            this.label1.Visible = false;
+            // 
+            // забронированныеБилетыToolStripMenuItem
+            // 
+            this.забронированныеБилетыToolStripMenuItem.Name = "забронированныеБилетыToolStripMenuItem";
+            this.забронированныеБилетыToolStripMenuItem.Size = new System.Drawing.Size(257, 24);
+            this.забронированныеБилетыToolStripMenuItem.Text = "Забронированные билеты";
+            this.забронированныеБилетыToolStripMenuItem.Click += new System.EventHandler(this.забронированныеБилетыToolStripMenuItem_Click);
             // 
             // TouristForm1
             // 
@@ -259,13 +261,13 @@ namespace TouristApp
         private System.Windows.Forms.ToolStripMenuItem ОпцииToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem товарыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem мероприятияToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem корзинаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem историяПокупокToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem забронированныеБилетыToolStripMenuItem;
     }
 }
 

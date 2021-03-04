@@ -32,8 +32,8 @@ namespace TouristApp
         {
             sqlcon = new SqlConnection();
             sqlcon.ConnectionString = connectionString;
-            try
-            {
+            //try
+            //{
                 sqlcon.Open();
                 if (txtBxLogin.Text != string.Empty && txtBxPassword.Text != string.Empty)
                 {
@@ -71,11 +71,11 @@ namespace TouristApp
                 {
                     labelWarning.Visible = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void txtBxPassword_TextChanged_1(object sender, EventArgs e)

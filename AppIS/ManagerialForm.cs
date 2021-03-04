@@ -135,8 +135,8 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["price"].ToString(), dr["description"].ToString(), dr["type"].ToString(), dr["quantity"].ToString() });
-                    dataGridView1.Rows[i].Tag = new Product(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["type"].ToString(), int.Parse(dr["quantity"].ToString()));
+                    dataGridView1.Rows.Add(new object[] { dr["product_id"].ToString(), dr["name"].ToString(), dr["price"].ToString(), dr["description"].ToString(), dr["type"].ToString(), dr["quantity"].ToString() });
+                    dataGridView1.Rows[i].Tag = new Product(int.Parse(dr["product_id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["type"].ToString(), int.Parse(dr["quantity"].ToString()));
                     i++;
                 }
             }
@@ -432,8 +432,6 @@ namespace AppIS
                         cmd.ExecuteNonQuery();
                         CreateTreeViewOfTourists();
                     }
-
-
                 }
                 else
                 if (treeView1.SelectedNode.Tag is Worker)
@@ -468,6 +466,39 @@ namespace AppIS
                         cmd.ExecuteNonQuery();
                         CreateTreeViewOfWorkers();
                     }
+                }
+                if (treeView1.SelectedNode.Tag is Order)
+                {
+                    //Order newWorker = treeView1.SelectedNode.Tag as Order;
+
+                    //WorkerRegisterForm change = new WorkerRegisterForm(newWorker);
+
+                    //if (change.ShowDialog() == DialogResult.OK)
+                    //{
+                    //    newWorker = change.AddingWorker;
+                    //    var cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
+                    //    cmd.Parameters.AddWithValue("@login", newWorker.Login);
+                    //    cmd.ExecuteNonQuery();
+                    //    treeView1.SelectedNode.Remove();
+
+                    //    cmd = new SqlCommand(
+                    //             "Insert into Workers(login,password,profession_id,name,surname,thirdname,dateOfBirth,workPlace_id,phoneNumber) " +
+                    //             "Values(@login,@password,@profession_id,@name,@surname,@thirdname,@dateOfBirth,@workPlace_id,@phoneNumber)"
+                    //             , sqlcon);
+
+                    //    cmd.Parameters.AddWithValue("@login", newWorker.Login);
+                    //    cmd.Parameters.AddWithValue("@password", newWorker.Password);
+                    //    cmd.Parameters.AddWithValue("@profession_id", newWorker.Profession_id);
+                    //    cmd.Parameters.AddWithValue("@name", newWorker.Name);
+                    //    cmd.Parameters.AddWithValue("@surname", newWorker.Surname);
+                    //    cmd.Parameters.AddWithValue("@thirdname", newWorker.Thirdname);
+                    //    cmd.Parameters.AddWithValue("@dateOfBirth", newWorker.DateOfBirth);
+                    //    cmd.Parameters.AddWithValue("@workPlace_id", newWorker.WorkPlace_id);
+                    //    cmd.Parameters.AddWithValue("@phoneNumber", newWorker.DateOfBirth);
+
+                    //    cmd.ExecuteNonQuery();
+                    //    CreateTreeViewOfWorkers();
+                    //}
                 }
             }
         }
@@ -528,7 +559,7 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    orders.Add(new Order(int.Parse(dr["id"].ToString()), dr["dateOrder"].ToString(), dr["login"].ToString(), bool.Parse(dr["isDone"].ToString())));
+                    orders.Add(new Order(int.Parse(dr["order_id"].ToString()), int.Parse(dr["product_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["dateOrder"].ToString(), dr["login"].ToString(), bool.Parse(dr["isDone"].ToString())));
                 }
             }
 
@@ -538,13 +569,14 @@ namespace AppIS
                 TreeNode tourist = new TreeNode();
 
                 tourist.Tag = tourists[i].Login;
+                tourist.Text = "(" + tourists[i].Login + ") " + tourists[i].Surname + " " + tourists[i].Name + " " + tourists[i].Thirdname + " [" + tourists[i].Room_id + " номер]";
 
                 for (int j = 0; j < orders.Count; j++)
                 {
                     if (orders[j].Login == tourists[i].Login)
                     {
                         TreeNode order = new TreeNode();
-                        order.Tag = orders[j].Login;
+                        order.Tag = orders[j];
                         order.Text = orders[j].ToString();
                         tourist.Nodes.Add(order);
                     }
@@ -808,33 +840,33 @@ namespace AppIS
                     рабочиеДниToolStripMenuItem_Click(this, e);
                 }
             }
-            //if (CurrentObject is Product)
-            //{
-            //    Product pr = new Product();
-            //    if (dataGridView1.RowCount > 0)
-            //        pr = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Product;
+            if (CurrentObject is Product)
+            {
+                Product pr = new Product();
+                if (dataGridView1.RowCount > 0)
+                    pr = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Product;
 
-            //    ProductRegisterForm equipRegister = new ProductRegisterForm(pr.Id + 1);
+                ProductRegisterForm equipRegister = new ProductRegisterForm(pr.Id + 1);
 
-            //    if (equipRegister.ShowDialog() == DialogResult.OK)
-            //    {
-            //        Product created = equipRegister.AddingProduct;
+                if (equipRegister.ShowDialog() == DialogResult.OK)
+                {
+                    Product created = equipRegister.AddingProduct;
 
-            //        cmd = new SqlCommand(
-            //               "Insert into Products(id,name,price,description,type,quantity) " +
-            //               "Values(@id,@name,@price,@description,@type,@quantity)"
-            //               , sqlcon);
+                    cmd = new SqlCommand(
+                           "Insert into Products(product_id,name,price,description,type,quantity) " +
+                           "Values(@product_id,@name,@price,@description,@type,@quantity)"
+                           , sqlcon);
 
-            //        cmd.Parameters.AddWithValue("@id", created.Id);
-            //        cmd.Parameters.AddWithValue("@name", created.Name);
-            //        cmd.Parameters.AddWithValue("@price", created.Price);
-            //        cmd.Parameters.AddWithValue("@description", created.Description);
-            //        cmd.Parameters.AddWithValue("@type", created.Type);
-            //        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
-            //        cmd.ExecuteNonQuery();
-            //        продуктыToolStripMenuItem_Click(this, e);
-            //    }
-            //}
+                    cmd.Parameters.AddWithValue("@product_id", created.Id);
+                    cmd.Parameters.AddWithValue("@name", created.Name);
+                    cmd.Parameters.AddWithValue("@price", created.Price);
+                    cmd.Parameters.AddWithValue("@description", created.Description);
+                    cmd.Parameters.AddWithValue("@type", created.Type);
+                    cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+                    cmd.ExecuteNonQuery();
+                    продуктыToolStripMenuItem_Click(this, e);
+                }
+            }
             if (CurrentObject is Event)
             {
                 Event ev = new Event();
@@ -989,18 +1021,18 @@ namespace AppIS
                         Product created = equipRegister.AddingProduct;
 
                         cmd = new SqlCommand(
-                            "delete from Products where id=@id"
+                            "delete from Products where product_id=@product_id"
                             , sqlcon);
 
-                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@product_id", created.Id);
                         cmd.ExecuteNonQuery();
 
                         cmd = new SqlCommand(
-                               "Insert into Products(id,name,price,description,type,quantity) " +
-                               "Values(@id,@name,@price,@description,@type,@quantity)"
+                               "Insert into Products(product_id,name,price,description,type,quantity) " +
+                               "Values(@product_id,@name,@price,@description,@type,@quantity)"
                                , sqlcon);
 
-                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@product_id", created.Id);
                         cmd.Parameters.AddWithValue("@name", created.Name);
                         cmd.Parameters.AddWithValue("@price", created.Price);
                         cmd.Parameters.AddWithValue("@description", created.Description);
@@ -1107,10 +1139,10 @@ namespace AppIS
                     Product pr = obj as Product;
 
                     cmd = new SqlCommand(
-                        "delete from Products where id=@id"
+                        "delete from Products where product_id=@product_id"
                         , sqlcon);
 
-                    cmd.Parameters.AddWithValue("@id", pr.Id);
+                    cmd.Parameters.AddWithValue("@product_id", pr.Id);
                     cmd.ExecuteNonQuery();
                     продуктыToolStripMenuItem_Click(this, e);
                 }
@@ -1127,6 +1159,11 @@ namespace AppIS
                     мероприятияToolStripMenuItem1_Click(this, e);
                 }
             }
+        }
+
+        private void работникиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
