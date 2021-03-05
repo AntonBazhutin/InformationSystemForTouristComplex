@@ -48,11 +48,13 @@ namespace AppIS
 
         private void BookedTicketRegisterForm_Load(object sender, EventArgs e)
         {
+            txtBxPaid.Text = AddingTicket.isPaid.ToString();
+            if (txtBxPaid.Text == "True")
+                txtBxPaid.ReadOnly = true;
             txtBxCost.Text = AddingTicket.Cost.ToString();
             txtBxEvent_id.Text = AddingTicket.Event_id.ToString();
             txtBxLogin.Text = AddingTicket.Login;
             txtBxOrder_id.Text = AddingTicket.Item_id.ToString();
-            txtBxPaid.Text = AddingTicket.isPaid.ToString();
             txtBxQuantity.Text = AddingTicket.Quantity.ToString();
         }
 

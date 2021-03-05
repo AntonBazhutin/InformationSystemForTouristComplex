@@ -127,15 +127,12 @@ namespace TouristApp
                 int quantity = 0;
 
                 product = dataGridView1.CurrentRow.Tag as Product;
-                ccf = new CountChoosingForm(product.Quantity);
-
-                if (ccf.ShowDialog() == DialogResult.OK)
+                if (product.Quantity > 0)
                 {
-                    quantity = ccf.Count;
-
-                    cmd = new SqlCommand("Select * from Orders where @product_id=product_id AND login=@login", sqlcon);
+                    cmd = new SqlCommand("Select * from Orders where @product_id=product_id AND login=@login AND @isDone=isDone", sqlcon);
                     cmd.Parameters.AddWithValue("@product_id", product.Id);
                     cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
+                    cmd.Parameters.AddWithValue("@isDone", false);
                     cmd.ExecuteNonQuery();
 
                     using (var dr = cmd.ExecuteReader())
@@ -147,38 +144,49 @@ namespace TouristApp
                                 dr["login"].ToString(), bool.Parse(dr["isDone"].ToString()));
                         }
                     }
-
-                    if (orders != null)
-                    {
-                        orders.Quantity += quantity;
-                        orders.Cost = orders.Quantity * product.Price;
-                        cmd = new SqlCommand(
-                        "delete from Orders where order_id=@order_id"
-                        , sqlcon);
-                        cmd.Parameters.AddWithValue("@order_id", orders.Order_id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    if (orders == null)
+                        ccf = new CountChoosingForm(product.Quantity, 0);
                     else
+                        ccf = new CountChoosingForm(product.Quantity, orders.Quantity);
+
+                    if (ccf.ShowDialog() == DialogResult.OK)
                     {
-                        orders = new Order(count + 1, product.Id, quantity, product.Price * quantity, DateTime.Now.ToString(), PersonalInfo.Login, false);
+                        quantity = ccf.Count;
+
+                        if (orders != null)
+                        {
+                            orders.Quantity += quantity;
+                            orders.Cost = orders.Quantity * product.Price;
+                            cmd = new SqlCommand(
+                            "delete from Orders where order_id=@order_id"
+                            , sqlcon);
+                            cmd.Parameters.AddWithValue("@order_id", orders.Order_id);
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            orders = new Order(count + 1, product.Id, quantity, product.Price * quantity, DateTime.Now.ToString(), PersonalInfo.Login, false);
+                        }
+
+                        cmd = new SqlCommand(
+                                  "Insert into Orders(order_id,product_id,quantity,cost,login,dateOrder,isDone) " +
+                                  "Values(@order_id,@product_id,@quantity,@cost,@login,@dateOrder,@isDone)"
+                                  , sqlcon);
+                        cmd.Parameters.AddWithValue("@order_id", orders.Order_id);
+                        cmd.Parameters.AddWithValue("@product_id", orders.Product_id);
+                        cmd.Parameters.AddWithValue("@quantity", orders.Quantity);
+                        cmd.Parameters.AddWithValue("@cost", orders.Cost);
+                        cmd.Parameters.AddWithValue("@login", orders.Login);
+                        cmd.Parameters.AddWithValue("@dateOrder", orders.DateOrder);
+                        cmd.Parameters.AddWithValue("@isDone", orders.IsDone);
+                        cmd.ExecuteNonQuery();
+
+                        if (product != null)
+                            товарыToolStripMenuItem_Click(this, e);
                     }
-
-                    cmd = new SqlCommand(
-                              "Insert into Orders(order_id,product_id,quantity,cost,login,dateOrder,isDone) " +
-                              "Values(@order_id,@product_id,@quantity,@cost,@login,@dateOrder,@isDone)"
-                              , sqlcon);
-                    cmd.Parameters.AddWithValue("@order_id", orders.Order_id);
-                    cmd.Parameters.AddWithValue("@product_id", orders.Product_id);
-                    cmd.Parameters.AddWithValue("@quantity", orders.Quantity);
-                    cmd.Parameters.AddWithValue("@cost", orders.Cost);
-                    cmd.Parameters.AddWithValue("@login", orders.Login);
-                    cmd.Parameters.AddWithValue("@dateOrder", orders.DateOrder);
-                    cmd.Parameters.AddWithValue("@isDone", orders.IsDone);
-                    cmd.ExecuteNonQuery();
-
-                    if (product != null)
-                        товарыToolStripMenuItem_Click(this, e);
                 }
+                else
+                    MessageBox.Show("Данного товара нет в наличии!");
             }
             if (dataGridView1.RowCount > 0 && CurrentObject is Event)
             {
@@ -197,17 +205,13 @@ namespace TouristApp
                 Event ev = null;
                 CountChoosingForm ccf = null;
                 int quantity = 0;
-
                 ev = dataGridView1.CurrentRow.Tag as Event;
-                ccf = new CountChoosingForm(ev.Quantity);
-
-                if (ccf.ShowDialog() == DialogResult.OK)
+                if (ev.Quantity > 0)
                 {
-                    quantity = ccf.Count;
-
-                    cmd = new SqlCommand("Select * from BookedTickets where @event_id=event_id AND login=@login", sqlcon);
+                    cmd = new SqlCommand("Select * from BookedTickets where @event_id=event_id AND login=@login AND @isPaid=isPaid", sqlcon);
                     cmd.Parameters.AddWithValue("@event_id", ev.Id);
                     cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
+                    cmd.Parameters.AddWithValue("@isPaid", false);
                     cmd.ExecuteNonQuery();
 
                     using (var dr = cmd.ExecuteReader())
@@ -218,36 +222,48 @@ namespace TouristApp
                         }
                     }
 
-                    if (bookedTickets != null)
-                    {
-                        bookedTickets.Quantity += quantity;
-                        bookedTickets.Cost = bookedTickets.Quantity * ev.Price;
-                        cmd = new SqlCommand(
-                        "delete from BookedTickets where item_id=@item_id"
-                        , sqlcon);
-                        cmd.Parameters.AddWithValue("@item_id", bookedTickets.Item_id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    if (bookedTickets == null)
+                        ccf = new CountChoosingForm(ev.Quantity, 0);
                     else
+                        ccf = new CountChoosingForm(ev.Quantity, bookedTickets.Quantity);
+
+                    if (ccf.ShowDialog() == DialogResult.OK)
                     {
-                        bookedTickets = new BookedTicket(count + 1, ev.Id, quantity, ev.Price * quantity, PersonalInfo.Login, false);
+                        quantity = ccf.Count;
+
+                        if (bookedTickets != null)
+                        {
+                            bookedTickets.Quantity += quantity;
+                            bookedTickets.Cost = bookedTickets.Quantity * ev.Price;
+                            cmd = new SqlCommand(
+                            "delete from BookedTickets where item_id=@item_id"
+                            , sqlcon);
+                            cmd.Parameters.AddWithValue("@item_id", bookedTickets.Item_id);
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            bookedTickets = new BookedTicket(count + 1, ev.Id, quantity, ev.Price * quantity, PersonalInfo.Login, false);
+                        }
+
+                        cmd = new SqlCommand(
+                                  "Insert into BookedTickets(item_id,event_id,quantity,cost,login,isPaid) " +
+                                  "Values(@item_id,@event_id,@quantity,@cost,@login,@isPaid)"
+                                  , sqlcon);
+                        cmd.Parameters.AddWithValue("@item_id", bookedTickets.Item_id);
+                        cmd.Parameters.AddWithValue("@event_id", bookedTickets.Event_id);
+                        cmd.Parameters.AddWithValue("@quantity", bookedTickets.Quantity);
+                        cmd.Parameters.AddWithValue("@cost", bookedTickets.Cost);
+                        cmd.Parameters.AddWithValue("@login", bookedTickets.Login);
+                        cmd.Parameters.AddWithValue("@isPaid", bookedTickets.IsPaid);
+                        cmd.ExecuteNonQuery();
+
+                        if (ev != null)
+                            мероприятияToolStripMenuItem_Click(this, e);
                     }
-
-                    cmd = new SqlCommand(
-                              "Insert into BookedTickets(item_id,event_id,quantity,cost,login,isPaid) " +
-                              "Values(@item_id,@event_id,@quantity,@cost,@login,@isPaid)"
-                              , sqlcon);
-                    cmd.Parameters.AddWithValue("@item_id", bookedTickets.Item_id);
-                    cmd.Parameters.AddWithValue("@event_id", bookedTickets.Event_id);
-                    cmd.Parameters.AddWithValue("@quantity", bookedTickets.Quantity);
-                    cmd.Parameters.AddWithValue("@cost", bookedTickets.Cost);
-                    cmd.Parameters.AddWithValue("@login", bookedTickets.Login);
-                    cmd.Parameters.AddWithValue("@isPaid", bookedTickets.IsPaid);
-                    cmd.ExecuteNonQuery();
-
-                    if (ev != null)
-                        мероприятияToolStripMenuItem_Click(this, e);
                 }
+                else
+                    MessageBox.Show("Данного товара нет в наличии!");
             }
         }
 
@@ -265,7 +281,7 @@ namespace TouristApp
             dataGridView1.Columns.Add("", "Кол-во");
             dataGridView1.Columns.Add("", "Цена");
             dataGridView1.Columns.Add("", "Дата заказа");
-            dataGridView1.Columns.Add("", "Выполнен?");
+            dataGridView1.Columns.Add("", "Оплачен?");
             var cmd = new SqlCommand("select * from Orders where login=@login", sqlcon);
             cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
             cmd.ExecuteNonQuery();
@@ -336,6 +352,7 @@ namespace TouristApp
             dataGridView1.Columns.Add("", "Цена");
             dataGridView1.Columns.Add("", "Дата проведения");
             dataGridView1.Columns.Add("", "Место проведения");
+            dataGridView1.Columns.Add("", "Оплачено?");
             var cmd = new SqlCommand("select * from BookedTickets where login=@login", sqlcon);
             cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
             cmd.ExecuteNonQuery();
@@ -368,7 +385,7 @@ namespace TouristApp
                     while (dr.Read())
                     {
                         dataGridView1.Rows.Add(new object[] { item.Event_id, dr["name"].ToString(), item.Quantity, item.Cost, dr["date"].ToString(),
-                            (from c in workPlaces where c.Id == int.Parse(dr["workPlace_id"].ToString()) select c.Building_id).ToList()[0] });
+                            (from c in workPlaces where c.Id == int.Parse(dr["workPlace_id"].ToString()) select c.Building_id).ToList()[0], item.IsPaid });
                         dataGridView1.Rows[i].Tag = item;
                         i++;
                     }

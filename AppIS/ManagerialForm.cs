@@ -497,6 +497,33 @@ namespace AppIS
                         cmd.Parameters.AddWithValue("@dateOrder", created.DateOrder);
                         cmd.Parameters.AddWithValue("@isDone", created.IsDone);
                         cmd.ExecuteNonQuery();
+
+                        if (created.IsDone)
+                        {
+                            cmd = new SqlCommand("select * from Products where product_id=@product_id", sqlcon);
+                            cmd.Parameters.AddWithValue("@product_id", created.Product_id);
+                            cmd.ExecuteNonQuery();
+                            Product elem = new Product();
+                            using (var dr = cmd.ExecuteReader())
+                            {
+                                while (dr.Read())
+                                {
+                                    elem = new Product(int.Parse(dr["product_id"].ToString()), dr["name"].ToString(),
+                                        decimal.Parse(dr["price"].ToString()), dr["description"].ToString(),
+                                        dr["type"].ToString(), int.Parse(dr["quantity"].ToString()));
+                                }
+                            }
+
+                            elem.Quantity -= created.Quantity;
+
+
+                            cmd = new SqlCommand("UPDATE Products SET quantity=@quantity where @product_id=product_id", sqlcon);
+                            cmd.Parameters.AddWithValue("@quantity", elem.Quantity);
+                            cmd.Parameters.AddWithValue("@product_id", elem.Id);
+                            cmd.ExecuteNonQuery();
+                            treeView1.SelectedNode.BackColor = Color.Green;
+                        }
+
                         заказыToolStripMenuItem_Click(this, e);
                     }
                 }
@@ -527,6 +554,31 @@ namespace AppIS
                         cmd.Parameters.AddWithValue("@login", created.Login);
                         cmd.Parameters.AddWithValue("@isPaid", created.isPaid);
                         cmd.ExecuteNonQuery();
+
+                        if (created.isPaid)
+                        {
+                            cmd = new SqlCommand("select * from Events where id=@id", sqlcon);
+                            cmd.Parameters.AddWithValue("@id", created.Event_id);
+                            cmd.ExecuteNonQuery();
+                            Event elem = new Event();
+                            using (var dr = cmd.ExecuteReader())
+                            {
+                                while (dr.Read())
+                                {
+                                    elem = new Event(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()),
+                                        dr["description"].ToString(), dr["date"].ToString(),
+                                        int.Parse(dr["workPlace_id"].ToString()), int.Parse(dr["quantity"].ToString()));
+                                }
+                            }
+
+                            elem.Quantity -= created.Quantity;
+                            cmd = new SqlCommand("UPDATE Events SET quantity=@quantity where @id=id", sqlcon);
+                            cmd.Parameters.AddWithValue("@quantity", elem.Quantity);
+                            cmd.Parameters.AddWithValue("@id", elem.Id);
+                            cmd.ExecuteNonQuery();
+                            treeView1.SelectedNode.BackColor = Color.Green;
+                        }
+
                         бронированиеБилетовToolStripMenuItem_Click(this, e);
                     }
                 }
@@ -638,6 +690,10 @@ namespace AppIS
                     {
                         TreeNode order = new TreeNode();
                         order.Tag = orders[j];
+                        if (orders[j].IsDone)
+                            order.BackColor = Color.Green;
+                        else
+                            order.BackColor = Color.Red;
                         order.Text = orders[j].ToString();
                         tourist.Nodes.Add(order);
                     }
@@ -1289,6 +1345,12 @@ namespace AppIS
                                 ticket.Text = $"({tickets[j].Event_id}) {events[x].Name} - {tickets[j].Quantity} шт. {tickets[j].Cost}р - Оплачен? {tickets[j].isPaid}";
                             }
                         }
+
+                        if (tickets[j].isPaid)
+                            ticket.BackColor = Color.Green;
+                        else
+                            ticket.BackColor = Color.Red;
+
                         ticket.Tag = tickets[j];
                         tourist.Nodes.Add(ticket);
                         treeView1.Nodes.Add(tourist);

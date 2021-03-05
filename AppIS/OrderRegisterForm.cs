@@ -54,6 +54,8 @@ namespace AppIS
         private void OrderRegisterForm_Load(object sender, EventArgs e)
         {
             txtBxCompleted.Text = AddingOrder.IsDone.ToString();
+            if (txtBxCompleted.Text == "True")
+                txtBxCompleted.ReadOnly = true;
             txtBxDateOrder.Text = AddingOrder.DateOrder.ToString();
             txtBxCost.Text = AddingOrder.Cost.ToString();
             txtBxLogin.Text = AddingOrder.Login;
