@@ -27,8 +27,8 @@ namespace AppIS
         {
             sqlcon = new SqlConnection();
             sqlcon.ConnectionString = connectionString;
-            try
-            {
+            //try
+            //{
                 sqlcon.Open();
                 if (txtBxLogin.Text != string.Empty && txtBxPassword.Text != string.Empty)
                 {
@@ -65,11 +65,11 @@ namespace AppIS
                 {
                     labelWarning.Visible = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
         private void LogInForm_Load(object sender, EventArgs e)
         {

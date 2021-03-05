@@ -100,8 +100,6 @@ namespace AppIS
                 }
                 Text = "Форма администратора";
             }
-
-
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -111,7 +109,11 @@ namespace AppIS
 
         private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CurrentObject = new Order();
             CreateTreeViewOfOrders();
+            contextMenuStrip1.Items.Clear();
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem1);
+            contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
         }
 
         private void продуктыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -467,38 +469,66 @@ namespace AppIS
                         CreateTreeViewOfWorkers();
                     }
                 }
+                else
                 if (treeView1.SelectedNode.Tag is Order)
                 {
-                    //Order newWorker = treeView1.SelectedNode.Tag as Order;
+                    OrderRegisterForm equipRegister = new OrderRegisterForm(treeView1.SelectedNode.Tag as Order);
 
-                    //WorkerRegisterForm change = new WorkerRegisterForm(newWorker);
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Order created = equipRegister.AddingOrder;
 
-                    //if (change.ShowDialog() == DialogResult.OK)
-                    //{
-                    //    newWorker = change.AddingWorker;
-                    //    var cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
-                    //    cmd.Parameters.AddWithValue("@login", newWorker.Login);
-                    //    cmd.ExecuteNonQuery();
-                    //    treeView1.SelectedNode.Remove();
+                        var cmd = new SqlCommand(
+                            "delete from Orders where order_id=@order_id"
+                            , sqlcon);
 
-                    //    cmd = new SqlCommand(
-                    //             "Insert into Workers(login,password,profession_id,name,surname,thirdname,dateOfBirth,workPlace_id,phoneNumber) " +
-                    //             "Values(@login,@password,@profession_id,@name,@surname,@thirdname,@dateOfBirth,@workPlace_id,@phoneNumber)"
-                    //             , sqlcon);
+                        cmd.Parameters.AddWithValue("@order_id", created.Order_id);
+                        cmd.ExecuteNonQuery();
 
-                    //    cmd.Parameters.AddWithValue("@login", newWorker.Login);
-                    //    cmd.Parameters.AddWithValue("@password", newWorker.Password);
-                    //    cmd.Parameters.AddWithValue("@profession_id", newWorker.Profession_id);
-                    //    cmd.Parameters.AddWithValue("@name", newWorker.Name);
-                    //    cmd.Parameters.AddWithValue("@surname", newWorker.Surname);
-                    //    cmd.Parameters.AddWithValue("@thirdname", newWorker.Thirdname);
-                    //    cmd.Parameters.AddWithValue("@dateOfBirth", newWorker.DateOfBirth);
-                    //    cmd.Parameters.AddWithValue("@workPlace_id", newWorker.WorkPlace_id);
-                    //    cmd.Parameters.AddWithValue("@phoneNumber", newWorker.DateOfBirth);
+                        cmd = new SqlCommand(
+                                "Insert into Orders(order_id,product_id,quantity,cost,login,dateOrder,isDone) " +
+                                "Values(@order_id,@product_id,@quantity,@cost,@login,@dateOrder,@isDone)"
+                                , sqlcon);
+                        cmd.Parameters.AddWithValue("@order_id", created.Order_id);
+                        cmd.Parameters.AddWithValue("@product_id", created.Product_id);
+                        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+                        cmd.Parameters.AddWithValue("@cost", created.Cost);
+                        cmd.Parameters.AddWithValue("@login", created.Login);
+                        cmd.Parameters.AddWithValue("@dateOrder", created.DateOrder);
+                        cmd.Parameters.AddWithValue("@isDone", created.IsDone);
+                        cmd.ExecuteNonQuery();
+                        заказыToolStripMenuItem_Click(this, e);
+                    }
+                }
+                else
+                if (treeView1.SelectedNode.Tag is BookedTicket)
+                {
+                    BookedTicketRegisterForm equipRegister = new BookedTicketRegisterForm(treeView1.SelectedNode.Tag as BookedTicket);
 
-                    //    cmd.ExecuteNonQuery();
-                    //    CreateTreeViewOfWorkers();
-                    //}
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        BookedTicket created = equipRegister.AddingTicket;
+
+                        var cmd = new SqlCommand(
+                              "delete from BookedTickets where item_id=@item_id"
+                              , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@item_id", created.Item_id);
+                        cmd.ExecuteNonQuery();
+
+                        cmd = new SqlCommand(
+                            "Insert into BookedTickets(item_id,event_id,quantity,cost,login,isPaid) " +
+                            "Values(@item_id,@event_id,@quantity,@cost,@login,@isPaid)"
+                            , sqlcon);
+                        cmd.Parameters.AddWithValue("@item_id", created.Item_id);
+                        cmd.Parameters.AddWithValue("@event_id", created.Event_id);
+                        cmd.Parameters.AddWithValue("@quantity", created.Quantity);
+                        cmd.Parameters.AddWithValue("@cost", created.Cost);
+                        cmd.Parameters.AddWithValue("@login", created.Login);
+                        cmd.Parameters.AddWithValue("@isPaid", created.isPaid);
+                        cmd.ExecuteNonQuery();
+                        бронированиеБилетовToolStripMenuItem_Click(this, e);
+                    }
                 }
             }
         }
@@ -506,6 +536,7 @@ namespace AppIS
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode != null)
+            {
                 if (treeView1.SelectedNode.Tag is Tourist || treeView1.SelectedNode.Tag is Worker)
                 {
                     object obj = new object();
@@ -534,6 +565,36 @@ namespace AppIS
                     if (obj is Tourist)
                         CreateTreeViewOfTourists();
                 }
+                if (treeView1.SelectedNode.Tag is BookedTicket || treeView1.SelectedNode.Tag is Order)
+                {
+                    if (treeView1.SelectedNode.Tag is Order)
+                    {
+                        Order ev = treeView1.SelectedNode.Tag as Order;
+
+                        var cmd = new SqlCommand(
+                             "delete from Orders where order_id=@order_id"
+                             , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@order_id", ev.Order_id);
+                        cmd.ExecuteNonQuery();
+                        treeView1.SelectedNode.Remove();
+                        CreateTreeViewOfOrders();
+                    }
+                    if (treeView1.SelectedNode.Tag is BookedTicket)
+                    {
+                        BookedTicket ev = treeView1.SelectedNode.Tag as BookedTicket;
+
+                        var cmd = new SqlCommand(
+                              "delete from BookedTickets where item_id=@item_id"
+                              , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@item_id", ev.Item_id);
+                        cmd.ExecuteNonQuery();
+                        treeView1.SelectedNode.Remove();
+                        CreateTreeOfBookedTickets();
+                    }
+                }
+            }
         }
         private void CreateTreeViewOfOrders()
         {
@@ -735,7 +796,7 @@ namespace AppIS
                     }
                 }
 
-                building.Text = $"{buildings[i].Id}  [{building.Nodes.Count - emptyNodes} / {buildings[i].Rooms}]";
+                building.Text = $"{buildings[i].Id} [{emptyNodes} / {building.Nodes.Count}]";
                 treeView1.Nodes.Add(building);
             }
         }
@@ -900,7 +961,6 @@ namespace AppIS
         private void редактироватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var cmd = new SqlCommand();
-
 
             if (dataGridView1.RowCount > 0)
             {
@@ -1164,6 +1224,77 @@ namespace AppIS
         private void работникиToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void бронированиеБилетовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrentObject = new BookedTicket();
+            CreateTreeOfBookedTickets();
+            contextMenuStrip1.Items.Clear();
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem1);
+            contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
+        }
+        private void CreateTreeOfBookedTickets()
+        {
+            treeView1.Visible = true;
+            dataGridView1.Visible = false;
+            treeView1.Nodes.Clear();
+            List<Tourist> tourists = new List<Tourist>();
+            List<BookedTicket> tickets = new List<BookedTicket>();
+            List<Event> events = new List<Event>();
+            var cmd = new SqlCommand("select * from BookedTickets", sqlcon);
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    tickets.Add(new BookedTicket(int.Parse(dr["item_id"].ToString()),
+                        int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString(), bool.Parse(dr["isPaid"].ToString())));
+                }
+            }
+
+            cmd = new SqlCommand("select * from Tourists", sqlcon);
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    tourists.Add(new Tourist(dr["login"].ToString(), dr["password"].ToString(), dr["name"].ToString(), dr["surname"].ToString(), dr["thirdname"].ToString(), dr["dateOfBirth"].ToString(), dr["email"].ToString(), dr["dateOfComing"].ToString(), dr["dateOfLeaving"].ToString(), dr["country"].ToString(), int.Parse(dr["room_id"].ToString())));
+                }
+            }
+
+            cmd = new SqlCommand("select * from Events", sqlcon);
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    events.Add(new Event(int.Parse(dr["id"].ToString()), dr["name"].ToString(), decimal.Parse(dr["price"].ToString()), dr["description"].ToString(), dr["date"].ToString(), int.Parse(dr["workPlace_id"].ToString()), int.Parse(dr["quantity"].ToString())));
+                }
+            }
+
+            TreeNode tourist = new TreeNode();
+            TreeNode ticket = new TreeNode();
+
+            for (int i = 0; i < tourists.Count; i++)
+            {
+                tourist = new TreeNode();
+                tourist.Text = tourists[i].Surname + " " + tourists[i].Name + " " + tourists[i].Thirdname;
+
+                for (int j = 0; j < tickets.Count; j++)
+                {
+                    if (tourists[i].Login == tickets[j].Login)
+                    {
+                        for (int x = 0; x < events.Count; x++)
+                        {
+                            if (events[x].Id == tickets[j].Event_id)
+                            {
+                                ticket.Text = $"({tickets[j].Event_id}) {events[x].Name} - {tickets[j].Quantity} шт. {tickets[j].Cost}р - Оплачен? {tickets[j].isPaid}";
+                            }
+                        }
+                        ticket.Tag = tickets[j];
+                        tourist.Nodes.Add(ticket);
+                        treeView1.Nodes.Add(tourist);
+                    }
+                }
+            }
         }
     }
 }

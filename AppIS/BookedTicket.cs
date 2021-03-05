@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TouristApp
+namespace AppIS
 {
     public class BookedTicket
     {
@@ -13,7 +13,7 @@ namespace TouristApp
         public int Quantity { get; set; }
         public decimal Cost { get; set; }
         public string Login { get; set; }
-        public bool IsPaid { get; set; }
+        public bool isPaid { get; set; }
         public BookedTicket()
         {
             Item_id = 0;
@@ -21,16 +21,16 @@ namespace TouristApp
             Quantity = 0;
             Cost = 0;
             Login = string.Empty;
-            IsPaid = false;
+            isPaid = false;
         }
-        public BookedTicket(int item_id, int event_id, int quantity, decimal cost, string login, bool isPaid)
+        public BookedTicket(int item_id, int event_id, int quantity, decimal cost, string login,bool paid)
         {
             Item_id = item_id;
             Event_id = event_id;
             Quantity = quantity;
             Cost = cost;
             Login = login;
-            IsPaid = isPaid;
+            isPaid = paid;
         }
     }
 }

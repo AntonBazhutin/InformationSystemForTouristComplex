@@ -48,6 +48,7 @@ namespace AppIS
             this.туристыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокВсехЖильцовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заказыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.бронированиеБилетовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.магазинToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.продуктыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.мероприятияToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +63,6 @@ namespace AppIS
             this.редактироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.удалитьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.бронированиеБилетовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -181,16 +181,23 @@ namespace AppIS
             // списокВсехЖильцовToolStripMenuItem
             // 
             this.списокВсехЖильцовToolStripMenuItem.Name = "списокВсехЖильцовToolStripMenuItem";
-            this.списокВсехЖильцовToolStripMenuItem.Size = new System.Drawing.Size(133, 24);
+            this.списокВсехЖильцовToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.списокВсехЖильцовToolStripMenuItem.Text = "Жильцы";
             this.списокВсехЖильцовToolStripMenuItem.Click += new System.EventHandler(this.списокВсехЖильцовToolStripMenuItem_Click);
             // 
             // заказыToolStripMenuItem
             // 
             this.заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
-            this.заказыToolStripMenuItem.Size = new System.Drawing.Size(133, 24);
+            this.заказыToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.заказыToolStripMenuItem.Text = "Заказы";
             this.заказыToolStripMenuItem.Click += new System.EventHandler(this.заказыToolStripMenuItem_Click);
+            // 
+            // бронированиеБилетовToolStripMenuItem
+            // 
+            this.бронированиеБилетовToolStripMenuItem.Name = "бронированиеБилетовToolStripMenuItem";
+            this.бронированиеБилетовToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.бронированиеБилетовToolStripMenuItem.Text = "Бронирование билетов";
+            this.бронированиеБилетовToolStripMenuItem.Click += new System.EventHandler(this.бронированиеБилетовToolStripMenuItem_Click);
             // 
             // магазинToolStripMenuItem
             // 
@@ -205,14 +212,14 @@ namespace AppIS
             // продуктыToolStripMenuItem
             // 
             this.продуктыToolStripMenuItem.Name = "продуктыToolStripMenuItem";
-            this.продуктыToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+            this.продуктыToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.продуктыToolStripMenuItem.Text = "Продукты";
             this.продуктыToolStripMenuItem.Click += new System.EventHandler(this.продуктыToolStripMenuItem_Click);
             // 
             // мероприятияToolStripMenuItem1
             // 
             this.мероприятияToolStripMenuItem1.Name = "мероприятияToolStripMenuItem1";
-            this.мероприятияToolStripMenuItem1.Size = new System.Drawing.Size(172, 24);
+            this.мероприятияToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.мероприятияToolStripMenuItem1.Text = "Мероприятия";
             this.мероприятияToolStripMenuItem1.Click += new System.EventHandler(this.мероприятияToolStripMenuItem1_Click);
             // 
@@ -340,12 +347,6 @@ namespace AppIS
             this.удалитьToolStripMenuItem1.Text = "Удалить";
             this.удалитьToolStripMenuItem1.Click += new System.EventHandler(this.удалитьToolStripMenuItem1_Click);
             // 
-            // бронированиеБилетовToolStripMenuItem
-            // 
-            this.бронированиеБилетовToolStripMenuItem.Name = "бронированиеБилетовToolStripMenuItem";
-            this.бронированиеБилетовToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
-            this.бронированиеБилетовToolStripMenuItem.Text = "Бронирование билетов";
-            // 
             // ManagerialForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -356,7 +357,8 @@ namespace AppIS
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(744, 618);
+            this.MaximumSize = new System.Drawing.Size(919, 618);
+            this.MinimumSize = new System.Drawing.Size(919, 618);
             this.Name = "ManagerialForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

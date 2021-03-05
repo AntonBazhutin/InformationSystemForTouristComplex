@@ -214,7 +214,7 @@ namespace TouristApp
                     {
                         while (dr.Read())
                         {
-                            bookedTickets = new BookedTicket(int.Parse(dr["item_id"].ToString()), int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString());
+                            bookedTickets = new BookedTicket(int.Parse(dr["item_id"].ToString()), int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString(), bool.Parse(dr["isPaid"].ToString()));
                         }
                     }
 
@@ -230,18 +230,19 @@ namespace TouristApp
                     }
                     else
                     {
-                        bookedTickets = new BookedTicket(count + 1, ev.Id, quantity, ev.Price * quantity, PersonalInfo.Login);
+                        bookedTickets = new BookedTicket(count + 1, ev.Id, quantity, ev.Price * quantity, PersonalInfo.Login, false);
                     }
 
                     cmd = new SqlCommand(
-                              "Insert into BookedTickets(item_id,event_id,quantity,cost,login) " +
-                              "Values(@item_id,@event_id,@quantity,@cost,@login)"
+                              "Insert into BookedTickets(item_id,event_id,quantity,cost,login,isPaid) " +
+                              "Values(@item_id,@event_id,@quantity,@cost,@login,@isPaid)"
                               , sqlcon);
                     cmd.Parameters.AddWithValue("@item_id", bookedTickets.Item_id);
                     cmd.Parameters.AddWithValue("@event_id", bookedTickets.Event_id);
                     cmd.Parameters.AddWithValue("@quantity", bookedTickets.Quantity);
                     cmd.Parameters.AddWithValue("@cost", bookedTickets.Cost);
                     cmd.Parameters.AddWithValue("@login", bookedTickets.Login);
+                    cmd.Parameters.AddWithValue("@isPaid", bookedTickets.IsPaid);
                     cmd.ExecuteNonQuery();
 
                     if (ev != null)
@@ -342,7 +343,7 @@ namespace TouristApp
             {
                 while (dr.Read())
                 {
-                    bookedTickets.Add(new BookedTicket(int.Parse(dr["item_id"].ToString()), int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString()));
+                    bookedTickets.Add(new BookedTicket(int.Parse(dr["item_id"].ToString()), int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString(), bool.Parse(dr["isPaid"].ToString())));
                 }
             }
 
