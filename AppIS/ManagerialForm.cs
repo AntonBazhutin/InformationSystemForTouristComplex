@@ -237,7 +237,6 @@ namespace AppIS
             dataGridView1.Columns.Add("", "Код");
             dataGridView1.Columns.Add("", "Название");
             dataGridView1.Columns.Add("", "Кол-во");
-            dataGridView1.Columns.Add("", "Серийный номер");
             dataGridView1.Columns.Add("", "Принадлежит профессии");
 
             int i = 0;
@@ -245,8 +244,8 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["quantity"].ToString(), dr["serialNumber"].ToString(), dr["profession_id"].ToString() });
-                    dataGridView1.Rows[i].Tag = new Equipment(int.Parse(dr["id"].ToString()), dr["name"].ToString(), int.Parse(dr["quantity"].ToString()), dr["serialNumber"].ToString(), int.Parse(dr["profession_id"].ToString()));
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["name"].ToString(), dr["quantity"].ToString(), dr["profession_id"].ToString() });
+                    dataGridView1.Rows[i].Tag = new Equipment(int.Parse(dr["id"].ToString()), dr["name"].ToString(), int.Parse(dr["quantity"].ToString()), int.Parse(dr["profession_id"].ToString()));
                     i++;
                 }
             }
@@ -280,13 +279,16 @@ namespace AppIS
         {
             if (treeView1.SelectedNode != null)
             {
-                if (treeView1.SelectedNode.Tag is Room)
+                object obj = treeView1.SelectedNode.Tag;
+
+                if (obj is Room)
                 {
                     Room room;
 
-                    room = treeView1.SelectedNode.Tag as Room;
+                    room = obj as Room;
 
                     Tourist addingTourist = null;
+
                     TouristRegisterForm register = new TouristRegisterForm(room.Id);
 
                     if (register.ShowDialog() == DialogResult.OK)
@@ -336,14 +338,34 @@ namespace AppIS
                             MessageBox.Show("Турист с таким логином и паролем уже зарегистрирован");
                     }
                 }
-
-                if (treeView1.SelectedNode.Tag is WorkPlace)
+                else
+                if (obj is WorkPlace)
                 {
-                    WorkPlace workPlace = treeView1.SelectedNode.Tag as WorkPlace;
+                    WorkPlace workPlace = obj as WorkPlace;
 
                     Worker addingWorker = null;
 
-                    WorkerRegisterForm register = new WorkerRegisterForm(workPlace.Id);
+                    List<int> Profession_ids = new List<int>();
+                    List<int> WorkPlaces_ids = new List<int>();
+                    var comm = new SqlCommand("select * from Professions", sqlcon);
+                    using (var dr = comm.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Profession_ids.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+                    comm = new SqlCommand("select * from WorkPlaces", sqlcon);
+
+                    using (var dr = comm.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            WorkPlaces_ids.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+
+                    WorkerRegisterForm register = new WorkerRegisterForm(workPlace.Id, Profession_ids, WorkPlaces_ids);
 
                     if (register.ShowDialog() == DialogResult.OK)
                     {
@@ -400,7 +422,9 @@ namespace AppIS
         {
             if (treeView1.SelectedNode != null)
             {
-                if (treeView1.SelectedNode.Tag is Tourist)
+                object obj = treeView1.SelectedNode.Tag;
+
+                if (obj is Tourist)
                 {
                     Tourist addingTourist = treeView1.SelectedNode.Tag as Tourist;
 
@@ -436,11 +460,30 @@ namespace AppIS
                     }
                 }
                 else
-                if (treeView1.SelectedNode.Tag is Worker)
+                if (obj is Worker)
                 {
+                    List<int> Profession_ids = new List<int>();
+                    List<int> WorkPlaces_ids = new List<int>();
+                    var comm = new SqlCommand("select * from Professions", sqlcon);
+                    using (var dr = comm.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Profession_ids.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+                    comm = new SqlCommand("select * from WorkPlaces", sqlcon);
+
+                    using (var dr = comm.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            WorkPlaces_ids.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
                     Worker newWorker = treeView1.SelectedNode.Tag as Worker;
 
-                    WorkerRegisterForm change = new WorkerRegisterForm(newWorker);
+                    WorkerRegisterForm change = new WorkerRegisterForm(newWorker, Profession_ids, WorkPlaces_ids);
 
                     if (change.ShowDialog() == DialogResult.OK)
                     {
@@ -463,14 +506,14 @@ namespace AppIS
                         cmd.Parameters.AddWithValue("@thirdname", newWorker.Thirdname);
                         cmd.Parameters.AddWithValue("@dateOfBirth", newWorker.DateOfBirth);
                         cmd.Parameters.AddWithValue("@workPlace_id", newWorker.WorkPlace_id);
-                        cmd.Parameters.AddWithValue("@phoneNumber", newWorker.DateOfBirth);
+                        cmd.Parameters.AddWithValue("@phoneNumber", newWorker.PhoneNumber);
 
                         cmd.ExecuteNonQuery();
                         CreateTreeViewOfWorkers();
                     }
                 }
                 else
-                if (treeView1.SelectedNode.Tag is Order)
+                if (obj is Order)
                 {
                     OrderRegisterForm equipRegister = new OrderRegisterForm(treeView1.SelectedNode.Tag as Order);
 
@@ -528,7 +571,7 @@ namespace AppIS
                     }
                 }
                 else
-                if (treeView1.SelectedNode.Tag is BookedTicket)
+                if (obj is BookedTicket)
                 {
                     BookedTicketRegisterForm equipRegister = new BookedTicketRegisterForm(treeView1.SelectedNode.Tag as BookedTicket);
 
@@ -589,7 +632,9 @@ namespace AppIS
         {
             if (treeView1.SelectedNode != null)
             {
-                if (treeView1.SelectedNode.Tag is Tourist || treeView1.SelectedNode.Tag is Worker)
+                object tag = treeView1.SelectedNode.Tag;
+
+                if (tag is Tourist || tag is Worker)
                 {
                     object obj = new object();
                     var cmd = new SqlCommand();
@@ -598,13 +643,20 @@ namespace AppIS
                     {
                         Tourist tourist = treeView1.SelectedNode.Tag as Tourist;
                         obj = tourist as Tourist;
+                        cmd = new SqlCommand("delete from Orders where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", tourist.Login);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand("delete from BookedTickets where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", tourist.Login);
+                        cmd.ExecuteNonQuery();
                         cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
                         cmd.Parameters.AddWithValue("@login", tourist.Login);
+
                     }
 
-                    if (treeView1.SelectedNode.Tag is Worker)
+                    if (tag is Worker)
                     {
-                        Worker worker = treeView1.SelectedNode.Tag as Worker;
+                        Worker worker = tag as Worker;
                         obj = worker as Worker;
                         cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
                         cmd.Parameters.AddWithValue("@login", worker.Login);
@@ -617,11 +669,11 @@ namespace AppIS
                     if (obj is Tourist)
                         CreateTreeViewOfTourists();
                 }
-                if (treeView1.SelectedNode.Tag is BookedTicket || treeView1.SelectedNode.Tag is Order)
+                if (tag is BookedTicket || tag is Order)
                 {
-                    if (treeView1.SelectedNode.Tag is Order)
+                    if (tag is Order)
                     {
-                        Order ev = treeView1.SelectedNode.Tag as Order;
+                        Order ev = tag as Order;
 
                         var cmd = new SqlCommand(
                              "delete from Orders where order_id=@order_id"
@@ -632,9 +684,9 @@ namespace AppIS
                         treeView1.SelectedNode.Remove();
                         CreateTreeViewOfOrders();
                     }
-                    if (treeView1.SelectedNode.Tag is BookedTicket)
+                    if (tag is BookedTicket)
                     {
-                        BookedTicket ev = treeView1.SelectedNode.Tag as BookedTicket;
+                        BookedTicket ev = tag as BookedTicket;
 
                         var cmd = new SqlCommand(
                               "delete from BookedTickets where item_id=@item_id"
@@ -867,7 +919,19 @@ namespace AppIS
                 if (dataGridView1.RowCount > 0)
                     wp = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as WorkPlace;
 
-                WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(wp.Id + 1);
+                List<string> building_ids = new List<string>();
+                cmd = new SqlCommand("Select * from Buildings", sqlcon);
+                cmd.ExecuteNonQuery();
+
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        building_ids.Add(dr["id"].ToString());
+                    }
+                }
+
+                WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(wp.Id + 1, building_ids);
                 if (wpRegister.ShowDialog() == DialogResult.OK)
                 {
                     WorkPlace created = wpRegister.AddingWorkPlace;
@@ -914,21 +978,30 @@ namespace AppIS
                 if (dataGridView1.RowCount > 0)
                     eq = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Equipment;
 
-                EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(eq.Id + 1);
+                List<int> professions = new List<int>();
+                cmd = new SqlCommand("select * from Professions", sqlcon);
+                cmd.ExecuteNonQuery();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        professions.Add(int.Parse(dr["id"].ToString()));
+                    }
+                }
+                EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(eq.Id + 1, professions);
 
                 if (equipRegister.ShowDialog() == DialogResult.OK)
                 {
                     Equipment created = equipRegister.AddingEquipment;
 
                     cmd = new SqlCommand(
-                           "Insert into Equipment(id,name,quantity,serialNumber,profession_id) " +
-                           "Values(@id,@name,@quantity,@serialNumber,@profession_id)"
+                           "Insert into Equipment(id,name,quantity,profession_id) " +
+                           "Values(@id,@name,@quantity,@profession_id)"
                            , sqlcon);
 
                     cmd.Parameters.AddWithValue("@id", created.Id);
                     cmd.Parameters.AddWithValue("@name", created.Name);
                     cmd.Parameters.AddWithValue("@quantity", created.Quantity);
-                    cmd.Parameters.AddWithValue("@serialNumber", created.SerialNumber);
                     cmd.Parameters.AddWithValue("@profession_id", created.ProfessionId);
                     cmd.ExecuteNonQuery();
                     оборудованиеToolStripMenuItem_Click(this, e);
@@ -940,7 +1013,18 @@ namespace AppIS
                 if (dataGridView1.RowCount > 0)
                     wd = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as WorkDay;
 
-                WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(wd.Id + 1);
+                List<string> logins = new List<string>();
+                cmd = new SqlCommand("Select * from Workers", sqlcon);
+                cmd.ExecuteNonQuery();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        logins.Add(dr["login"].ToString());
+                    }
+                }
+
+                WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(wd.Id + 1, logins);
 
                 if (equipRegister.ShowDialog() == DialogResult.OK)
                 {
@@ -990,7 +1074,19 @@ namespace AppIS
                 if (dataGridView1.RowCount > 0)
                     ev = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Event;
 
-                EventRegisterForm equipRegister = new EventRegisterForm(ev.Id + 1);
+                List<int> workPlace_ids = new List<int>();
+                cmd = new SqlCommand("Select * from Events", sqlcon);
+                cmd.ExecuteNonQuery();
+
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        workPlace_ids.Add(int.Parse(dr["id"].ToString()));
+                    }
+                }
+
+                EventRegisterForm equipRegister = new EventRegisterForm(ev.Id + 1, workPlace_ids);
 
                 if (equipRegister.ShowDialog() == DialogResult.OK)
                 {
@@ -1024,7 +1120,17 @@ namespace AppIS
 
                 if (obj is WorkPlace)
                 {
-                    WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(obj as WorkPlace);
+                    List<string> building_ids = new List<string>();
+                    cmd = new SqlCommand("Select * from Buildings", sqlcon);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            building_ids.Add(dr["id"].ToString());
+                        }
+                    }
+                    WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(obj as WorkPlace, building_ids);
                     if (wpRegister.ShowDialog() == DialogResult.OK)
                     {
                         WorkPlace created = wpRegister.AddingWorkPlace;
@@ -1076,7 +1182,17 @@ namespace AppIS
                 }
                 if (obj is Equipment)
                 {
-                    EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(obj as Equipment);
+                    List<int> professions = new List<int>();
+                    cmd = new SqlCommand("select * from Professions", sqlcon);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            professions.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+                    EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(obj as Equipment, professions);
 
                     if (equipRegister.ShowDialog() == DialogResult.OK)
                     {
@@ -1089,14 +1205,13 @@ namespace AppIS
                         cmd.ExecuteNonQuery();
 
                         cmd = new SqlCommand(
-                               "Insert into Equipment(id,name,quantity,serialNumber,profession_id) " +
-                               "Values(@id,@name,@quantity,@serialNumber,@profession_id)"
+                               "Insert into Equipment(id,name,quantity,profession_id) " +
+                               "Values(@id,@name,@quantity,@profession_id)"
                                , sqlcon);
 
                         cmd.Parameters.AddWithValue("@id", created.Id);
                         cmd.Parameters.AddWithValue("@name", created.Name);
                         cmd.Parameters.AddWithValue("@quantity", created.Quantity);
-                        cmd.Parameters.AddWithValue("@serialNumber", created.SerialNumber);
                         cmd.Parameters.AddWithValue("@profession_id", created.ProfessionId);
                         cmd.ExecuteNonQuery();
                         оборудованиеToolStripMenuItem_Click(this, e);
@@ -1104,7 +1219,18 @@ namespace AppIS
                 }
                 if (obj is WorkDay)
                 {
-                    WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(obj as WorkDay);
+                    List<string> logins = new List<string>();
+                    cmd = new SqlCommand("Select * from Workers", sqlcon);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            logins.Add(dr["login"].ToString());
+                        }
+                    }
+
+                    WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(obj as WorkDay, logins);
 
                     if (equipRegister.ShowDialog() == DialogResult.OK)
                     {
@@ -1160,7 +1286,19 @@ namespace AppIS
                 }
                 if (obj is Event)
                 {
-                    EventRegisterForm equipRegister = new EventRegisterForm(obj as Event);
+                    List<int> workPlace_ids = new List<int>();
+                    cmd = new SqlCommand("Select * from Events", sqlcon);
+                    cmd.ExecuteNonQuery();
+
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            workPlace_ids.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+
+                    EventRegisterForm equipRegister = new EventRegisterForm(obj as Event, workPlace_ids);
 
                     if (equipRegister.ShowDialog() == DialogResult.OK)
                     {

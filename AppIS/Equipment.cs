@@ -11,15 +11,13 @@ namespace AppIS
         public int Id { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
-        public string SerialNumber { get; set; }
         public int ProfessionId { get; set; }
 
-        public Equipment(int id, string name, int quantity, string serialNumber, int professionId)
+        public Equipment(int id, string name, int quantity, int professionId)
         {
             Id = id;
             Name = name;
             Quantity = quantity;
-            SerialNumber = serialNumber;
             ProfessionId = professionId;
         }
         public Equipment()
@@ -27,7 +25,6 @@ namespace AppIS
             Id = 0;
             Name = null;
             Quantity = 0;
-            SerialNumber = null;
             ProfessionId = 0;
         }
         public Equipment(int id)
@@ -35,7 +32,6 @@ namespace AppIS
             Id = id;
             Name = null;
             Quantity = 0;
-            SerialNumber = null;
             ProfessionId = 0;
         }
     }

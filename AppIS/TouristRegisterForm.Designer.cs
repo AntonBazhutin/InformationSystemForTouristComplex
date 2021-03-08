@@ -36,11 +36,8 @@ namespace AppIS
             this.label3 = new System.Windows.Forms.Label();
             this.txtBxThirdname = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtBxDateOfBirth = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtBxDateOfComing = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtBxDateOfLeaving = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtBxLogin = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -51,8 +48,11 @@ namespace AppIS
             this.txtBxCountry = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtBxRoom = new System.Windows.Forms.TextBox();
             this.labelWarning = new System.Windows.Forms.Label();
+            this.dateTimeComing = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeLeaving = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeDateOfBirth = new System.Windows.Forms.DateTimePicker();
+            this.textBxRoom_id = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtBxName
@@ -119,14 +119,6 @@ namespace AppIS
             this.label4.TabIndex = 7;
             this.label4.Text = "Дата рождения";
             // 
-            // txtBxDateOfBirth
-            // 
-            this.txtBxDateOfBirth.Location = new System.Drawing.Point(144, 102);
-            this.txtBxDateOfBirth.Name = "txtBxDateOfBirth";
-            this.txtBxDateOfBirth.Size = new System.Drawing.Size(100, 20);
-            this.txtBxDateOfBirth.TabIndex = 6;
-            this.txtBxDateOfBirth.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -137,14 +129,6 @@ namespace AppIS
             this.label5.TabIndex = 9;
             this.label5.Text = "Дата приезда";
             // 
-            // txtBxDateOfComing
-            // 
-            this.txtBxDateOfComing.Location = new System.Drawing.Point(144, 202);
-            this.txtBxDateOfComing.Name = "txtBxDateOfComing";
-            this.txtBxDateOfComing.Size = new System.Drawing.Size(100, 20);
-            this.txtBxDateOfComing.TabIndex = 8;
-            this.txtBxDateOfComing.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -154,14 +138,6 @@ namespace AppIS
             this.label6.Size = new System.Drawing.Size(105, 18);
             this.label6.TabIndex = 11;
             this.label6.Text = "Дата отъезда";
-            // 
-            // txtBxDateOfLeaving
-            // 
-            this.txtBxDateOfLeaving.Location = new System.Drawing.Point(144, 228);
-            this.txtBxDateOfLeaving.Name = "txtBxDateOfLeaving";
-            this.txtBxDateOfLeaving.Size = new System.Drawing.Size(100, 20);
-            this.txtBxDateOfLeaving.TabIndex = 10;
-            this.txtBxDateOfLeaving.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label7
             // 
@@ -259,14 +235,6 @@ namespace AppIS
             this.label11.TabIndex = 22;
             this.label11.Text = "Номер комнаты";
             // 
-            // txtBxRoom
-            // 
-            this.txtBxRoom.Location = new System.Drawing.Point(144, 176);
-            this.txtBxRoom.Name = "txtBxRoom";
-            this.txtBxRoom.Size = new System.Drawing.Size(100, 20);
-            this.txtBxRoom.TabIndex = 21;
-            this.txtBxRoom.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
-            // 
             // labelWarning
             // 
             this.labelWarning.AutoSize = true;
@@ -278,14 +246,49 @@ namespace AppIS
             this.labelWarning.TabIndex = 23;
             this.labelWarning.Text = "Заполните все поля!";
             // 
+            // dateTimeComing
+            // 
+            this.dateTimeComing.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimeComing.Location = new System.Drawing.Point(144, 202);
+            this.dateTimeComing.Name = "dateTimeComing";
+            this.dateTimeComing.Size = new System.Drawing.Size(100, 20);
+            this.dateTimeComing.TabIndex = 25;
+            // 
+            // dateTimeLeaving
+            // 
+            this.dateTimeLeaving.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimeLeaving.Location = new System.Drawing.Point(144, 228);
+            this.dateTimeLeaving.Name = "dateTimeLeaving";
+            this.dateTimeLeaving.Size = new System.Drawing.Size(100, 20);
+            this.dateTimeLeaving.TabIndex = 26;
+            // 
+            // dateTimeDateOfBirth
+            // 
+            this.dateTimeDateOfBirth.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimeDateOfBirth.Location = new System.Drawing.Point(144, 102);
+            this.dateTimeDateOfBirth.Name = "dateTimeDateOfBirth";
+            this.dateTimeDateOfBirth.Size = new System.Drawing.Size(100, 20);
+            this.dateTimeDateOfBirth.TabIndex = 27;
+            // 
+            // textBxRoom_id
+            // 
+            this.textBxRoom_id.Location = new System.Drawing.Point(144, 178);
+            this.textBxRoom_id.Name = "textBxRoom_id";
+            this.textBxRoom_id.Size = new System.Drawing.Size(100, 20);
+            this.textBxRoom_id.TabIndex = 28;
+            this.textBxRoom_id.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
+            // 
             // TouristRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 277);
+            this.Controls.Add(this.textBxRoom_id);
+            this.Controls.Add(this.dateTimeDateOfBirth);
+            this.Controls.Add(this.dateTimeLeaving);
+            this.Controls.Add(this.dateTimeComing);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtBxRoom);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.txtBxCountry);
             this.Controls.Add(this.label10);
@@ -296,11 +299,8 @@ namespace AppIS
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBxLogin);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtBxDateOfLeaving);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtBxDateOfComing);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtBxDateOfBirth);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtBxThirdname);
             this.Controls.Add(this.label2);
@@ -330,11 +330,8 @@ namespace AppIS
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBxThirdname;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtBxDateOfBirth;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtBxDateOfComing;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtBxDateOfLeaving;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtBxLogin;
         private System.Windows.Forms.Label label8;
@@ -345,7 +342,10 @@ namespace AppIS
         private System.Windows.Forms.TextBox txtBxCountry;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtBxRoom;
         private System.Windows.Forms.Label labelWarning;
+        private System.Windows.Forms.DateTimePicker dateTimeComing;
+        private System.Windows.Forms.DateTimePicker dateTimeLeaving;
+        private System.Windows.Forms.DateTimePicker dateTimeDateOfBirth;
+        private System.Windows.Forms.TextBox textBxRoom_id;
     }
 }

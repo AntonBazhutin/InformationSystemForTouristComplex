@@ -12,6 +12,7 @@ namespace AppIS
 {
     public partial class OrderRegisterForm : Form
     {
+
         public Order AddingOrder { get; set; }
         public OrderRegisterForm(Order addingOrder)
         {
@@ -20,42 +21,34 @@ namespace AppIS
         }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            bool resBool = false;
+            if (comboBox1.SelectedItem.ToString() == "Да")
+                resBool = true;
+            else
+                resBool = false;
             AddingOrder = new Order(int.Parse(txtBxOrder_id.Text), int.Parse(txtBxProduct_id.Text),
-                int.Parse(txtBxQuantity.Text), decimal.Parse(txtBxCost.Text), txtBxDateOrder.Text, txtBxLogin.Text, bool.Parse(txtBxCompleted.Text));
+                int.Parse(txtBxQuantity.Text), decimal.Parse(txtBxCost.Text), txtBxDateOrder.Text, txtBxLogin.Text, resBool);
         }
 
         private void txtBxId_TextChanged(object sender, EventArgs e)
         {
-            int count = 0;
-            foreach (var c in Controls)
-            {
-                if (c is TextBox)
-                {
-                    TextBox txtbx = c as TextBox;
-                    if (txtbx.Text == string.Empty)
-                    {
-                        count++;
-                    }
-                }
-            }
 
-            if (count == 0)
-            {
-                labelWarning.Visible = false;
-                btnSubmit.Enabled = true;
-            }
-            else
-            {
-                labelWarning.Visible = true;
-                btnSubmit.Enabled = false;
-            }
         }
 
         private void OrderRegisterForm_Load(object sender, EventArgs e)
         {
-            txtBxCompleted.Text = AddingOrder.IsDone.ToString();
-            if (txtBxCompleted.Text == "True")
-                txtBxCompleted.ReadOnly = true;
+            bool res = bool.Parse(AddingOrder.IsDone.ToString());
+            if (res == true)
+            {
+                comboBox1.Enabled = false;
+                comboBox1.Text = "Да";
+            }
+            else
+            {
+                comboBox1.Enabled = true;
+                comboBox1.Text = "Нет";
+            }
+
             txtBxDateOrder.Text = AddingOrder.DateOrder.ToString();
             txtBxCost.Text = AddingOrder.Cost.ToString();
             txtBxLogin.Text = AddingOrder.Login;

@@ -12,6 +12,8 @@ namespace AppIS
 {
     public partial class ProductRegisterForm : Form
     {
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_";
+
         public bool IsFilled { get; set; }
         private Product product;
         public Product AddingProduct { get { return product; } set { product = value; } }
@@ -29,11 +31,35 @@ namespace AppIS
         }
         private void ProductRegisterForm_Load(object sender, EventArgs e)
         {
+            int count = 0;
+            foreach (var c in Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox txtbx = c as TextBox;
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
+                        count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
+                    }
+                }
+            }
+
+            if (count == 0)
+            {
+                btnSubmit.Enabled = true;
+            }
+            else
+            {
+                btnSubmit.Enabled = false;
+            }
             if (IsFilled)
             {
                 txtBxDescription.Text = AddingProduct.Description;
                 txtBxName.Text = AddingProduct.Name;
-                txtBxPrice.Text = AddingProduct.Price.ToString();
+                numericUpDown1.Text = AddingProduct.Price.ToString();
                 txtBxProductId.Text = AddingProduct.Id.ToString();
                 txtBxQuantity.Text = AddingProduct.Quantity.ToString();
                 txtBxType.Text = AddingProduct.Type;
@@ -53,7 +79,7 @@ namespace AppIS
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             AddingProduct = new Product(int.Parse(txtBxProductId.Text),
-                txtBxName.Text, decimal.Parse(txtBxPrice.Text),
+                txtBxName.Text, decimal.Parse(numericUpDown1.Text),
                 txtBxDescription.Text, txtBxType.Text, int.Parse(txtBxQuantity.Text));
         }
 
@@ -65,21 +91,22 @@ namespace AppIS
                 if (c is TextBox)
                 {
                     TextBox txtbx = c as TextBox;
-                    if (txtbx.Text == string.Empty)
-                    {
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                         count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
                     }
                 }
             }
 
             if (count == 0)
             {
-                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
-                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }

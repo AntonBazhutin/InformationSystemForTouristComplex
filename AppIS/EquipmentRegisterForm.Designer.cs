@@ -31,16 +31,15 @@ namespace AppIS
         {
             this.labelWarning = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
-            this.txtBxQuantity = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtBxName = new System.Windows.Forms.TextBox();
             this.txtBxId = new System.Windows.Forms.TextBox();
-            this.txtBxSerialNumber = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtBxProfessionId = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.comboBxProfession_id = new System.Windows.Forms.ComboBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelWarning
@@ -65,14 +64,6 @@ namespace AppIS
             this.btnSubmit.Text = "Добавить";
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
-            // 
-            // txtBxQuantity
-            // 
-            this.txtBxQuantity.Location = new System.Drawing.Point(162, 93);
-            this.txtBxQuantity.Name = "txtBxQuantity";
-            this.txtBxQuantity.Size = new System.Drawing.Size(100, 20);
-            this.txtBxQuantity.TabIndex = 54;
-            this.txtBxQuantity.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
             // label3
             // 
@@ -120,54 +111,57 @@ namespace AppIS
             this.txtBxId.TabIndex = 49;
             this.txtBxId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
-            // txtBxSerialNumber
-            // 
-            this.txtBxSerialNumber.Location = new System.Drawing.Point(162, 132);
-            this.txtBxSerialNumber.Name = "txtBxSerialNumber";
-            this.txtBxSerialNumber.Size = new System.Drawing.Size(100, 20);
-            this.txtBxSerialNumber.TabIndex = 58;
-            this.txtBxSerialNumber.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(25, 134);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(126, 18);
-            this.label4.TabIndex = 57;
-            this.label4.Text = "Серийный номер";
-            // 
-            // txtBxProfessionId
-            // 
-            this.txtBxProfessionId.Location = new System.Drawing.Point(162, 171);
-            this.txtBxProfessionId.Name = "txtBxProfessionId";
-            this.txtBxProfessionId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxProfessionId.TabIndex = 60;
-            this.txtBxProfessionId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(25, 173);
+            this.label5.Location = new System.Drawing.Point(25, 149);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(118, 18);
             this.label5.TabIndex = 59;
             this.label5.Text = "Код профессии";
+            // 
+            // comboBxProfession_id
+            // 
+            this.comboBxProfession_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBxProfession_id.FormattingEnabled = true;
+            this.comboBxProfession_id.Location = new System.Drawing.Point(162, 150);
+            this.comboBxProfession_id.Name = "comboBxProfession_id";
+            this.comboBxProfession_id.Size = new System.Drawing.Size(100, 21);
+            this.comboBxProfession_id.TabIndex = 60;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(162, 92);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(100, 20);
+            this.numericUpDown1.TabIndex = 61;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // EquipmentRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 286);
-            this.Controls.Add(this.txtBxProfessionId);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.comboBxProfession_id);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtBxSerialNumber);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
-            this.Controls.Add(this.txtBxQuantity);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -181,6 +175,7 @@ namespace AppIS
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Добавление инструментов";
             this.Load += new System.EventHandler(this.EquipmentRegisterForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,15 +185,13 @@ namespace AppIS
 
         private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Button btnSubmit;
-        private System.Windows.Forms.TextBox txtBxQuantity;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBxName;
         private System.Windows.Forms.TextBox txtBxId;
-        private System.Windows.Forms.TextBox txtBxSerialNumber;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtBxProfessionId;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBxProfession_id;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

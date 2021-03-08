@@ -30,13 +30,13 @@ namespace AppIS
         private void InitializeComponent()
         {
             this.txtBxId = new System.Windows.Forms.TextBox();
-            this.txtBxPlaceId = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtBxBuildingId = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.labelWarning = new System.Windows.Forms.Label();
+            this.comboBxBuilding_id = new System.Windows.Forms.ComboBox();
+            this.txtBxPlace_id = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtBxId
@@ -46,14 +46,6 @@ namespace AppIS
             this.txtBxId.Size = new System.Drawing.Size(100, 20);
             this.txtBxId.TabIndex = 1;
             this.txtBxId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
-            // 
-            // txtBxPlaceId
-            // 
-            this.txtBxPlaceId.Location = new System.Drawing.Point(132, 63);
-            this.txtBxPlaceId.Name = "txtBxPlaceId";
-            this.txtBxPlaceId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxPlaceId.TabIndex = 2;
-            this.txtBxPlaceId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
             // label1
             // 
@@ -85,14 +77,6 @@ namespace AppIS
             this.label3.TabIndex = 5;
             this.label3.Text = "Код здания";
             // 
-            // txtBxBuildingId
-            // 
-            this.txtBxBuildingId.Location = new System.Drawing.Point(132, 103);
-            this.txtBxBuildingId.Name = "txtBxBuildingId";
-            this.txtBxBuildingId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxBuildingId.TabIndex = 6;
-            this.txtBxBuildingId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
-            // 
             // btnSubmit
             // 
             this.btnSubmit.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -116,18 +100,35 @@ namespace AppIS
             this.labelWarning.TabIndex = 48;
             this.labelWarning.Text = "Заполните все поля!";
             // 
+            // comboBxBuilding_id
+            // 
+            this.comboBxBuilding_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBxBuilding_id.FormattingEnabled = true;
+            this.comboBxBuilding_id.Location = new System.Drawing.Point(132, 103);
+            this.comboBxBuilding_id.Name = "comboBxBuilding_id";
+            this.comboBxBuilding_id.Size = new System.Drawing.Size(100, 21);
+            this.comboBxBuilding_id.TabIndex = 50;
+            // 
+            // txtBxPlace_id
+            // 
+            this.txtBxPlace_id.Location = new System.Drawing.Point(132, 63);
+            this.txtBxPlace_id.Name = "txtBxPlace_id";
+            this.txtBxPlace_id.Size = new System.Drawing.Size(100, 20);
+            this.txtBxPlace_id.TabIndex = 51;
+            this.txtBxPlace_id.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
+            // 
             // WorkPlaceRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 229);
+            this.Controls.Add(this.txtBxPlace_id);
+            this.Controls.Add(this.comboBxBuilding_id);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
-            this.Controls.Add(this.txtBxBuildingId);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtBxPlaceId);
             this.Controls.Add(this.txtBxId);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(296, 268);
@@ -144,12 +145,12 @@ namespace AppIS
 
         #endregion
         private System.Windows.Forms.TextBox txtBxId;
-        private System.Windows.Forms.TextBox txtBxPlaceId;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtBxBuildingId;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label labelWarning;
+        private System.Windows.Forms.ComboBox comboBxBuilding_id;
+        private System.Windows.Forms.TextBox txtBxPlace_id;
     }
 }

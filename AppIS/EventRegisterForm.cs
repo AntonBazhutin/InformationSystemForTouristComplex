@@ -12,17 +12,21 @@ namespace AppIS
 {
     public partial class EventRegisterForm : Form
     {
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_";
+        List<int> workPlace_ids = new List<int>();
         public bool IsFilled { get; set; }
         private Event event_;
         public Event AddingEvent { get { return event_; } set { event_ = value; } }
-        public EventRegisterForm(int id)
+        public EventRegisterForm(int id, List<int> workplace_ids)
         {
+            this.workPlace_ids = workplace_ids;
             IsFilled = false;
             AddingEvent = new Event(id);
             InitializeComponent();
         }
-        public EventRegisterForm(Event ev)
+        public EventRegisterForm(Event ev, List<int> workplace_ids)
         {
+            this.workPlace_ids = workplace_ids;
             AddingEvent = ev;
             IsFilled = true;
             InitializeComponent();
@@ -31,21 +35,52 @@ namespace AppIS
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             AddingEvent = new Event(int.Parse(txtBxEventId.Text), txtBxName.Text,
-                decimal.Parse(txtBxPrice.Text), txtBxDescription.Text, txtBxDate.Text, int.Parse(txtBxWorkPlaceId.Text),int.Parse(txtBxTickets.Text));
+                decimal.Parse(numericUpDownPrice.Text), txtBxDescription.Text, dateTimePicker1.Text,
+                int.Parse(comboBoxWorkPlace_id.SelectedItem.ToString()), int.Parse(numericUpDownCountOfTickets.Text));
         }
 
         private void EventRegisterForm_Load(object sender, EventArgs e)
         {
+            int count = 0;
+            foreach (var c in Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox txtbx = c as TextBox;
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
+                        count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
+                    }
+                }
+            }
+
+            if (count == 0)
+            {
+                btnSubmit.Enabled = true;
+            }
+            else
+            {
+                btnSubmit.Enabled = false;
+            }
+
+            foreach (var item in workPlace_ids)
+            {
+                comboBoxWorkPlace_id.Items.Add(item);
+            }
+            comboBoxWorkPlace_id.Text = workPlace_ids[0].ToString();
             if (IsFilled)
             {
                 txtBxDescription.Text = AddingEvent.Description;
                 txtBxName.Text = AddingEvent.Name;
-                txtBxPrice.Text = AddingEvent.Price.ToString();
+                numericUpDownPrice.Text = AddingEvent.Price.ToString();
                 txtBxEventId.Text = AddingEvent.Id.ToString();
-                txtBxDate.Text = AddingEvent.Date;
-                txtBxWorkPlaceId.Text = AddingEvent.WorkPlace_id.ToString();
+                dateTimePicker1.Text = AddingEvent.Date;
+                comboBoxWorkPlace_id.Text = AddingEvent.WorkPlace_id.ToString();
                 txtBxEventId.ReadOnly = true;
-                txtBxTickets.Text = AddingEvent.Quantity.ToString();
+                numericUpDownCountOfTickets.Text = AddingEvent.Quantity.ToString();
                 Text = "Редатирование информации";
                 btnSubmit.Text = "ОК";
             }
@@ -66,21 +101,22 @@ namespace AppIS
                 if (c is TextBox)
                 {
                     TextBox txtbx = c as TextBox;
-                    if (txtbx.Text == string.Empty)
-                    {
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                         count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
                     }
                 }
             }
 
             if (count == 0)
             {
-                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
-                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }

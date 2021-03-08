@@ -12,6 +12,7 @@ namespace AppIS
 {
     public partial class ProfessionRegisterForm : Form
     {
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_";
         public bool IsFilled { get; set; }
 
         private Profession profession;
@@ -36,6 +37,31 @@ namespace AppIS
 
         private void ProfessionRegisterForm_Load(object sender, EventArgs e)
         {
+            int count = 0;
+            foreach (var c in Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox txtbx = c as TextBox;
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
+                        count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
+                    }
+                }
+            }
+
+            if (count == 0)
+            {
+                btnSubmit.Enabled = true;
+            }
+            else
+            {
+                btnSubmit.Enabled = false;
+            }
+
             if (IsFilled)
             {
                 txtBxId.Text = AddingProfession.Id.ToString();
@@ -61,21 +87,22 @@ namespace AppIS
                 if (c is TextBox)
                 {
                     TextBox txtbx = c as TextBox;
-                    if (txtbx.Text == string.Empty)
-                    {
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                         count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
                     }
                 }
             }
 
             if (count == 0)
             {
-                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
-                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }

@@ -29,7 +29,6 @@ namespace AppIS
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtBxPaid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtBxLogin = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -43,14 +42,8 @@ namespace AppIS
             this.label1 = new System.Windows.Forms.Label();
             this.txtBxEvent_id = new System.Windows.Forms.TextBox();
             this.txtBxOrder_id = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // txtBxPaid
-            // 
-            this.txtBxPaid.Location = new System.Drawing.Point(182, 160);
-            this.txtBxPaid.Name = "txtBxPaid";
-            this.txtBxPaid.Size = new System.Drawing.Size(100, 20);
-            this.txtBxPaid.TabIndex = 92;
             // 
             // label7
             // 
@@ -180,12 +173,24 @@ namespace AppIS
             this.txtBxOrder_id.TabIndex = 77;
             this.txtBxOrder_id.TextChanged += new System.EventHandler(this.txtBxOrder_id_TextChanged);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Да",
+            "Нет"});
+            this.comboBox1.Location = new System.Drawing.Point(182, 163);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
+            this.comboBox1.TabIndex = 92;
+            // 
             // BookedTicketRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 320);
-            this.Controls.Add(this.txtBxPaid);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBxLogin);
             this.Controls.Add(this.label5);
@@ -213,8 +218,6 @@ namespace AppIS
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtBxPaid;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtBxLogin;
         private System.Windows.Forms.Label label5;
@@ -228,5 +231,6 @@ namespace AppIS
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBxEvent_id;
         private System.Windows.Forms.TextBox txtBxOrder_id;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

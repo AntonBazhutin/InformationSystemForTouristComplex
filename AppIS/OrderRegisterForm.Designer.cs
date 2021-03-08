@@ -43,8 +43,8 @@ namespace AppIS
             this.txtBxOrder_id = new System.Windows.Forms.TextBox();
             this.txtBxDateOrder = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtBxCompleted = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txtBxLogin
@@ -184,14 +184,6 @@ namespace AppIS
             this.label6.TabIndex = 73;
             this.label6.Text = "Дата заказа";
             // 
-            // txtBxCompleted
-            // 
-            this.txtBxCompleted.Location = new System.Drawing.Point(173, 172);
-            this.txtBxCompleted.Name = "txtBxCompleted";
-            this.txtBxCompleted.Size = new System.Drawing.Size(100, 20);
-            this.txtBxCompleted.TabIndex = 76;
-            this.txtBxCompleted.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -202,12 +194,24 @@ namespace AppIS
             this.label7.TabIndex = 75;
             this.label7.Text = "Оплачен?";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Да",
+            "Нет"});
+            this.comboBox1.Location = new System.Drawing.Point(173, 170);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
+            this.comboBox1.TabIndex = 76;
+            // 
             // OrderRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 320);
-            this.Controls.Add(this.txtBxCompleted);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBxDateOrder);
             this.Controls.Add(this.label6);
@@ -253,7 +257,7 @@ namespace AppIS
         private System.Windows.Forms.TextBox txtBxOrder_id;
         private System.Windows.Forms.TextBox txtBxDateOrder;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtBxCompleted;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

@@ -33,10 +33,10 @@ namespace AppIS
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxDay = new System.Windows.Forms.TextBox();
-            this.txtBxWorkerId = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtBxId = new System.Windows.Forms.TextBox();
+            this.comboBxWorker_id = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelWarning
@@ -80,14 +80,6 @@ namespace AppIS
             this.txtBxDay.TabIndex = 50;
             this.txtBxDay.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
-            // txtBxWorkerId
-            // 
-            this.txtBxWorkerId.Location = new System.Drawing.Point(138, 55);
-            this.txtBxWorkerId.Name = "txtBxWorkerId";
-            this.txtBxWorkerId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxWorkerId.TabIndex = 49;
-            this.txtBxWorkerId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -116,11 +108,21 @@ namespace AppIS
             this.txtBxId.TabIndex = 57;
             this.txtBxId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
+            // comboBxWorker_id
+            // 
+            this.comboBxWorker_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBxWorker_id.FormattingEnabled = true;
+            this.comboBxWorker_id.Location = new System.Drawing.Point(138, 54);
+            this.comboBxWorker_id.Name = "comboBxWorker_id";
+            this.comboBxWorker_id.Size = new System.Drawing.Size(100, 21);
+            this.comboBxWorker_id.TabIndex = 59;
+            // 
             // WorkDayRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 229);
+            this.Controls.Add(this.comboBxWorker_id);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtBxId);
             this.Controls.Add(this.labelWarning);
@@ -128,7 +130,6 @@ namespace AppIS
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtBxDay);
-            this.Controls.Add(this.txtBxWorkerId);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(296, 268);
             this.MinimumSize = new System.Drawing.Size(296, 268);
@@ -147,9 +148,9 @@ namespace AppIS
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtBxDay;
-        private System.Windows.Forms.TextBox txtBxWorkerId;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBxId;
+        private System.Windows.Forms.ComboBox comboBxWorker_id;
     }
 }

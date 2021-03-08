@@ -31,7 +31,6 @@ namespace AppIS
         {
             this.labelWarning = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtBxWorkPlaceId = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.txtBxPhoneNumber = new System.Windows.Forms.TextBox();
@@ -40,7 +39,6 @@ namespace AppIS
             this.label7 = new System.Windows.Forms.Label();
             this.txtBxLogin = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtBxDateOfBirth = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtBxThirdname = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,7 +46,9 @@ namespace AppIS
             this.label1 = new System.Windows.Forms.Label();
             this.txtBxName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtBxProfessionId = new System.Windows.Forms.TextBox();
+            this.comboBxWorkPlace_id = new System.Windows.Forms.ComboBox();
+            this.comboBxProfession_id = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // labelWarning
@@ -71,14 +71,6 @@ namespace AppIS
             this.label11.Size = new System.Drawing.Size(138, 18);
             this.label11.TabIndex = 46;
             this.label11.Text = "Код места работы";
-            // 
-            // txtBxWorkPlaceId
-            // 
-            this.txtBxWorkPlaceId.Location = new System.Drawing.Point(148, 179);
-            this.txtBxWorkPlaceId.Name = "txtBxWorkPlaceId";
-            this.txtBxWorkPlaceId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxWorkPlaceId.TabIndex = 45;
-            this.txtBxWorkPlaceId.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // btnSubmit
             // 
@@ -122,7 +114,7 @@ namespace AppIS
             // 
             // txtBxPassword
             // 
-            this.txtBxPassword.Location = new System.Drawing.Point(371, 53);
+            this.txtBxPassword.Location = new System.Drawing.Point(371, 54);
             this.txtBxPassword.Name = "txtBxPassword";
             this.txtBxPassword.Size = new System.Drawing.Size(100, 20);
             this.txtBxPassword.TabIndex = 38;
@@ -155,14 +147,6 @@ namespace AppIS
             this.label4.Size = new System.Drawing.Size(116, 18);
             this.label4.TabIndex = 31;
             this.label4.Text = "Дата рождения";
-            // 
-            // txtBxDateOfBirth
-            // 
-            this.txtBxDateOfBirth.Location = new System.Drawing.Point(148, 105);
-            this.txtBxDateOfBirth.Name = "txtBxDateOfBirth";
-            this.txtBxDateOfBirth.Size = new System.Drawing.Size(100, 20);
-            this.txtBxDateOfBirth.TabIndex = 30;
-            this.txtBxDateOfBirth.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label3
             // 
@@ -228,24 +212,46 @@ namespace AppIS
             this.label5.TabIndex = 49;
             this.label5.Text = "Код профессии";
             // 
-            // txtBxProfessionId
+            // comboBxWorkPlace_id
             // 
-            this.txtBxProfessionId.Location = new System.Drawing.Point(148, 206);
-            this.txtBxProfessionId.Name = "txtBxProfessionId";
-            this.txtBxProfessionId.Size = new System.Drawing.Size(100, 20);
-            this.txtBxProfessionId.TabIndex = 48;
-            this.txtBxProfessionId.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
+            this.comboBxWorkPlace_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBxWorkPlace_id.FormattingEnabled = true;
+            this.comboBxWorkPlace_id.Location = new System.Drawing.Point(148, 176);
+            this.comboBxWorkPlace_id.Name = "comboBxWorkPlace_id";
+            this.comboBxWorkPlace_id.Size = new System.Drawing.Size(121, 21);
+            this.comboBxWorkPlace_id.TabIndex = 50;
+            // 
+            // comboBxProfession_id
+            // 
+            this.comboBxProfession_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBxProfession_id.FormattingEnabled = true;
+            this.comboBxProfession_id.Location = new System.Drawing.Point(148, 206);
+            this.comboBxProfession_id.Name = "comboBxProfession_id";
+            this.comboBxProfession_id.Size = new System.Drawing.Size(121, 21);
+            this.comboBxProfession_id.TabIndex = 51;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker1.Location = new System.Drawing.Point(148, 106);
+            this.dateTimePicker1.MaxDate = new System.DateTime(2003, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
+            this.dateTimePicker1.TabIndex = 52;
+            this.dateTimePicker1.Value = new System.DateTime(2003, 1, 1, 0, 0, 0, 0);
             // 
             // WorkerRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 277);
+            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.comboBxProfession_id);
+            this.Controls.Add(this.comboBxWorkPlace_id);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtBxProfessionId);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtBxWorkPlaceId);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtBxPhoneNumber);
@@ -254,7 +260,6 @@ namespace AppIS
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBxLogin);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtBxDateOfBirth);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtBxThirdname);
             this.Controls.Add(this.label2);
@@ -278,7 +283,6 @@ namespace AppIS
 
         private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtBxWorkPlaceId;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtBxPhoneNumber;
@@ -287,7 +291,6 @@ namespace AppIS
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtBxLogin;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtBxDateOfBirth;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBxThirdname;
         private System.Windows.Forms.Label label2;
@@ -295,6 +298,8 @@ namespace AppIS
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBxName;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtBxProfessionId;
+        private System.Windows.Forms.ComboBox comboBxWorkPlace_id;
+        private System.Windows.Forms.ComboBox comboBxProfession_id;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

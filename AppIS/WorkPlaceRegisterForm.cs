@@ -12,6 +12,10 @@ namespace AppIS
 {
     public partial class WorkPlaceRegisterForm : Form
     {
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_";
+
+        List<string> building_ids = new List<string>();
+        List<string> place_ids = new List<string>();
         public bool IsFilled { get; set; }
 
         private WorkPlace workplace;
@@ -20,30 +24,63 @@ namespace AppIS
             get { return workplace; }
             set { workplace = value; }
         }
-        public WorkPlaceRegisterForm(int id)
+        public WorkPlaceRegisterForm(int id, List<string> buildings)
         {
+            building_ids = buildings;
             IsFilled = false;
             AddingWorkPlace = new WorkPlace(id);
             InitializeComponent();
         }
-        public WorkPlaceRegisterForm(WorkPlace addingWorkPlace)
+        public WorkPlaceRegisterForm(WorkPlace addingWorkPlace, List<string> buildings)
         {
+            building_ids = buildings;
             IsFilled = true;
             AddingWorkPlace = addingWorkPlace;
             InitializeComponent();
         }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            AddingWorkPlace = new WorkPlace(int.Parse(txtBxId.Text), txtBxBuildingId.Text, txtBxPlaceId.Text);
+            AddingWorkPlace = new WorkPlace(int.Parse(txtBxId.Text), comboBxBuilding_id.SelectedItem.ToString(), txtBxPlace_id.Text);
         }
 
         private void WorkPlaceRegisterForm_Load(object sender, EventArgs e)
         {
+            int count = 0;
+            foreach (var c in Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox txtbx = c as TextBox;
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
+                        count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
+                    }
+                }
+            }
+
+            if (count == 0)
+            {
+                btnSubmit.Enabled = true;
+            }
+            else
+            {
+                btnSubmit.Enabled = false;
+            }
+            foreach (var item in building_ids)
+            {
+                comboBxBuilding_id.Items.Add(item);
+            }
+
+            comboBxBuilding_id.Text = building_ids[0];
+
             if (IsFilled)
             {
-                txtBxBuildingId.Text = AddingWorkPlace.Building_id;
+                comboBxBuilding_id.Text = AddingWorkPlace.Building_id;
                 txtBxId.Text = AddingWorkPlace.Id.ToString();
-                txtBxPlaceId.Text = AddingWorkPlace.Place_id;
+                txtBxPlace_id.Text = AddingWorkPlace.Place_id;
                 txtBxId.ReadOnly = true;
                 Text = "Редатирование информации";
                 btnSubmit.Text = "ОК";
@@ -66,21 +103,22 @@ namespace AppIS
                 if (c is TextBox)
                 {
                     TextBox txtbx = c as TextBox;
-                    if (txtbx.Text == string.Empty)
-                    {
+                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                         count++;
+                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    {
+                        if (!safeString.Contains(txtbx.Text[i]))
+                            count++;
                     }
                 }
             }
 
             if (count == 0)
             {
-                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
-                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }
