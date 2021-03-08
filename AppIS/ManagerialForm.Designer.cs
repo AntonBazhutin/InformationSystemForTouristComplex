@@ -63,6 +63,8 @@ namespace AppIS
             this.редактироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.удалитьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.зданияНаТерриторииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.комнатыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -125,7 +127,9 @@ namespace AppIS
             this.рабочиеМестаToolStripMenuItem,
             this.профессииToolStripMenuItem,
             this.оборудованиеToolStripMenuItem,
-            this.рабочиеДниToolStripMenuItem});
+            this.рабочиеДниToolStripMenuItem,
+            this.зданияНаТерриторииToolStripMenuItem,
+            this.комнатыToolStripMenuItem});
             this.работникиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.работникиToolStripMenuItem.Name = "работникиToolStripMenuItem";
             this.работникиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
@@ -135,35 +139,35 @@ namespace AppIS
             // списокСотрудниковToolStripMenuItem
             // 
             this.списокСотрудниковToolStripMenuItem.Name = "списокСотрудниковToolStripMenuItem";
-            this.списокСотрудниковToolStripMenuItem.Size = new System.Drawing.Size(183, 24);
+            this.списокСотрудниковToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.списокСотрудниковToolStripMenuItem.Text = "Сотрудники";
             this.списокСотрудниковToolStripMenuItem.Click += new System.EventHandler(this.списокСотрудниковToolStripMenuItem_Click);
             // 
             // рабочиеМестаToolStripMenuItem
             // 
             this.рабочиеМестаToolStripMenuItem.Name = "рабочиеМестаToolStripMenuItem";
-            this.рабочиеМестаToolStripMenuItem.Size = new System.Drawing.Size(183, 24);
+            this.рабочиеМестаToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.рабочиеМестаToolStripMenuItem.Text = "Рабочие места";
             this.рабочиеМестаToolStripMenuItem.Click += new System.EventHandler(this.рабочиеМестаToolStripMenuItem_Click);
             // 
             // профессииToolStripMenuItem
             // 
             this.профессииToolStripMenuItem.Name = "профессииToolStripMenuItem";
-            this.профессииToolStripMenuItem.Size = new System.Drawing.Size(183, 24);
+            this.профессииToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.профессииToolStripMenuItem.Text = "Профессии";
             this.профессииToolStripMenuItem.Click += new System.EventHandler(this.профессииToolStripMenuItem_Click);
             // 
             // оборудованиеToolStripMenuItem
             // 
             this.оборудованиеToolStripMenuItem.Name = "оборудованиеToolStripMenuItem";
-            this.оборудованиеToolStripMenuItem.Size = new System.Drawing.Size(183, 24);
+            this.оборудованиеToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.оборудованиеToolStripMenuItem.Text = "Оборудование";
             this.оборудованиеToolStripMenuItem.Click += new System.EventHandler(this.оборудованиеToolStripMenuItem_Click);
             // 
             // рабочиеДниToolStripMenuItem
             // 
             this.рабочиеДниToolStripMenuItem.Name = "рабочиеДниToolStripMenuItem";
-            this.рабочиеДниToolStripMenuItem.Size = new System.Drawing.Size(183, 24);
+            this.рабочиеДниToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.рабочиеДниToolStripMenuItem.Text = "Рабочие дни";
             this.рабочиеДниToolStripMenuItem.Click += new System.EventHandler(this.рабочиеДниToolStripMenuItem_Click);
             // 
@@ -347,6 +351,20 @@ namespace AppIS
             this.удалитьToolStripMenuItem1.Text = "Удалить";
             this.удалитьToolStripMenuItem1.Click += new System.EventHandler(this.удалитьToolStripMenuItem1_Click);
             // 
+            // зданияНаТерриторииToolStripMenuItem
+            // 
+            this.зданияНаТерриторииToolStripMenuItem.Name = "зданияНаТерриторииToolStripMenuItem";
+            this.зданияНаТерриторииToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.зданияНаТерриторииToolStripMenuItem.Text = "Здания на территории";
+            this.зданияНаТерриторииToolStripMenuItem.Click += new System.EventHandler(this.зданияНаТерриторииToolStripMenuItem_Click);
+            // 
+            // комнатыToolStripMenuItem
+            // 
+            this.комнатыToolStripMenuItem.Name = "комнатыToolStripMenuItem";
+            this.комнатыToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.комнатыToolStripMenuItem.Text = "Комнаты";
+            this.комнатыToolStripMenuItem.Click += new System.EventHandler(this.комнатыToolStripMenuItem_Click);
+            // 
             // ManagerialForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,5 +425,7 @@ namespace AppIS
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem бронированиеБилетовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem зданияНаТерриторииToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem комнатыToolStripMenuItem;
     }
 }

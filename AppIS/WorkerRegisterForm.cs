@@ -17,10 +17,12 @@ namespace AppIS
         List<int> Profession_ids = new List<int>();
         List<int> Workplace_ids = new List<int>();
         public bool IsFilled { get; set; }
+        public int workplace_id;
         private Worker worker;
         public Worker AddingWorker { get { return worker; } set { worker = value; } }
         public WorkerRegisterForm(int workPlace_id, List<int> profession_ids, List<int> workplace_ids)
         {
+            this.workplace_id = workPlace_id;
             Profession_ids = profession_ids;
             Workplace_ids = workplace_ids;
             AddingWorker = new Worker(workPlace_id);
@@ -71,7 +73,7 @@ namespace AppIS
             {
                 comboBxWorkPlace_id.Items.Add(item);
             }
-            comboBxWorkPlace_id.Text = Workplace_ids[0].ToString();
+            comboBxWorkPlace_id.Text = workplace_id.ToString();
             if (IsFilled)
             {
                 comboBxProfession_id.Text = AddingWorker.Profession_id.ToString();

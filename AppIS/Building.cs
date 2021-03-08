@@ -9,12 +9,17 @@ namespace AppIS
     public class Building
     {
         public string Id { get; set; }
-        public uint Rooms { get; set; }
+        public int Rooms { get; set; }
 
-        public Building(string id, uint rooms)
+        public Building(string id, int rooms)
         {
             Id = id;
             Rooms = rooms;
+        }
+        public Building()
+        {
+            Id = string.Empty;
+            Rooms = 0;
         }
     }
 }

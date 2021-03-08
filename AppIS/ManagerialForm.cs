@@ -44,6 +44,11 @@ namespace AppIS
         }
         private void списокВсехЖильцовToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            contextMenuStrip2.Visible = false;
+            contextMenuStrip1.Items.Clear();
+            contextMenuStrip1.Items.Add(добавитьToolStripMenuItem);
+            contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
             CreateTreeViewOfTourists();
         }
 
@@ -112,7 +117,7 @@ namespace AppIS
             CurrentObject = new Order();
             CreateTreeViewOfOrders();
             contextMenuStrip1.Items.Clear();
-            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem1);
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
             contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
         }
 
@@ -174,11 +179,17 @@ namespace AppIS
 
         private void списокСотрудниковToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            contextMenuStrip1.Items.Clear();
+            contextMenuStrip1.Items.Add(добавитьToolStripMenuItem);
+            contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
             CreateTreeViewOfWorkers();
         }
 
         private void профессииToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            contextMenuStrip1.Visible = false;
+
             CurrentObject = new Profession();
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -202,6 +213,7 @@ namespace AppIS
 
         private void рабочиеМестаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            contextMenuStrip1.Visible = false;
             CurrentObject = new WorkPlace();
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -227,6 +239,7 @@ namespace AppIS
 
         private void оборудованиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            contextMenuStrip1.Visible = false;
             CurrentObject = new Equipment();
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -253,6 +266,7 @@ namespace AppIS
 
         private void рабочиеДниToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            contextMenuStrip1.Visible = false;
             CurrentObject = new WorkDay();
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -331,6 +345,11 @@ namespace AppIS
                             cmd.Parameters.AddWithValue("@country", addingTourist.Country);
                             cmd.Parameters.AddWithValue("@room_id", addingTourist.Room_id);
 
+                            cmd.ExecuteNonQuery();
+
+                            cmd = new SqlCommand("Update Rooms SET isAvailable=@isAvailable where id=@id", sqlcon);
+                            cmd.Parameters.AddWithValue("@id", addingTourist.Room_id);
+                            cmd.Parameters.AddWithValue("@isAvailable", false);
                             cmd.ExecuteNonQuery();
                             CreateTreeViewOfTourists();
                         }
@@ -651,7 +670,6 @@ namespace AppIS
                         cmd.ExecuteNonQuery();
                         cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
                         cmd.Parameters.AddWithValue("@login", tourist.Login);
-
                     }
 
                     if (tag is Worker)
@@ -787,7 +805,7 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    buildings.Add(new Building(dr["id"].ToString(), uint.Parse(dr["rooms"].ToString())));
+                    buildings.Add(new Building(dr["id"].ToString(), int.Parse(dr["rooms"].ToString())));
                 }
             }
 
@@ -852,7 +870,7 @@ namespace AppIS
             {
                 while (dr.Read())
                 {
-                    buildings.Add(new Building(dr["id"].ToString(), uint.Parse(dr["rooms"].ToString())));
+                    buildings.Add(new Building(dr["id"].ToString(), int.Parse(dr["rooms"].ToString())));
                 }
             }
 
@@ -899,7 +917,21 @@ namespace AppIS
                             room.Text = $"Номер ({rooms[j].Id}) Занят";
                         }
 
+
                         room.Tag = rooms[j];
+
+                        cmd = new SqlCommand("Update Rooms SET @isAvailable=isAvailable where @id=id", sqlcon);
+                        cmd.Parameters.AddWithValue("@id", rooms[j].Id);
+
+                        if (room.Nodes.Count == 0)
+                        {
+                            cmd.Parameters.AddWithValue("@isAvailable", true);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@isAvailable", false);
+                        }
+                        cmd.ExecuteNonQuery();
                         building.Nodes.Add(room);
                     }
                 }
@@ -1106,6 +1138,25 @@ namespace AppIS
                     cmd.Parameters.AddWithValue("@workPlace_id", created.WorkPlace_id);
                     cmd.ExecuteNonQuery();
                     мероприятияToolStripMenuItem1_Click(this, e);
+                }
+            }
+            if (CurrentObject is Building)
+            {
+                BuildingRegisterForm equipRegister = new BuildingRegisterForm();
+
+                if (equipRegister.ShowDialog() == DialogResult.OK)
+                {
+                    Building created = equipRegister.AddinBuilding;
+
+                    cmd = new SqlCommand(
+                           "Insert into Buildings(id,rooms) " +
+                           "Values(@id,@rooms)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", created.Id);
+                    cmd.Parameters.AddWithValue("@rooms", created.Rooms);
+                    cmd.ExecuteNonQuery();
+                    зданияНаТерриторииToolStripMenuItem_Click(this, e);
                 }
             }
         }
@@ -1327,6 +1378,22 @@ namespace AppIS
                         мероприятияToolStripMenuItem1_Click(this, e);
                     }
                 }
+                if (obj is Building)
+                {
+                    BuildingRegisterForm equipRegister = new BuildingRegisterForm(obj as Building);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Building created = equipRegister.AddinBuilding;
+
+                        cmd = new SqlCommand("UPDATE Buildings SET rooms=@rooms where @id=id", sqlcon);
+
+                        cmd.Parameters.AddWithValue("@rooms", created.Id);
+                        cmd.Parameters.AddWithValue("@id", created.Rooms);
+                        cmd.ExecuteNonQuery();
+                        зданияНаТерриторииToolStripMenuItem_Click(this, e);
+                    }
+                }
             }
         }
 
@@ -1412,6 +1479,18 @@ namespace AppIS
                     cmd.ExecuteNonQuery();
                     мероприятияToolStripMenuItem1_Click(this, e);
                 }
+                if (obj is Building)
+                {
+                    Building ev = obj as Building;
+
+                    cmd = new SqlCommand(
+                        "delete from Buildings where id=@id"
+                        , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", ev.Id);
+                    cmd.ExecuteNonQuery();
+                    зданияНаТерриторииToolStripMenuItem_Click(this, e);
+                }
             }
         }
 
@@ -1425,7 +1504,7 @@ namespace AppIS
             CurrentObject = new BookedTicket();
             CreateTreeOfBookedTickets();
             contextMenuStrip1.Items.Clear();
-            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem1);
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
             contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
         }
         private void CreateTreeOfBookedTickets()
@@ -1495,6 +1574,18 @@ namespace AppIS
                     }
                 }
             }
+        }
+
+        private void зданияНаТерриторииToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Visible = false;
+
+        }
+
+        private void комнатыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Visible = false;
+
         }
     }
 }

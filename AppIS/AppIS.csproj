@@ -70,6 +70,12 @@
       <DependentUpon>BookedTicketRegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Building.cs" />
+    <Compile Include="BuildingRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuildingRegisterForm.Designer.cs">
+      <DependentUpon>BuildingRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentRegisterForm.cs">
       <SubType>Form</SubType>
@@ -119,6 +125,12 @@
       <DependentUpon>ProfessionRegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Room.cs" />
+    <Compile Include="RoomRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RoomRegisterForm.Designer.cs">
+      <DependentUpon>RoomRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tourist.cs" />
     <Compile Include="TouristRegisterForm.cs">
       <SubType>Form</SubType>
@@ -152,6 +164,9 @@
     <EmbeddedResource Include="BookedTicketRegisterForm.resx">
       <DependentUpon>BookedTicketRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BuildingRegisterForm.resx">
+      <DependentUpon>BuildingRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EquipmentRegisterForm.resx">
       <DependentUpon>EquipmentRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +197,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RoomRegisterForm.resx">
+      <DependentUpon>RoomRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TouristRegisterForm.resx">
       <DependentUpon>TouristRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
