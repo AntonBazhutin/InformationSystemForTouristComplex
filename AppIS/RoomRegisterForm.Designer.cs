@@ -89,6 +89,7 @@ namespace AppIS
             this.btnSubmit.TabIndex = 99;
             this.btnSubmit.Text = "ОК";
             this.btnSubmit.UseVisualStyleBackColor = true;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
             // label3
             // 
@@ -242,6 +243,7 @@ namespace AppIS
             this.Name = "RoomRegisterForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Load += new System.EventHandler(this.RoomRegisterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountofBeds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountOfRooms)).EndInit();

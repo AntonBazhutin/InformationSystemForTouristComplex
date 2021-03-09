@@ -816,6 +816,7 @@ namespace AppIS
             for (int i = 0; i < buildings.Count; i++)
             {
                 building = new TreeNode();
+                building.Text = buildings[i].Id;
 
                 for (int j = 0; j < workPlaces.Count; j++)
                 {
@@ -835,12 +836,12 @@ namespace AppIS
                                 place.Nodes.Add(worker);
                             }
                         }
-
                         building.Text = buildings[i].Id;
                         //building.Tag = buildings[i].Id;
                         building.Nodes.Add(place);
                     }
                 }
+
 
                 treeView1.Nodes.Add(building);
             }
@@ -1159,6 +1160,84 @@ namespace AppIS
                     зданияНаТерриторииToolStripMenuItem_Click(this, e);
                 }
             }
+            if (CurrentObject is Room)
+            {
+                cmd = new SqlCommand("Select * from Rooms", sqlcon);
+                cmd.ExecuteNonQuery();
+                int id = 0;
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        id = int.Parse(dr["id"].ToString());
+                    }
+                }
+                List<string> buildings = new List<string>();
+                cmd = new SqlCommand("Select * from Buildings", sqlcon);
+                cmd.ExecuteNonQuery();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        buildings.Add(dr["id"].ToString());
+                    }
+                }
+
+                RoomRegisterForm equipRegister = new RoomRegisterForm(id + 1, buildings);
+
+                if (equipRegister.ShowDialog() == DialogResult.OK)
+                {
+                    List<Room> created = equipRegister.Rooms;
+
+                    int count = 0;
+                    cmd = new SqlCommand("Select * from Rooms where @building_id=building_id", sqlcon);
+                    cmd.Parameters.AddWithValue("@building_id", created[0].Building_id);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            count++;
+                        }
+                    }
+
+                    int iCount = 0;
+                    cmd = new SqlCommand("Select * from Buildings where @id=id", sqlcon);
+                    cmd.Parameters.AddWithValue("@id", created[0].Building_id);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            iCount = int.Parse(dr["rooms"].ToString());
+                        }
+                    }
+
+                    count = iCount - count;
+
+                    if (count >= created.Count)
+                    {
+                        for (int i = 0; i < created.Count; i++)
+                        {
+                            cmd = new SqlCommand(
+                                                      "Insert into Rooms(id,price,beds,isAvailable,building_id) " +
+                                                      "Values(@id,@price,@beds,@isAvailable,@building_id)"
+                                                      , sqlcon);
+
+                            cmd.Parameters.AddWithValue("@id", created[i].Id);
+                            cmd.Parameters.AddWithValue("@price", created[i].Price);
+                            cmd.Parameters.AddWithValue("@beds", created[i].Beds);
+                            cmd.Parameters.AddWithValue("@isAvailable", created[i].IsAvailable);
+                            cmd.Parameters.AddWithValue("@building_id", created[i].Building_id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        комнатыToolStripMenuItem_Click(this, e);
+                    }
+                    else
+                        MessageBox.Show($"Превышение максимального кол-ва создаваемых комнат в здании ({created[0].Building_id})");
+                }
+            }
         }
 
         private void редактироватьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1388,10 +1467,39 @@ namespace AppIS
 
                         cmd = new SqlCommand("UPDATE Buildings SET rooms=@rooms where @id=id", sqlcon);
 
-                        cmd.Parameters.AddWithValue("@rooms", created.Id);
-                        cmd.Parameters.AddWithValue("@id", created.Rooms);
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@rooms", created.Rooms);
                         cmd.ExecuteNonQuery();
                         зданияНаТерриторииToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is Room)
+                {
+                    List<string> buildings = new List<string>();
+                    cmd = new SqlCommand("Select * from Buildings", sqlcon);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            buildings.Add(dr["id"].ToString());
+                        }
+                    }
+
+                    RoomRegisterForm equipRegister = new RoomRegisterForm(obj as Room, buildings);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        Room created = equipRegister.AddingRoom;
+
+                        cmd = new SqlCommand("UPDATE Rooms SET price=@price,beds=@beds,isAvailable=@isAvailable where @id=id", sqlcon);
+
+                        cmd.Parameters.AddWithValue("@id", created.Id);
+                        cmd.Parameters.AddWithValue("@price", created.Price);
+                        cmd.Parameters.AddWithValue("@beds", created.Beds);
+                        cmd.Parameters.AddWithValue("@isAvailable", created.IsAvailable);
+                        cmd.ExecuteNonQuery();
+                        комнатыToolStripMenuItem_Click(this, e);
                     }
                 }
             }
@@ -1491,6 +1599,18 @@ namespace AppIS
                     cmd.ExecuteNonQuery();
                     зданияНаТерриторииToolStripMenuItem_Click(this, e);
                 }
+                if (obj is Room)
+                {
+                    Room ev = obj as Room;
+
+                    cmd = new SqlCommand(
+                        "delete from Rooms where id=@id"
+                        , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@id", ev.Id);
+                    cmd.ExecuteNonQuery();
+                    комнатыToolStripMenuItem_Click(this, e);
+                }
             }
         }
 
@@ -1579,13 +1699,52 @@ namespace AppIS
         private void зданияНаТерриторииToolStripMenuItem_Click(object sender, EventArgs e)
         {
             contextMenuStrip1.Visible = false;
+            CurrentObject = new Building();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            treeView1.Visible = false;
+            dataGridView1.Visible = true;
 
+            var cmd = new SqlCommand("Select * from Buildings", sqlcon);
+            dataGridView1.Columns.Add("", "Код");
+            dataGridView1.Columns.Add("", "Кол-во комнат");
+            int i = 0;
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["rooms"].ToString() });
+                    dataGridView1.Rows[i].Tag = new Building(dr["id"].ToString(), int.Parse(dr["rooms"].ToString()));
+                    i++;
+                }
+            }
         }
 
         private void комнатыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             contextMenuStrip1.Visible = false;
+            CurrentObject = new Room();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            treeView1.Visible = false;
+            dataGridView1.Visible = true;
 
+            var cmd = new SqlCommand("Select * from Rooms", sqlcon);
+            dataGridView1.Columns.Add("", "Номер комнаты");
+            dataGridView1.Columns.Add("", "Цена");
+            dataGridView1.Columns.Add("", "Кол-во кроватей");
+            dataGridView1.Columns.Add("", "Свободна?");
+            dataGridView1.Columns.Add("", "Код здания");
+            int i = 0;
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    dataGridView1.Rows.Add(dr["id"].ToString(), dr["price"].ToString(), dr["beds"].ToString(), dr["isAvailable"].ToString(), dr["building_id"].ToString());
+                    dataGridView1.Rows[i].Tag = new Room(int.Parse(dr["id"].ToString()), decimal.Parse(dr["price"].ToString()), int.Parse(dr["beds"].ToString()), bool.Parse(dr["isAvailable"].ToString()), dr["building_id"].ToString());
+                    i++;
+                }
+            }
         }
     }
 }

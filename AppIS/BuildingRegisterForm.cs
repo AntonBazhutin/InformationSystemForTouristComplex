@@ -12,17 +12,20 @@ namespace AppIS
 {
     public partial class BuildingRegisterForm : Form
     {
-        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-";
+        public int CountOfRooms { get; set; }
         public bool IsFilled { get; set; }
         public Building AddinBuilding { get; set; }
         public BuildingRegisterForm(Building building)
         {
+            CountOfRooms = building.Rooms;
             IsFilled = true;
             AddinBuilding = building;
             InitializeComponent();
         }
         public BuildingRegisterForm()
         {
+            CountOfRooms = 1;
             IsFilled = false;
             InitializeComponent();
         }
@@ -61,11 +64,16 @@ namespace AppIS
                 txtBxId.ReadOnly = true;
                 Text = "Редатирование информации";
                 btnSubmit.Text = "ОК";
+                if (numericUpDownCountOfRooms.Value == 0)
+                    checkBox1.Checked = false;
+                else
+                    checkBox1.Checked = true;
             }
             else
             {
+                numericUpDownCountOfRooms.Enabled = false;
                 Text = "Добавление здания";
-                txtBxId.ReadOnly = true;
+                txtBxId.ReadOnly = false;
                 btnSubmit.Text = "Добавить";
             }
         }
@@ -101,6 +109,22 @@ namespace AppIS
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             AddinBuilding = new Building(txtBxId.Text, int.Parse(numericUpDownCountOfRooms.Text));
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked == false)
+            {
+                numericUpDownCountOfRooms.Enabled = false;
+                numericUpDownCountOfRooms.Minimum = 0;
+                numericUpDownCountOfRooms.Value = 0;
+            }
+            else
+            {
+                numericUpDownCountOfRooms.Enabled = true;
+                numericUpDownCountOfRooms.Minimum = 1;
+                numericUpDownCountOfRooms.Value = CountOfRooms;
+            }
         }
     }
 }

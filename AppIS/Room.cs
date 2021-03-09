@@ -30,6 +30,14 @@ namespace AppIS
             IsAvailable = false;
             Building_id = string.Empty;
         }
+        public Room(int id)
+        {
+            Id = id;
+            Price = 0;
+            Beds = 0;
+            IsAvailable = false;
+            Building_id = string.Empty;
+        }
         //public override string ToString()
         //{
         //    return $"({Id}) Кроватей : {Beds}, {Price}p";
