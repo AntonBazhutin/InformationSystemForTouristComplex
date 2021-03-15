@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace AppIS
@@ -44,6 +45,7 @@ namespace AppIS
         }
         private void списокВсехЖильцовToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip2.Visible = false;
             contextMenuStrip1.Items.Clear();
             contextMenuStrip1.Items.Add(добавитьToolStripMenuItem);
@@ -55,7 +57,12 @@ namespace AppIS
         private void ManagerialForm_Load(object sender, EventArgs e)
         {
             toolStripTextBox1.Text = PersonalInfo.Surname + " " + PersonalInfo.Name + " " + PersonalInfo.Thirdname;
-            списокСотрудниковToolStripMenuItem_Click(this, e);
+            if (Text == "Форма администратора")
+                списокСотрудниковToolStripMenuItem_Click(this, e);
+            if (Text == "Форма работника на ресепшене")
+                списокВсехЖильцовToolStripMenuItem_Click(this, e);
+            if (Text == "Форма сотрудника комплекса")
+                рабочиеМестаToolStripMenuItem_Click(this, e);
         }
 
         private void DefinePower()
@@ -78,7 +85,7 @@ namespace AppIS
 
             if (isEmpty == string.Empty)
             {
-                Text = "Форма рабочего";
+                Text = "Форма сотрудника комплекса";
                 туристыToolStripMenuItem.Enabled = false;
                 туристыToolStripMenuItem.Visible = false;
                 магазинToolStripMenuItem.Enabled = false;
@@ -90,20 +97,24 @@ namespace AppIS
                 оборудованиеToolStripMenuItem.Enabled = false;
                 профессииToolStripMenuItem.Visible = false;
                 профессииToolStripMenuItem.Enabled = false;
+                зданияНаТерриторииToolStripMenuItem.Enabled = false;
+                комнатыToolStripMenuItem.Enabled = false;
+                зданияНаТерриторииToolStripMenuItem.Visible = false;
+                комнатыToolStripMenuItem.Visible = false;
+                contextMenuStrip2.Items.Clear();
             }
             else
             {
+                limitPower = bool.Parse(isEmpty);
+
                 if (limitPower)
                 {
-                    Text = "Форма секретаря";
-                    списокСотрудниковToolStripMenuItem.Visible = false;
-                    списокСотрудниковToolStripMenuItem.Enabled = false;
-                    оборудованиеToolStripMenuItem.Visible = false;
-                    оборудованиеToolStripMenuItem.Enabled = false;
-                    профессииToolStripMenuItem.Visible = false;
-                    профессииToolStripMenuItem.Enabled = false;
+                    Text = "Форма работника на ресепшене";
+
+                    работникиToolStripMenuItem.Visible = false;
                 }
-                Text = "Форма администратора";
+                else
+                    Text = "Форма администратора";
             }
         }
 
@@ -114,6 +125,7 @@ namespace AppIS
 
         private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             CurrentObject = new Order();
             CreateTreeViewOfOrders();
             contextMenuStrip1.Items.Clear();
@@ -123,6 +135,7 @@ namespace AppIS
 
         private void продуктыToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             CurrentObject = new Product();
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -151,6 +164,7 @@ namespace AppIS
 
         private void мероприятияToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             CurrentObject = new Event();
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -179,6 +193,7 @@ namespace AppIS
 
         private void списокСотрудниковToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Items.Clear();
             contextMenuStrip1.Items.Add(добавитьToolStripMenuItem);
             contextMenuStrip1.Items.Add(редактироватьToolStripMenuItem1);
@@ -188,6 +203,7 @@ namespace AppIS
 
         private void профессииToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Visible = false;
 
             CurrentObject = new Profession();
@@ -213,6 +229,7 @@ namespace AppIS
 
         private void рабочиеМестаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Visible = false;
             CurrentObject = new WorkPlace();
             dataGridView1.Columns.Clear();
@@ -239,6 +256,7 @@ namespace AppIS
 
         private void оборудованиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Visible = false;
             CurrentObject = new Equipment();
             dataGridView1.Columns.Clear();
@@ -266,6 +284,7 @@ namespace AppIS
 
         private void рабочиеДниToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Visible = false;
             CurrentObject = new WorkDay();
             dataGridView1.Columns.Clear();
@@ -1002,6 +1021,27 @@ namespace AppIS
                     cmd.Parameters.AddWithValue("@id", created.Id);
                     cmd.Parameters.AddWithValue("@name", created.Name);
                     cmd.ExecuteNonQuery();
+
+                    string rights = profRegister.Rights;
+
+                    if (rights == "Полные" || rights == "Ограниченные")
+                    {
+                        cmd = new SqlCommand(
+                             "Insert into UsersPower(profession_id,limitPower) " +
+                             "Values(@profession_id,@limitPower)"
+                             , sqlcon);
+
+                        bool limitPower = false;
+                        if (rights == "Полные")
+                            limitPower = true;
+                        else
+                            limitPower = false;
+
+                        cmd.Parameters.AddWithValue("@profession_id", created.Id);
+                        cmd.Parameters.AddWithValue("@limitPower", limitPower);
+                        cmd.ExecuteNonQuery();
+                    }
+
                     профессииToolStripMenuItem_Click(this, e);
                 }
             }
@@ -1160,6 +1200,36 @@ namespace AppIS
                     зданияНаТерриторииToolStripMenuItem_Click(this, e);
                 }
             }
+            if (CurrentObject is UserPower)
+            {
+                cmd = new SqlCommand("Select * from Professions", sqlcon);
+                cmd.ExecuteNonQuery();
+
+                List<int> professions = new List<int>();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        professions.Add(int.Parse(dr["id"].ToString()));
+                    }
+                }
+                UserPowerRegisterForm userPowerR = new UserPowerRegisterForm(professions);
+
+                if (userPowerR.ShowDialog() == DialogResult.OK)
+                {
+                    UserPower created = userPowerR.AddingPower;
+
+                    cmd = new SqlCommand(
+                           "Insert into UsersPower(profession_id,limitPower) " +
+                           "Values(@profession_id,@limitPower)"
+                           , sqlcon);
+
+                    cmd.Parameters.AddWithValue("@profession_id", created.Profession_id);
+                    cmd.Parameters.AddWithValue("@limitPower", created.LimitPower);
+                    cmd.ExecuteNonQuery();
+                    праваПользователейToolStripMenuItem_Click(this, e);
+                }
+            }
             if (CurrentObject is Room)
             {
                 cmd = new SqlCommand("Select * from Rooms", sqlcon);
@@ -1308,6 +1378,28 @@ namespace AppIS
                         cmd.Parameters.AddWithValue("@name", created.Name);
                         cmd.ExecuteNonQuery();
                         профессииToolStripMenuItem_Click(this, e);
+                    }
+                }
+                if (obj is UserPower)
+                {
+                    UserPowerRegisterForm profRegister = new UserPowerRegisterForm(obj as UserPower);
+
+                    if (profRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        UserPower created = profRegister.AddingPower;
+
+                        cmd = new SqlCommand(
+                             "UPDATE UsersPower SET limitPower=@limitPower where profession_id=@profession_id"
+                             , sqlcon);
+
+                        if (created.LimitPower == true)
+                            cmd.Parameters.AddWithValue("@limitPower", 1);
+                        else
+                            cmd.Parameters.AddWithValue("@limitPower", 0);
+                        cmd.Parameters.AddWithValue("@profession_id", created.Profession_id);
+                        cmd.ExecuteNonQuery();
+
+                        праваПользователейToolStripMenuItem_Click(this, e);
                     }
                 }
                 if (obj is Equipment)
@@ -1538,6 +1630,17 @@ namespace AppIS
                     cmd.ExecuteNonQuery();
                     профессииToolStripMenuItem_Click(this, e);
                 }
+                if (obj is UserPower)
+                {
+                    UserPower prof = obj as UserPower;
+
+                    cmd = new SqlCommand(
+                         "delete from UsersPower where profession_id=@profession_id"
+                         , sqlcon);
+                    cmd.Parameters.AddWithValue("@profession_id", prof.Profession_id);
+                    cmd.ExecuteNonQuery();
+                    праваПользователейToolStripMenuItem_Click(this, e);
+                }
 
                 if (obj is Equipment)
                 {
@@ -1621,6 +1724,7 @@ namespace AppIS
 
         private void бронированиеБилетовToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             CurrentObject = new BookedTicket();
             CreateTreeOfBookedTickets();
             contextMenuStrip1.Items.Clear();
@@ -1698,6 +1802,7 @@ namespace AppIS
 
         private void зданияНаТерриторииToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Visible = false;
             CurrentObject = new Building();
             dataGridView1.Columns.Clear();
@@ -1722,6 +1827,7 @@ namespace AppIS
 
         private void комнатыToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            panel1.Visible = false;
             contextMenuStrip1.Visible = false;
             CurrentObject = new Room();
             dataGridView1.Columns.Clear();
@@ -1745,6 +1851,721 @@ namespace AppIS
                     i++;
                 }
             }
+        }
+
+        private void праваПользователейToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+            contextMenuStrip1.Visible = false;
+            CurrentObject = new UserPower();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            treeView1.Visible = false;
+            dataGridView1.Visible = true;
+
+            var cmd = new SqlCommand("Select * from UsersPower", sqlcon);
+            dataGridView1.Columns.Add("", "Код профессии");
+            dataGridView1.Columns.Add("", "Права");
+            int i = 0;
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    dataGridView1.Rows.Add(dr["profession_id"].ToString(), bool.Parse(dr["limitPower"].ToString()) == true ? "Ограниченные" : "Полные");
+                    dataGridView1.Rows[i].Tag = new UserPower(int.Parse(dr["profession_id"].ToString()), bool.Parse(dr["limitPower"].ToString()));
+                    i++;
+                }
+            }
+        }
+        private void FindTable(string table)
+        {
+
+            switch (table)
+            {
+                case "Работники":
+                    {
+                        Table = "Workers";
+                    }
+                    break;
+                case "Рабочие места":
+                    {
+                        Table = "WorkPlaces";
+                    }
+                    break;
+                case "Профессии":
+                    {
+                        Table = "Professions";
+                    }
+                    break;
+                case "Оборудование":
+                    {
+                        Table = "Equipment";
+                    }
+                    break;
+                case "Рабочие дни":
+                    {
+                        Table = "Workdays";
+                    }
+                    break;
+                case "Здания на территории":
+                    {
+                        Table = "Buildings";
+                    }
+                    break;
+                case "Комнаты":
+                    {
+                        Table = "Rooms";
+                    }
+                    break;
+                case "Права пользователей":
+                    {
+                        Table = "UsersPower";
+                    }
+                    break;
+                case "Жильцы":
+                    {
+                        Table = "Tourists";
+                    }
+                    break;
+                case "Заказы":
+                    {
+                        Table = "Orders";
+                    }
+                    break;
+                case "Забронированные билеты":
+                    {
+                        Table = "BookedTickets";
+                    }
+                    break;
+                case "Продукты":
+                    {
+                        Table = "Products";
+                    }
+                    break;
+                case "Мероприятия":
+                    {
+                        Table = "Events";
+                    }
+                    break;
+            }
+        }
+        private void FindAttribute(string tableName, string attribute)
+        {
+            if (attribute != "Не заполнять")
+            {
+                switch (tableName)
+                {
+                    case "Работники":
+                        {
+                            if (attribute == "Логин")
+                                Attribute = "login";
+                            if (attribute == "Пароль")
+                                Attribute = "password";
+                            if (attribute == "Код профессии")
+                                Attribute = "profession_id";
+                            if (attribute == "Имя")
+                                Attribute = "name";
+                            if (attribute == "Фамилия")
+                                Attribute = "surname";
+                            if (attribute == "Отчество")
+                                Attribute = "thirdname";
+                            if (attribute == "Дата рождения")
+                                Attribute = "dateOfBirth";
+                            if (attribute == "Код рабочего места")
+                                Attribute = "workPlace_id";
+                            if (attribute == "Телеф. номер")
+                                Attribute = "phoneNumber";
+                        }
+                        break;
+                    case "Рабочие места":
+                        {
+                            if (attribute == "Код рабочего места")
+                                Attribute = "id";
+                            if (attribute == "Код места в здании")
+                                Attribute = "place_id";
+                            if (attribute == "Код здания")
+                                Attribute = "building_id";
+                        }
+                        break;
+                    case "Профессии":
+                        {
+                            if (attribute == "Код профессии")
+                                Attribute = "id";
+                            if (attribute == "Название")
+                                Attribute = "name";
+                        }
+                        break;
+                    case "Оборудование":
+                        {
+                            if (attribute == "Код оборудования")
+                                Attribute = "id";
+                            if (attribute == "Название")
+                                Attribute = "name";
+                            if (attribute == "Количество в наличии")
+                                Attribute = "quantity";
+                            if (attribute == "Код профессии")
+                                Attribute = "profession_id";
+                        }
+                        break;
+                    case "Рабочие дни":
+                        {
+                            if (attribute == "Логин рабочего")
+                                Attribute = "worker_login";
+                            if (attribute == "Рабочие дни")
+                                Attribute = "workDays";
+                        }
+                        break;
+                    case "Здания на территории":
+                        {
+                            if (attribute == "Код здания")
+                                Attribute = "id";
+                            if (attribute == "Количество комнат")
+                                Attribute = "rooms";
+                        }
+                        break;
+                    case "Комнаты":
+                        {
+                            if (attribute == "Номер комнаты")
+                                Attribute = "id";
+                            if (attribute == "Цена")
+                                Attribute = "price";
+                            if (attribute == "Количество кроватей")
+                                Attribute = "beds";
+                            if (attribute == "Занят?")
+                                Attribute = "isAvailable";
+                            if (attribute == "Код здания")
+                                Attribute = "building_id";
+                        }
+                        break;
+                    case "Права пользователей":
+                        {
+                            if (attribute == "Код профессии")
+                                Attribute = "profession_id";
+                            if (attribute == "Ограниченные права?")
+                                Attribute = "limitPower";
+                        }
+                        break;
+                    case "Жильцы":
+                        {
+                            if (attribute == "Логин")
+                                Attribute = "login";
+                            if (attribute == "Пароль")
+                                Attribute = "password";
+                            if (attribute == "Эл. почта")
+                                Attribute = "email";
+                            if (attribute == "Имя")
+                                Attribute = "name";
+                            if (attribute == "Фамилия")
+                                Attribute = "surname";
+                            if (attribute == "Отчество")
+                                Attribute = "thirdname";
+                            if (attribute == "Дата рождения")
+                                Attribute = "dateOfBirth";
+                            if (attribute == "Дата приезда")
+                                Attribute = "dateOfComing";
+                            if (attribute == "Дата отъезда")
+                                Attribute = "dateOfLeaving";
+                            if (attribute == "Страна")
+                                Attribute = "country";
+                            if (attribute == "Номер комнаты")
+                                Attribute = "room_id";
+                        }
+                        break;
+                    case "Заказы":
+                        {
+                            if (attribute == "Код заказа")
+                                Attribute = "order_id";
+                            if (attribute == "Код продукта")
+                                Attribute = "product_id";
+                            if (attribute == "Количество")
+                                Attribute = "quantity";
+                            if (attribute == "Стоимость")
+                                Attribute = "cost";
+                            if (attribute == "Логин заказчика")
+                                Attribute = "login";
+                            if (attribute == "Дата оформления")
+                                Attribute = "dateOrder";
+                            if (attribute == "Оплачен?")
+                                Attribute = "isDone";
+                        }
+                        break;
+                    case "Забронированные билеты":
+                        {
+                            if (attribute == "Код заказа")
+                                Attribute = "item_id";
+                            if (attribute == "Код мероприятия")
+                                Attribute = "event_id";
+                            if (attribute == "Количество")
+                                Attribute = "quantity";
+                            if (attribute == "Стоимость")
+                                Attribute = "cost";
+                            if (attribute == "Логин заказчика")
+                                Attribute = "login";
+                            if (attribute == "Оплачен?")
+                                Attribute = "isPaid";
+                        }
+                        break;
+                    case "Продукты":
+                        {
+                            if (attribute == "Код продукта")
+                                Attribute = "product_id";
+                            if (attribute == "Название")
+                                Attribute = "name";
+                            if (attribute == "Цена")
+                                Attribute = "price";
+                            if (attribute == "Описание")
+                                Attribute = "description";
+                            if (attribute == "Тип")
+                                Attribute = "type";
+                            if (attribute == "Количество в наличии")
+                                Attribute = "quantity";
+                        }
+                        break;
+                    case "Мероприятия":
+                        {
+                            if (attribute == "Код мероприятия")
+                                Attribute = "id";
+                            if (attribute == "Название")
+                                Attribute = "name";
+                            if (attribute == "Цена")
+                                Attribute = "price";
+                            if (attribute == "Описание")
+                                Attribute = "description";
+                            if (attribute == "Дата проведения")
+                                Attribute = "date";
+                            if (attribute == "Код рабочего места")
+                                Attribute = "workPlace_id";
+                            if (attribute == "Количество в наличии")
+                                Attribute = "quantity";
+                        }
+                        break;
+                }
+            }
+            Attribute = string.Empty;
+        }
+        private void FindExtraAttribute(string tableName, string attribute)
+        {
+
+            switch (tableName)
+            {
+                case "Работники":
+                    {
+                        if (attribute == "Логин")
+                            ExtraAttribute = "login";
+                        if (attribute == "Пароль")
+                            ExtraAttribute = "password";
+                        if (attribute == "Код профессии")
+                            ExtraAttribute = "profession_id";
+                        if (attribute == "Имя")
+                            ExtraAttribute = "name";
+                        if (attribute == "Фамилия")
+                            ExtraAttribute = "surname";
+                        if (attribute == "Отчество")
+                            ExtraAttribute = "thirdname";
+                        if (attribute == "Дата рождения")
+                            ExtraAttribute = "dateOfBirth";
+                        if (attribute == "Код рабочего места")
+                            ExtraAttribute = "workPlace_id";
+                        if (attribute == "Телеф. номер")
+                            ExtraAttribute = "phoneNumber";
+                    }
+                    break;
+                case "Рабочие места":
+                    {
+                        if (attribute == "Код рабочего места")
+                            ExtraAttribute = "id";
+                        if (attribute == "Код места в здании")
+                            ExtraAttribute = "place_id";
+                        if (attribute == "Код здания")
+                            ExtraAttribute = "building_id";
+                    }
+                    break;
+                case "Профессии":
+                    {
+                        if (attribute == "Код профессии")
+                            ExtraAttribute = "id";
+                        if (attribute == "Название")
+                            ExtraAttribute = "name";
+                    }
+                    break;
+                case "Оборудование":
+                    {
+                        if (attribute == "Код оборудования")
+                            ExtraAttribute = "id";
+                        if (attribute == "Название")
+                            ExtraAttribute = "name";
+                        if (attribute == "Количество в наличии")
+                            ExtraAttribute = "quantity";
+                        if (attribute == "Код профессии")
+                            ExtraAttribute = "profession_id";
+                    }
+                    break;
+                case "Рабочие дни":
+                    {
+                        if (attribute == "Логин рабочего")
+                            ExtraAttribute = "worker_login";
+                        if (attribute == "Рабочие дни")
+                            ExtraAttribute = "workDays";
+                    }
+                    break;
+                case "Здания на территории":
+                    {
+                        if (attribute == "Код здания")
+                            ExtraAttribute = "id";
+                        if (attribute == "Количество комнат")
+                            ExtraAttribute = "rooms";
+                    }
+                    break;
+                case "Комнаты":
+                    {
+                        if (attribute == "Номер комнаты")
+                            ExtraAttribute = "id";
+                        if (attribute == "Цена")
+                            ExtraAttribute = "price";
+                        if (attribute == "Количество кроватей")
+                            ExtraAttribute = "beds";
+                        if (attribute == "Занят?")
+                            ExtraAttribute = "isAvailable";
+                        if (attribute == "Код здания")
+                            ExtraAttribute = "building_id";
+                    }
+                    break;
+                case "Права пользователей":
+                    {
+                        if (attribute == "Код профессии")
+                            ExtraAttribute = "profession_id";
+                        if (attribute == "Ограниченные права?")
+                            ExtraAttribute = "limitPower";
+                    }
+                    break;
+                case "Жильцы":
+                    {
+                        if (attribute == "Логин")
+                            ExtraAttribute = "login";
+                        if (attribute == "Пароль")
+                            ExtraAttribute = "password";
+                        if (attribute == "Эл. почта")
+                            ExtraAttribute = "email";
+                        if (attribute == "Имя")
+                            ExtraAttribute = "name";
+                        if (attribute == "Фамилия")
+                            ExtraAttribute = "surname";
+                        if (attribute == "Отчество")
+                            ExtraAttribute = "thirdname";
+                        if (attribute == "Дата рождения")
+                            ExtraAttribute = "dateOfBirth";
+                        if (attribute == "Дата приезда")
+                            ExtraAttribute = "dateOfComing";
+                        if (attribute == "Дата отъезда")
+                            ExtraAttribute = "dateOfLeaving";
+                        if (attribute == "Страна")
+                            ExtraAttribute = "country";
+                        if (attribute == "Номер комнаты")
+                            ExtraAttribute = "room_id";
+                    }
+                    break;
+                case "Заказы":
+                    {
+                        if (attribute == "Код заказа")
+                            ExtraAttribute = "order_id";
+                        if (attribute == "Код продукта")
+                            ExtraAttribute = "product_id";
+                        if (attribute == "Количество")
+                            ExtraAttribute = "quantity";
+                        if (attribute == "Стоимость")
+                            ExtraAttribute = "cost";
+                        if (attribute == "Логин заказчика")
+                            ExtraAttribute = "login";
+                        if (attribute == "Дата оформления")
+                            ExtraAttribute = "dateOrder";
+                        if (attribute == "Оплачен?")
+                            ExtraAttribute = "isDone";
+                    }
+                    break;
+                case "Забронированные билеты":
+                    {
+                        if (attribute == "Код заказа")
+                            ExtraAttribute = "item_id";
+                        if (attribute == "Код мероприятия")
+                            ExtraAttribute = "event_id";
+                        if (attribute == "Количество")
+                            ExtraAttribute = "quantity";
+                        if (attribute == "Стоимость")
+                            ExtraAttribute = "cost";
+                        if (attribute == "Логин заказчика")
+                            ExtraAttribute = "login";
+                        if (attribute == "Оплачен?")
+                            ExtraAttribute = "isPaid";
+                    }
+                    break;
+                case "Продукты":
+                    {
+                        if (attribute == "Код продукта")
+                            ExtraAttribute = "product_id";
+                        if (attribute == "Название")
+                            ExtraAttribute = "name";
+                        if (attribute == "Цена")
+                            ExtraAttribute = "price";
+                        if (attribute == "Описание")
+                            ExtraAttribute = "description";
+                        if (attribute == "Тип")
+                            ExtraAttribute = "type";
+                        if (attribute == "Количество в наличии")
+                            ExtraAttribute = "quantity";
+                    }
+                    break;
+                case "Мероприятия":
+                    {
+                        if (attribute == "Код мероприятия")
+                            ExtraAttribute = "id";
+                        if (attribute == "Название")
+                            ExtraAttribute = "name";
+                        if (attribute == "Цена")
+                            ExtraAttribute = "price";
+                        if (attribute == "Описание")
+                            ExtraAttribute = "description";
+                        if (attribute == "Дата проведения")
+                            ExtraAttribute = "date";
+                        if (attribute == "Код рабочего места")
+                            ExtraAttribute = "workPlace_id";
+                        if (attribute == "Количество в наличии")
+                            ExtraAttribute = "quantity";
+                    }
+                    break;
+            }
+        }
+        List<string> AdminItems = new List<string>() { "Работники", "Рабочие места", "Профессии", "Оборудование", "Рабочие дни", "Здания на территории",
+            "Комнаты", "Права пользователей", "Жильцы", "Заказы", "Забронированные билеты", "Продукты", "Мероприятия"};
+        List<string> ReceptionWorkerItems = new List<string>() { "Жильцы", "Заказы", "Забронированные билеты", "Продукты", "Мероприятия" };
+        List<string> StaffMemeberItems = new List<string>() { "Рабочие места", "Рабочие дни" };
+        private string safeString = " 0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+        private void конструкторЗапросовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            comboBoxObj.Items.Clear();
+            treeView1.Visible = false;
+            dataGridView1.Visible = false;
+            panel1.Visible = true;
+
+            if (Text == "Форма администратора")
+            {
+                foreach (var item in AdminItems)
+                {
+                    comboBoxObj.Items.Add(item);
+                }
+                comboBoxObj.Text = comboBoxObj.Items[0].ToString();
+            }
+            if (Text == "Форма работника на ресепшене")
+            {
+                foreach (var item in ReceptionWorkerItems)
+                {
+                    comboBoxObj.Items.Add(item);
+                }
+                comboBoxObj.Text = comboBoxObj.Items[0].ToString();
+            }
+            if (Text == "Форма сотрудника комплекса")
+            {
+                foreach (var item in StaffMemeberItems)
+                {
+                    comboBoxObj.Items.Add(item);
+                }
+                comboBoxObj.Text = comboBoxObj.Items[0].ToString();
+            }
+        }
+
+        private void FillAttributes()
+        {
+            comboBoxAttribute.Items.Clear();
+            string selectedItem = comboBoxObj.SelectedItem.ToString();
+
+            switch (selectedItem)
+            {
+                case "Работники":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Логин", "Пароль", "Код профессии", "Имя", "Фамилия", "Отчество", "Дата рождения", "Код рабочего места", "Телеф. номер", "Не заполнять" });
+                    break;
+                case "Рабочие места":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код рабочего места", "Код места в здании", "Код здания", "Не заполнять" });
+                    break;
+                case "Профессии":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код профессии", "Название", "Не заполнять" });
+                    break;
+                case "Оборудование":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код оборудования", "Название", "Количество в наличии", "Код профессии", "Не заполнять" });
+                    break;
+                case "Рабочие дни":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Логин рабочего", "Рабочие дни", "Не заполнять" });
+                    break;
+                case "Здания на территории":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код здания", "Количество комнат", "Не заполнять" });
+                    break;
+                case "Комнаты":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Номер комнаты", "Цена", "Количество кроватей", "Занят?", "Код здания", "Не заполнять" });
+                    break;
+                case "Права пользователей":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код профессии", "Ограниченные права?", "Не заполнять" });
+                    break;
+                case "Жильцы":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Логин", "Пароль", "Эл. почта", "Имя", "Фамилия", "Отчество", "Дата рождения", "Дата приезда", "Дата отъезда",
+                        "Страна", "Номер комнаты","Не заполнять"});
+                    break;
+                case "Заказы":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код заказа", "Код продукта", "Количество", "Стоимость", "Логин заказчика", "Дата оформления", "Оплачен?", "Не заполнять" });
+                    break;
+                case "Забронированные билеты":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код заказа", "Код мероприятия", "Количество", "Стоимость", "Логин заказчика", "Оплачен?", "Не заполнять" });
+                    break;
+                case "Продукты":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код продукта", "Название", "Цена", "Описание", "Тип", "Количество в наличии", "Не заполнять" });
+                    break;
+                case "Мероприятия":
+                    comboBoxAttribute.Items.AddRange(new string[] { "Код мероприятия", "Название", "Цена", "Описание", "Дата проведения", "Код рабочего места", "Количество в наличии", "Не заполнять" });
+                    break;
+            }
+            comboBoxAttribute.Text = comboBoxAttribute.Items[comboBoxAttribute.Items.Count - 1].ToString();
+        }
+
+        private void FillExtraAttributes()
+        {
+            cmbBoxExtraAttribute.Items.Clear();
+            string selectedItem = comboBoxObj.SelectedItem.ToString();
+
+            switch (selectedItem)
+            {
+                case "Работники":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Логин", "Пароль", "Код профессии", "Имя", "Фамилия", "Отчество", "Дата рождения", "Код рабочего места", "Телеф. номер" });
+                    break;
+                case "Рабочие места":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код рабочего места", "Код места в здании", "Код здания" });
+                    break;
+                case "Профессии":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код профессии", "Название" });
+                    break;
+                case "Оборудование":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код оборудования", "Название", "Количество в наличии", "Код профессии" });
+                    break;
+                case "Рабочие дни":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Логин рабочего", "Рабочие дни" });
+                    break;
+                case "Здания на территории":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код здания", "Количество комнат" });
+                    break;
+                case "Комнаты":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Номер комнаты", "Цена", "Количество кроватей", "Занят?", "Код здания" });
+                    break;
+                case "Права пользователей":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код профессии", "Ограниченные права?" });
+                    break;
+                case "Жильцы":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Логин", "Пароль", "Эл. почта", "Имя", "Фамилия", "Отчество", "Дата рождения", "Дата приезда", "Дата отъезда",
+                        "Страна", "Номер комнаты"});
+                    break;
+                case "Заказы":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код заказа", "Код продукта", "Количество", "Стоимость", "Логин заказчика", "Дата оформления", "Оплачен?" });
+                    break;
+                case "Забронированные билеты":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код заказа", "Код мероприятия", "Количество", "Стоимость", "Логин заказчика", "Оплачен?" });
+                    break;
+                case "Продукты":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код продукта", "Название", "Цена", "Описание", "Тип", "Количество в наличии" });
+                    break;
+                case "Мероприятия":
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код мероприятия", "Название", "Цена", "Описание", "Дата проведения", "Код рабочего места", "Количество в наличии" });
+                    break;
+            }
+
+            cmbBoxExtraAttribute.Text = cmbBoxExtraAttribute.Items[0].ToString();
+        }
+        public string Table { get; set; }
+        public string Attribute { get; set; }
+        public string ExtraAttribute { get; set; }
+        private void comboBoxObj_SelectedValueChanged(object sender, EventArgs e)
+        {
+            FindTable(comboBoxObj.SelectedItem.ToString());
+            FillAttributes();
+            if (checkBox1.Checked)
+                FillExtraAttributes();
+        }
+        private void txtBxSomteText_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (txtBxSomeText.Text == "Введите значение...")
+                txtBxSomeText.Text = string.Empty;
+        }
+        private void txtBxSomteText_TextChanged(object sender, EventArgs e)
+        {
+            int counter = 0;
+            for (int i = 0; i < txtBxSomeText.Text.Length; i++)
+            {
+                if (safeString.Contains(txtBxSomeText.Text[i]))
+                    counter++;
+            }
+            if (counter != txtBxSomeText.Text.Length)
+            {
+                txtBxSomeText.ForeColor = Color.Red;
+            }
+            else
+            {
+                txtBxSomeText.ForeColor = Color.Black;
+            }
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked == true)
+            {
+                FillExtraAttributes();
+                cmbBoxAndOr.Enabled = true;
+                cmbBoxAndOr.Items.AddRange(new string[] { "И", "ИЛИ" });
+                cmbBoxAndOr.Text = cmbBoxAndOr.Items[0].ToString();
+                cmbBoxExtraAttribute.Enabled = true;
+                FillExtraAttributes();
+                cmbBxExtraSign.Enabled = true;
+                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=" });
+                cmbBxExtraSign.Text = cmbBxExtraSign.Items[0].ToString();
+                txtbxExtraSomeText.Enabled = true;
+                txtbxExtraSomeText.Text = "Введите значение...";
+            }
+            else
+            {
+                cmbBoxAndOr.Items.Clear();
+                cmbBoxAndOr.Enabled = false;
+                cmbBoxAndOr.Enabled = false;
+                cmbBoxExtraAttribute.Enabled = false;
+                cmbBoxExtraAttribute.Items.Clear();
+                cmbBxExtraSign.Enabled = false;
+                cmbBxExtraSign.Items.Clear();
+                txtbxExtraSomeText.Text = "";
+                txtbxExtraSomeText.Enabled = false;
+            }
+        }
+        private void txtbxExtraExtraSomeText_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (txtbxExtraSomeText.Text == "Введите значение...")
+                txtbxExtraSomeText.Text = string.Empty;
+        }
+
+        private void comboBoxAttribute_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (comboBoxAttribute.SelectedItem.ToString() != "Не заполнять")
+            {
+                FindAttribute(Table, comboBoxAttribute.SelectedItem.ToString());
+                txtBxSomeText.Text = "Введите значение...";
+                txtBxSomeText.Enabled = true;
+                comboBoxSign.Enabled = true;
+                comboBoxSign.Items.Clear();
+                comboBoxSign.Items.AddRange(new string[] { "=", "!=" });
+                comboBoxSign.Text = comboBoxSign.Items[0].ToString();
+            }
+            else
+            {
+                comboBoxSign.Items.Clear();
+                comboBoxSign.Enabled = false;
+                txtBxSomeText.Text = "";
+                txtBxSomeText.Enabled = false;
+            }
+        }
+
+        private void cmbBoxExtraAttribute_SelectedValueChanged(object sender, EventArgs e)
+        {
+            FindExtraAttribute(Table, cmbBoxExtraAttribute.SelectedItem.ToString());
+            txtbxExtraSomeText.Text = "Введите значение...";
         }
     }
 }

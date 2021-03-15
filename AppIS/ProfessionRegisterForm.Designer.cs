@@ -35,6 +35,8 @@ namespace AppIS
             this.label1 = new System.Windows.Forms.Label();
             this.txtBxName = new System.Windows.Forms.TextBox();
             this.txtBxId = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelWarning
@@ -42,7 +44,7 @@ namespace AppIS
             this.labelWarning.AutoSize = true;
             this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(58, 141);
+            this.labelWarning.Location = new System.Drawing.Point(58, 153);
             this.labelWarning.Name = "labelWarning";
             this.labelWarning.Size = new System.Drawing.Size(168, 20);
             this.labelWarning.TabIndex = 56;
@@ -52,12 +54,13 @@ namespace AppIS
             // 
             this.btnSubmit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSubmit.Location = new System.Drawing.Point(88, 164);
+            this.btnSubmit.Location = new System.Drawing.Point(88, 176);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(105, 41);
             this.btnSubmit.TabIndex = 55;
             this.btnSubmit.Text = "Добавить";
             this.btnSubmit.UseVisualStyleBackColor = true;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
             // label2
             // 
@@ -95,11 +98,36 @@ namespace AppIS
             this.txtBxId.TabIndex = 49;
             this.txtBxId.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Полные",
+            "Ограниченные",
+            "Никаких"});
+            this.comboBox1.Location = new System.Drawing.Point(126, 117);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
+            this.comboBox1.TabIndex = 57;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(56, 117);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 18);
+            this.label3.TabIndex = 58;
+            this.label3.Text = "Права";
+            // 
             // ProfessionRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 229);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label2);
@@ -127,5 +155,7 @@ namespace AppIS
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBxName;
         private System.Windows.Forms.TextBox txtBxId;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label3;
     }
 }

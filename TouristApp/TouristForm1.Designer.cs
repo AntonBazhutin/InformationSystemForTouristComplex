@@ -42,12 +42,11 @@ namespace TouristApp
             this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.мероприятияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.историяПокупокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.забронированныеБилетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.забронированныеБилетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -145,6 +144,13 @@ namespace TouristApp
             this.историяПокупокToolStripMenuItem.Text = "История покупок";
             this.историяПокупокToolStripMenuItem.Click += new System.EventHandler(this.историяПокупокToolStripMenuItem_Click);
             // 
+            // забронированныеБилетыToolStripMenuItem
+            // 
+            this.забронированныеБилетыToolStripMenuItem.Name = "забронированныеБилетыToolStripMenuItem";
+            this.забронированныеБилетыToolStripMenuItem.Size = new System.Drawing.Size(257, 24);
+            this.забронированныеБилетыToolStripMenuItem.Text = "Забронированные билеты";
+            this.забронированныеБилетыToolStripMenuItem.Click += new System.EventHandler(this.забронированныеБилетыToolStripMenuItem_Click);
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -192,43 +198,22 @@ namespace TouristApp
             // добавитьToolStripMenuItem
             // 
             this.добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
-            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.добавитьToolStripMenuItem.Text = "Добавить в заказы";
             this.добавитьToolStripMenuItem.Click += new System.EventHandler(this.добавитьToolStripMenuItem_Click);
             // 
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.удалитьToolStripMenuItem.Text = "Удалить заказ";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(258, 140);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 32);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Товары";
-            this.label1.Visible = false;
-            // 
-            // забронированныеБилетыToolStripMenuItem
-            // 
-            this.забронированныеБилетыToolStripMenuItem.Name = "забронированныеБилетыToolStripMenuItem";
-            this.забронированныеБилетыToolStripMenuItem.Size = new System.Drawing.Size(257, 24);
-            this.забронированныеБилетыToolStripMenuItem.Text = "Забронированные билеты";
-            this.забронированныеБилетыToolStripMenuItem.Click += new System.EventHandler(this.забронированныеБилетыToolStripMenuItem_Click);
             // 
             // TouristForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 579);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -266,7 +251,6 @@ namespace TouristApp
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem забронированныеБилетыToolStripMenuItem;
     }
 }

@@ -12,7 +12,8 @@ namespace AppIS
 {
     public partial class ProfessionRegisterForm : Form
     {
-        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-";
+        public string Rights { get; set; }
+        private string safeString = " 0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
         public bool IsFilled { get; set; }
 
         private Profession profession;
@@ -37,6 +38,7 @@ namespace AppIS
 
         private void ProfessionRegisterForm_Load(object sender, EventArgs e)
         {
+            comboBox1.Text = "Полные";
             int count = 0;
             foreach (var c in Controls)
             {
@@ -69,6 +71,8 @@ namespace AppIS
                 txtBxId.ReadOnly = true;
                 Text = "Редатирование информации";
                 btnSubmit.Text = "ОК";
+                comboBox1.Visible = false;
+                label3.Visible = false;
             }
             else
             {
@@ -105,6 +109,12 @@ namespace AppIS
             {
                 btnSubmit.Enabled = false;
             }
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            AddingProfession = new Profession(int.Parse(txtBxId.Text), txtBxName.Text);
+            Rights = comboBox1.SelectedItem.ToString();
         }
     }
 }

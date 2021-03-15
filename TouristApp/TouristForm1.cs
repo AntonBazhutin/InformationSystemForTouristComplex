@@ -44,7 +44,6 @@ namespace TouristApp
         }
         private void товарыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            label1.Text = "Товары";
             contextMenuStrip1.Items.Clear();
             contextMenuStrip1.Items.Add(добавитьToolStripMenuItem);
             CurrentObject = new Product();
@@ -79,7 +78,6 @@ namespace TouristApp
 
         private void мероприятияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            label1.Text = "Мероприятия";
             contextMenuStrip1.Items.Clear();
             contextMenuStrip1.Items.Add(добавитьToolStripMenuItem);
             CurrentObject = new Event();
@@ -275,7 +273,6 @@ namespace TouristApp
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
             List<Order> orders = new List<Order>();
-            label1.Text = "История покупок";
             dataGridView1.Columns.Add("", "Код заказа");
             dataGridView1.Columns.Add("", "Название товара");
             dataGridView1.Columns.Add("", "Кол-во");

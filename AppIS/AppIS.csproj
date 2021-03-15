@@ -138,6 +138,13 @@
     <Compile Include="TouristRegisterForm.Designer.cs">
       <DependentUpon>TouristRegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserPower.cs" />
+    <Compile Include="UserPowerRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserPowerRegisterForm.Designer.cs">
+      <DependentUpon>UserPowerRegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorkDay.cs" />
     <Compile Include="WorkDayRegisterForm.cs">
       <SubType>Form</SubType>
@@ -202,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TouristRegisterForm.resx">
       <DependentUpon>TouristRegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserPowerRegisterForm.resx">
+      <DependentUpon>UserPowerRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkDayRegisterForm.resx">
       <DependentUpon>WorkDayRegisterForm.cs</DependentUpon>
