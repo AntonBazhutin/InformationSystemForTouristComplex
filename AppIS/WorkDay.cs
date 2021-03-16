@@ -8,26 +8,22 @@ namespace AppIS
 {
     public class WorkDay
     {
-        public int Id { get; set; }
-        public int WorkerLogin { get; set; }
-        public string WorkDay_ { get; set; }
-        public WorkDay(int workerLogin, string workDay, int id)
+        public string WorkerLogin { get; set; }
+        public string WorkDays { get; set; }
+        public WorkDay(string workerLogin, string workDay)
         {
             WorkerLogin = workerLogin;
-            WorkDay_ = workDay;
-            Id = id;
+            WorkDays = workDay;
         }
         public WorkDay()
         {
-            WorkerLogin = 0;
-            WorkDay_ = null;
-            Id = 0;
+            WorkerLogin = null;
+            WorkDays = null;
         }
-        public WorkDay(int id)
+        public WorkDay(string workerLogin)
         {
-            WorkerLogin = 0;
-            WorkDay_ = null;
-            Id = id;
+            WorkerLogin = workerLogin;
+            WorkDays = null;
         }
     }
 }

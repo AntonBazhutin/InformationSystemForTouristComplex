@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace AppIS
 {
@@ -120,7 +122,7 @@ namespace AppIS
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -293,16 +295,15 @@ namespace AppIS
             dataGridView1.Visible = true;
 
             var cmd = new SqlCommand("Select * from Workdays", sqlcon);
-            dataGridView1.Columns.Add("", "Код записи");
             dataGridView1.Columns.Add("", "Код рабочего");
-            dataGridView1.Columns.Add("", "День недели");
+            dataGridView1.Columns.Add("", "Рабочие дни");
             int i = 0;
             using (var dr = cmd.ExecuteReader())
             {
                 while (dr.Read())
                 {
-                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["worker_login"].ToString(), dr["day"].ToString() });
-                    dataGridView1.Rows[i].Tag = new WorkDay(int.Parse(dr["worker_login"].ToString()), dr["day"].ToString(), int.Parse(dr["id"].ToString()));
+                    dataGridView1.Rows.Add(new object[] { dr["worker_login"].ToString(), dr["workDays"].ToString() });
+                    dataGridView1.Rows[i].Tag = new WorkDay(dr["worker_login"].ToString(), dr["workDays"].ToString());
                     i++;
                 }
             }
@@ -1082,37 +1083,47 @@ namespace AppIS
             }
             if (CurrentObject is WorkDay)
             {
-                WorkDay wd = new WorkDay();
-                if (dataGridView1.RowCount > 0)
-                    wd = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as WorkDay;
-
-                List<string> logins = new List<string>();
-                cmd = new SqlCommand("Select * from Workers", sqlcon);
-                cmd.ExecuteNonQuery();
+                List<string> onCheck = new List<string>();
+                cmd = new SqlCommand("select worker_login from Workdays", sqlcon);
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        logins.Add(dr["login"].ToString());
+                        onCheck.Add(dr["worker_login"].ToString());
                     }
                 }
 
-                WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(wd.Id + 1, logins);
-
-                if (equipRegister.ShowDialog() == DialogResult.OK)
+                List<string> logins = new List<string>();
+                cmd = new SqlCommand("select login from Workers", sqlcon);
+                using (var dr = cmd.ExecuteReader())
                 {
-                    WorkDay created = equipRegister.AddingWorkDay;
-
-                    cmd = new SqlCommand(
-                           "Insert into WorkDays(worker_login,day) " +
-                           "Values(@worker_login,@day)"
-                           , sqlcon);
-
-                    cmd.Parameters.AddWithValue("@worker_login", created.WorkerLogin);
-                    cmd.Parameters.AddWithValue("@day", created.WorkDay_);
-                    cmd.ExecuteNonQuery();
-                    рабочиеДниToolStripMenuItem_Click(this, e);
+                    while (dr.Read())
+                    {
+                        if (!onCheck.Contains(dr["login"].ToString()))
+                            logins.Add(dr["login"].ToString());
+                    }
                 }
+                if (logins.Count > 0)
+                {
+                    WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(logins);
+
+                    if (equipRegister.ShowDialog() == DialogResult.OK)
+                    {
+                        WorkDay created = equipRegister.AddingWorkDay;
+
+                        cmd = new SqlCommand(
+                               "Insert into Workdays(worker_login,workDays) " +
+                               "Values(@worker_login,@workDays)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@worker_login", created.WorkerLogin);
+                        cmd.Parameters.AddWithValue("@workDays", created.WorkDays);
+                        cmd.ExecuteNonQuery();
+                        рабочиеДниToolStripMenuItem_Click(this, e);
+                    }
+                }
+                else
+                    MessageBox.Show("У всех работников уже есть расписание рабочих дней");
             }
             if (CurrentObject is Product)
             {
@@ -1202,6 +1213,18 @@ namespace AppIS
             }
             if (CurrentObject is UserPower)
             {
+                cmd = new SqlCommand("Select profession_id from UsersPower", sqlcon);
+                cmd.ExecuteNonQuery();
+
+                List<int> onCheck = new List<int>();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        onCheck.Add(int.Parse(dr["profession_id"].ToString()));
+                    }
+                }
+
                 cmd = new SqlCommand("Select * from Professions", sqlcon);
                 cmd.ExecuteNonQuery();
 
@@ -1210,25 +1233,32 @@ namespace AppIS
                 {
                     while (dr.Read())
                     {
-                        professions.Add(int.Parse(dr["id"].ToString()));
+                        if (!onCheck.Contains(int.Parse(dr["id"].ToString())))
+                            professions.Add(int.Parse(dr["id"].ToString()));
                     }
                 }
-                UserPowerRegisterForm userPowerR = new UserPowerRegisterForm(professions);
 
-                if (userPowerR.ShowDialog() == DialogResult.OK)
+                if (professions.Count > 0)
                 {
-                    UserPower created = userPowerR.AddingPower;
+                    UserPowerRegisterForm userPowerR = new UserPowerRegisterForm(professions);
 
-                    cmd = new SqlCommand(
-                           "Insert into UsersPower(profession_id,limitPower) " +
-                           "Values(@profession_id,@limitPower)"
-                           , sqlcon);
+                    if (userPowerR.ShowDialog() == DialogResult.OK)
+                    {
+                        UserPower created = userPowerR.AddingPower;
 
-                    cmd.Parameters.AddWithValue("@profession_id", created.Profession_id);
-                    cmd.Parameters.AddWithValue("@limitPower", created.LimitPower);
-                    cmd.ExecuteNonQuery();
-                    праваПользователейToolStripMenuItem_Click(this, e);
+                        cmd = new SqlCommand(
+                               "Insert into UsersPower(profession_id,limitPower) " +
+                               "Values(@profession_id,@limitPower)"
+                               , sqlcon);
+
+                        cmd.Parameters.AddWithValue("@profession_id", created.Profession_id);
+                        cmd.Parameters.AddWithValue("@limitPower", created.LimitPower);
+                        cmd.ExecuteNonQuery();
+                        праваПользователейToolStripMenuItem_Click(this, e);
+                    }
                 }
+                else
+                    MessageBox.Show("У всех существующих профессий уже есть права");
             }
             if (CurrentObject is Room)
             {
@@ -1441,37 +1471,18 @@ namespace AppIS
                 }
                 if (obj is WorkDay)
                 {
-                    List<string> logins = new List<string>();
-                    cmd = new SqlCommand("Select * from Workers", sqlcon);
-                    cmd.ExecuteNonQuery();
-                    using (var dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            logins.Add(dr["login"].ToString());
-                        }
-                    }
-
-                    WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(obj as WorkDay, logins);
+                    WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(obj as WorkDay);
 
                     if (equipRegister.ShowDialog() == DialogResult.OK)
                     {
                         WorkDay created = equipRegister.AddingWorkDay;
 
                         cmd = new SqlCommand(
-                            "delete from WorkDays where id=@id"
+                            "UPDATE Workdays  SET workDays=@workDays where worker_login=@worker_login"
                             , sqlcon);
 
-                        cmd.Parameters.AddWithValue("@id", created.Id);
-                        cmd.ExecuteNonQuery();
-
-                        cmd = new SqlCommand(
-                               "Insert into WorkDays(worker_login,day) " +
-                               "Values(@worker_login,@day)"
-                               , sqlcon);
-
                         cmd.Parameters.AddWithValue("@worker_login", created.WorkerLogin);
-                        cmd.Parameters.AddWithValue("@day", created.WorkDay_);
+                        cmd.Parameters.AddWithValue("@workDays", created.WorkDays);
                         cmd.ExecuteNonQuery();
                         рабочиеДниToolStripMenuItem_Click(this, e);
                     }
@@ -1659,10 +1670,10 @@ namespace AppIS
                     WorkDay wd = obj as WorkDay;
 
                     cmd = new SqlCommand(
-                        "delete from WorkDays where id=@id"
+                        "delete from Workdays where worker_login=@worker_login"
                         , sqlcon);
 
-                    cmd.Parameters.AddWithValue("@id", wd.Id);
+                    cmd.Parameters.AddWithValue("@worker_login", wd.WorkerLogin);
                     cmd.ExecuteNonQuery();
                     рабочиеДниToolStripMenuItem_Click(this, e);
                 }
@@ -2141,7 +2152,8 @@ namespace AppIS
                         break;
                 }
             }
-            Attribute = string.Empty;
+            else
+                Attribute = null;
         }
         private void FindExtraAttribute(string tableName, string attribute)
         {
@@ -2545,16 +2557,20 @@ namespace AppIS
         {
             if (comboBoxAttribute.SelectedItem.ToString() != "Не заполнять")
             {
-                FindAttribute(Table, comboBoxAttribute.SelectedItem.ToString());
+                FindAttribute(comboBoxObj.SelectedItem.ToString(), comboBoxAttribute.SelectedItem.ToString());
+
                 txtBxSomeText.Text = "Введите значение...";
                 txtBxSomeText.Enabled = true;
                 comboBoxSign.Enabled = true;
                 comboBoxSign.Items.Clear();
                 comboBoxSign.Items.AddRange(new string[] { "=", "!=" });
                 comboBoxSign.Text = comboBoxSign.Items[0].ToString();
+                checkBox1.Enabled = true;
             }
             else
             {
+                checkBox1.Enabled = false;
+                checkBox1.Checked = false;
                 comboBoxSign.Items.Clear();
                 comboBoxSign.Enabled = false;
                 txtBxSomeText.Text = "";
@@ -2564,8 +2580,477 @@ namespace AppIS
 
         private void cmbBoxExtraAttribute_SelectedValueChanged(object sender, EventArgs e)
         {
-            FindExtraAttribute(Table, cmbBoxExtraAttribute.SelectedItem.ToString());
-            txtbxExtraSomeText.Text = "Введите значение...";
+            FindExtraAttribute(comboBoxObj.SelectedItem.ToString(), cmbBoxExtraAttribute.SelectedItem.ToString());
+        }
+        private void ConvertToAttributeDataType(string tableCMB, string attribute, string inputText, ref dynamic outPut)
+        {
+            switch (tableCMB)
+            {
+                case "Работники":
+                    {
+                        if (attribute == "Дата рождения" || attribute == "Логин" || attribute == "Пароль" || attribute == "Имя" || attribute == "Фамилия" || attribute == "Отчество" || attribute == "Телеф. номер")
+                            outPut = inputText;
+
+                        if (attribute == "Код профессии" || attribute == "Код рабочего места")
+                            outPut = int.Parse(outPut);
+                    }
+                    break;
+                case "Рабочие места":
+                    {
+                        if (attribute == "Код места в здании" || attribute == "Код здания")
+                            outPut = inputText;
+                        if (attribute == "Код рабочего места")
+                            outPut = int.Parse(inputText);
+                    }
+                    break;
+                case "Профессии":
+                    {
+                        if (attribute == "Код профессии")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Название")
+                        {
+                            outPut = inputText;
+                        }
+                    }
+                    break;
+                case "Оборудование":
+                    {
+                        if (attribute == "Код оборудования" || attribute == "Количество в наличии" || attribute == "Код профессии")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Название")
+                        {
+                            outPut = inputText;
+                        }
+                    }
+                    break;
+                case "Рабочие дни":
+                    {
+                        if (attribute == "Логин рабочего" || attribute == "Рабочие дни")
+                        {
+                            outPut = inputText;
+                        }
+                    }
+                    break;
+                case "Здания на территории":
+                    {
+                        if (attribute == "Код здания")
+                        {
+                            outPut = inputText;
+                        }
+                        if (attribute == "Количество комнат")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                    }
+                    break;
+                case "Комнаты":
+                    {
+                        if (attribute == "Номер комнаты" || attribute == "Количество кроватей")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Цена")
+                        {
+                            outPut = decimal.Parse(inputText);
+                        }
+                        if (attribute == "Занят?")
+                        {
+                            outPut = bool.Parse(inputText);
+                        }
+                        if (attribute == "Код здания")
+                        {
+                            outPut = inputText;
+                        }
+                    }
+                    break;
+                case "Права пользователей":
+                    {
+                        if (attribute == "Код профессии")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Ограниченные права?")
+                        {
+                            outPut = bool.Parse(inputText);
+                        }
+                    }
+                    break;
+                case "Жильцы":
+                    {
+
+                        if (attribute == "Дата рождения" || attribute == "Логин" || attribute == "Пароль" || attribute == "Имя"
+                    || attribute == "Фамилия" || attribute == "Отчество" || attribute == "Эл. почта" || attribute == "Дата приезда"
+                    || attribute == "Дата отъезда" || attribute == "Страна")
+                        {
+                            outPut = inputText;
+                        }
+                        if (attribute == "Номер комнаты")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                    }
+                    break;
+                case "Заказы":
+                    {
+                        if (attribute == "Код заказа" || attribute == "Код продукта" || attribute == "Количество")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Стоимость")
+                        {
+                            outPut = decimal.Parse(inputText);
+                        }
+                        if (attribute == "Логин заказчика" || attribute == "Дата оформления")
+                        {
+                            outPut = inputText;
+                        }
+                        if (attribute == "Оплачен ?")
+                        {
+                            outPut = bool.Parse(inputText);
+                        }
+                    }
+                    break;
+                case "Забронированные билеты":
+                    {
+                        if (attribute == "Код заказа" || attribute == "Код мероприятия" || attribute == "Количество")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Стоимость")
+                        {
+                            outPut = decimal.Parse(inputText);
+                        }
+                        if (attribute == "Логин заказчика")
+                        {
+                            outPut = inputText;
+                        }
+                        if (attribute == "Оплачен?")
+                        {
+                            outPut = bool.Parse(inputText);
+                        }
+                    }
+                    break;
+                case "Продукты":
+                    {
+                        if (attribute == "Код продукта" || attribute == "Количество в наличии")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Название" || attribute == "Описание" || attribute == "Тип")
+                        {
+                            outPut = inputText;
+                        }
+                        if (attribute == "Цена")
+                        {
+                            outPut = decimal.Parse(inputText);
+                        }
+                    }
+                    break;
+                case "Мероприятия":
+                    {
+                        if (attribute == "Код мероприятия" || attribute == "Количество в наличии" || attribute == "Код рабочего места")
+                        {
+                            outPut = int.Parse(inputText);
+                        }
+                        if (attribute == "Название" || attribute == "Описание" || attribute == "Дата проведения")
+                        {
+                            outPut = inputText;
+                        }
+                        if (attribute == "Цена")
+                        {
+                            outPut = decimal.Parse(inputText);
+                        }
+                    }
+                    break;
+            }
+
+
+        }
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            dynamic input1 = 0;
+            dynamic input2 = 0;
+
+            dgwSearchResults.Rows.Clear();
+            dgwSearchResults.Columns.Clear();
+            string request = string.Empty;
+
+            if (comboBoxAttribute.SelectedItem.ToString() != "Не заполнять" && checkBox1.Checked == false)
+            {
+                string text = txtBxSomeText.Text.Trim(' ');
+                if (text == string.Empty)
+                    MessageBox.Show("Заполните данные");
+                else
+                {
+                    request = $"Select * from {Table} where {Attribute}{comboBoxSign.SelectedItem.ToString()}@{Attribute}";
+                }
+            }
+            if (comboBoxAttribute.SelectedItem.ToString() == "Не заполнять" && checkBox1.Checked == false)
+            {
+                request = $"Select * from {Table}";
+            }
+            if (comboBoxAttribute.SelectedItem.ToString() != "Не заполнять" && checkBox1.Checked == true)
+            {
+                string orAnd = string.Empty;
+                if (cmbBoxAndOr.SelectedItem.ToString() == "И")
+                    orAnd = "AND";
+                else
+                    orAnd = "OR";
+
+                string text2 = txtbxExtraSomeText.Text.Trim(' ');
+                string text = txtBxSomeText.Text.Trim(' ');
+                if (text == string.Empty || text2 == string.Empty)
+                    MessageBox.Show("Заполните данные");
+                else
+                {
+                    request = $"Select * from {Table} where {Attribute}{comboBoxSign.SelectedItem.ToString()}@{Attribute} {orAnd} " +
+                        $"{ExtraAttribute} {cmbBxExtraSign.SelectedItem.ToString()}@{ExtraAttribute}1";
+                }
+            }
+
+            try
+            {
+                ConvertToAttributeDataType(comboBoxObj.SelectedItem.ToString(), comboBoxAttribute.SelectedItem.ToString(), txtBxSomeText.Text, ref input1);
+                if (txtbxExtraSomeText.Enabled)
+                    ConvertToAttributeDataType(comboBoxObj.SelectedItem.ToString(), cmbBoxExtraAttribute.SelectedItem.ToString(), txtbxExtraSomeText.Text, ref input2);
+
+                switch (Table)
+                {
+                    case "Workers":
+                        {
+                            dgwSearchResults.Columns.Add("", "Логин");
+                            dgwSearchResults.Columns.Add("", "Пароль");
+                            dgwSearchResults.Columns.Add("", "Код профессии");
+                            dgwSearchResults.Columns.Add("", "Имя");
+                            dgwSearchResults.Columns.Add("", "Фамилия");
+                            dgwSearchResults.Columns.Add("", "Отчество");
+                            dgwSearchResults.Columns.Add("", "Дата рождения");
+                            dgwSearchResults.Columns.Add("", "Код рабочего места");
+                            dgwSearchResults.Columns.Add("", "Телеф. номер");
+                        }
+                        break;
+                    case "Workdays":
+                        {
+                            dgwSearchResults.Columns.Add("", "Логин рабочего");
+                            dgwSearchResults.Columns.Add("", "Рабочие дни");
+                        }
+                        break;
+                    case "Professions":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код профессии");
+                            dgwSearchResults.Columns.Add("", "Название");
+                        }
+                        break;
+                    case "Equipment":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код оборудования");
+                            dgwSearchResults.Columns.Add("", "Название");
+                            dgwSearchResults.Columns.Add("", "Кол-во в наличии");
+                            dgwSearchResults.Columns.Add("", "Код профессии");
+                        }
+                        break;
+                    case "UsersPower":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код профессии");
+                            dgwSearchResults.Columns.Add("", "Ограниченные права?");
+                        }
+                        break;
+                    case "WorkPlaces":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код рабочего места");
+                            dgwSearchResults.Columns.Add("", "Код места в здании");
+                            dgwSearchResults.Columns.Add("", "Код здания");
+                        }
+                        break;
+                    case "Buildings":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код здания");
+                            dgwSearchResults.Columns.Add("", "Кол-во комнат");
+                        }
+                        break;
+                    case "Rooms":
+                        {
+                            dgwSearchResults.Columns.Add("", "Номер комнаты");
+                            dgwSearchResults.Columns.Add("", "Цена");
+                            dgwSearchResults.Columns.Add("", "Кол-во в кроватей");
+                            dgwSearchResults.Columns.Add("", "Свободен?");
+                            dgwSearchResults.Columns.Add("", "Код здания");
+                        }
+                        break;
+                    case "Events":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код мероприятия");
+                            dgwSearchResults.Columns.Add("", "Название");
+                            dgwSearchResults.Columns.Add("", "Цена");
+                            dgwSearchResults.Columns.Add("", "Описание");
+                            dgwSearchResults.Columns.Add("", "Дата проведения");
+                            dgwSearchResults.Columns.Add("", "Код рабочего места");
+                            dgwSearchResults.Columns.Add("", "Кол-во билетов в наличии");
+                        }
+                        break;
+                    case "Tourists":
+                        {
+                            dgwSearchResults.Columns.Add("", "Логин");
+                            dgwSearchResults.Columns.Add("", "Пароль");
+                            dgwSearchResults.Columns.Add("", "Эл. почта");
+                            dgwSearchResults.Columns.Add("", "Имя");
+                            dgwSearchResults.Columns.Add("", "Фамилия");
+                            dgwSearchResults.Columns.Add("", "Отчество");
+                            dgwSearchResults.Columns.Add("", "Дата рождения");
+                            dgwSearchResults.Columns.Add("", "Дата приезда");
+                            dgwSearchResults.Columns.Add("", "Дата отъезда");
+                            dgwSearchResults.Columns.Add("", "Страна");
+                            dgwSearchResults.Columns.Add("", "Номер комнаты");
+                        }
+                        break;
+                    case "BookedTickets":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код заказа");
+                            dgwSearchResults.Columns.Add("", "Код мероприятия");
+                            dgwSearchResults.Columns.Add("", "Кол-во");
+                            dgwSearchResults.Columns.Add("", "Стоимость");
+                            dgwSearchResults.Columns.Add("", "Логин заказчика");
+                            dgwSearchResults.Columns.Add("", "Оплачен?");
+                        }
+                        break;
+                    case "Orders":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код заказа");
+                            dgwSearchResults.Columns.Add("", "Код товара");
+                            dgwSearchResults.Columns.Add("", "Кол-во");
+                            dgwSearchResults.Columns.Add("", "Стоимость");
+                            dgwSearchResults.Columns.Add("", "Логин заказчика");
+                            dgwSearchResults.Columns.Add("", "Дата оформления заказа");
+                            dgwSearchResults.Columns.Add("", "Оплачен?");
+                        }
+                        break;
+                    case "Products":
+                        {
+                            dgwSearchResults.Columns.Add("", "Код товара");
+                            dgwSearchResults.Columns.Add("", "Название");
+                            dgwSearchResults.Columns.Add("", "Цена");
+                            dgwSearchResults.Columns.Add("", "Описание");
+                            dgwSearchResults.Columns.Add("", "Вид");
+                            dgwSearchResults.Columns.Add("", "Кол-во в наличии");
+                        }
+                        break;
+                }
+                var cmd = new SqlCommand(request, sqlcon);
+                cmd.Parameters.AddWithValue($"@{Attribute}", input1);
+                cmd.Parameters.AddWithValue($"@{ExtraAttribute}1", input2);
+                using (var dr = cmd.ExecuteReader())
+                {
+                    int counter = 0;
+                    while (dr.Read())
+                    {
+                        counter++;
+                        switch (Table)
+                        {
+                            case "Workers":
+                                dgwSearchResults.Rows.Add(new string[] { dr["login"].ToString(), dr["password"].ToString(),
+                                        dr["profession_id"].ToString(), dr["name"].ToString(), dr["surname"].ToString(), dr["thirdname"].ToString(),
+                                        dr["dateOfBirth"].ToString(),dr["workPlace_id"].ToString(),dr["phoneNumber"].ToString() });
+                                break;
+                            case "Workdays":
+                                dgwSearchResults.Rows.Add(new string[] { dr["worker_login"].ToString(), dr["workDays"].ToString() });
+                                break;
+                            case "Professions":
+                                dgwSearchResults.Rows.Add(new string[] { dr["id"].ToString(), dr["name"].ToString() });
+                                break;
+                            case "Equipment":
+                                dgwSearchResults.Rows.Add(new string[] { dr["id"].ToString(), dr["name"].ToString(), dr["quantity"].ToString(), dr["profession_id"].ToString() });
+                                break;
+                            case "UsersPower":
+                                dgwSearchResults.Rows.Add(new string[] { dr["profession_id"].ToString(), dr["limitPower"].ToString() });
+                                break;
+                            case "WorkPlaces":
+                                dgwSearchResults.Rows.Add(new string[] { dr["id"].ToString(), dr["place_id"].ToString(), dr["building_id"].ToString() });
+                                break;
+                            case "Buildings":
+                                dgwSearchResults.Rows.Add(new string[] { dr["id"].ToString(), dr["rooms"].ToString() });
+                                break;
+                            case "Rooms":
+                                dgwSearchResults.Rows.Add(new string[] { dr["id"].ToString(), dr["price"].ToString(), dr["beds"].ToString(),
+                                        dr["isAvailable"].ToString(), dr["building_id"].ToString() });
+                                break;
+                            case "Events":
+                                dgwSearchResults.Rows.Add(new string[] { dr["id"].ToString(), dr["name"].ToString(), dr["price"].ToString(),
+                                        dr["description"].ToString(), dr["date"].ToString(), dr["workPlace_id"].ToString(), dr["quantity"].ToString() });
+                                break;
+                            case "Tourists":
+                                dgwSearchResults.Rows.Add(new string[] { dr["login"].ToString(), dr["password"].ToString(), dr["email"].ToString(),
+                                        dr["name"].ToString(), dr["surname"].ToString(), dr["thirdname"].ToString(), dr["dateOfBirth"].ToString(),
+                                        dr["dateOfComing"].ToString(), dr["dateOfLeaving"].ToString(), dr["country"].ToString() , dr["room_id"].ToString()  });
+                                break;
+                            case "BookedTickets":
+
+                                dgwSearchResults.Rows.Add(new string[] { dr["item_id"].ToString(), dr["event_id"].ToString(), dr["quantity"].ToString(),
+                                        dr["cost"].ToString(), dr["login"].ToString(), dr["isPaid"].ToString() });
+                                break;
+                            case "Orders":
+                                dgwSearchResults.Rows.Add(new string[] { dr["order_id"].ToString(), dr["product_id"].ToString(), dr["quantity"].ToString(),
+                                        dr["cost"].ToString(), dr["login"].ToString(), dr["dateOrder"].ToString(), dr["isDone"].ToString() });
+                                break;
+                            case "Products":
+                                dgwSearchResults.Rows.Add(new string[] { dr["product_id"].ToString(), dr["name"].ToString(), dr["price"].ToString(),
+                                        dr["description"].ToString(), dr["type"].ToString(), dr["quantity"].ToString()});
+                                break;
+                        }
+                    }
+                    if (counter == 0)
+                    {
+                        dgwSearchResults.Rows.Clear();
+                        dgwSearchResults.Columns.Clear();
+                        MessageBox.Show("Такие записи отсутствуют в базе данных");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                dgwSearchResults.Rows.Clear();
+                dgwSearchResults.Columns.Clear();
+                MessageBox.Show("Ошибка в формировании запроса");
+            }
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            if (dgwSearchResults.Rows.Count > 0)
+            {
+                var app = new Application();
+                app.Visible = true;
+
+                var wb = app.Workbooks.Add();
+                var ws = (Worksheet)wb.Worksheets[1];
+
+                for (int i = 1; i < dgwSearchResults.Columns.Count + 1; i++)
+                {
+                    ws.Cells[1, i].Value = dgwSearchResults.Columns[i - 1].HeaderText;
+                    ws.Cells[1, i].EntireColumn.ColumnWidth = dgwSearchResults.Columns[i - 1].Width / 5;
+                    ws.Cells[1, i].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                }
+
+                for (int i = 0; i < dgwSearchResults.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dgwSearchResults.Columns.Count; j++)
+                    {
+                        ws.Cells[i + 2, j + 1].Value = dgwSearchResults.Rows[i].Cells[j].Value.ToString();
+                        ws.Cells[i + 2, j + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                    }
+                }
+            }
+            else
+                MessageBox.Show("Чтобы создать отчет, таблица не должна быть пустой");
         }
     }
 }
