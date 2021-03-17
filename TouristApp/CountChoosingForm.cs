@@ -16,19 +16,46 @@ namespace TouristApp
         public int Count { get; set; }
         public int MaxQuantity { get; set; }
         public int CurrentQuantity { get; set; }
+        public bool re { get; set; }
         public CountChoosingForm(int maxQuantity, int currentQuantity)
         {
+            re = false;
+            Text = "Выбор кол-ва";
             MaxQuantity = maxQuantity;
             CurrentQuantity = currentQuantity;
             InitializeComponent();
         }
-
+        public CountChoosingForm(int maxQuantity)
+        {
+            re = true;
+            Text = "Редактирование кол-ва";
+            MaxQuantity = maxQuantity;
+            InitializeComponent();
+        }
         private void CountChoosingForm_Load(object sender, EventArgs e)
         {
-            if (MaxQuantity - CurrentQuantity >= 0 && MaxQuantity >= CurrentQuantity && MaxQuantity - CurrentQuantity >= int.Parse(numericUpDown1.Value.ToString()))
-                btnOk.Enabled = true;
+            if (re == false)
+            {
+                if (MaxQuantity - CurrentQuantity >= 0 && MaxQuantity >= CurrentQuantity && MaxQuantity - CurrentQuantity >= int.Parse(numericUpDown1.Value.ToString()))
+                {
+                    btnOk.Enabled = true;
+                }
+                else
+                {
+                    btnOk.Enabled = false;
+                }
+            }
             else
-                btnOk.Enabled = false;
+            {
+                if (MaxQuantity >= int.Parse(numericUpDown1.Value.ToString()))
+                {
+                    btnOk.Enabled = true;
+                }
+                else
+                {
+                    btnOk.Enabled = false;
+                }
+            }
 
             numericUpDown1.Maximum = MaxQuantity;
         }
@@ -40,10 +67,28 @@ namespace TouristApp
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            if (MaxQuantity - CurrentQuantity >= 0 && MaxQuantity >= CurrentQuantity && MaxQuantity - CurrentQuantity >= int.Parse(numericUpDown1.Value.ToString()))
-                btnOk.Enabled = true;
+            if (re == false)
+            {
+                if (MaxQuantity - CurrentQuantity >= 0 && MaxQuantity >= CurrentQuantity && MaxQuantity - CurrentQuantity >= int.Parse(numericUpDown1.Value.ToString()))
+                {
+                    btnOk.Enabled = true;
+                }
+                else
+                {
+                    btnOk.Enabled = false;
+                }
+            }
             else
-                btnOk.Enabled = false;
+            {
+                if (MaxQuantity >= int.Parse(numericUpDown1.Value.ToString()))
+                {
+                    btnOk.Enabled = true;
+                }
+                else
+                {
+                    btnOk.Enabled = false;
+                }
+            }
         }
     }
 }

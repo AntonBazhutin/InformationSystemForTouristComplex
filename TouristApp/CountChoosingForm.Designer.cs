@@ -37,7 +37,7 @@ namespace TouristApp
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Location = new System.Drawing.Point(21, 12);
+            this.numericUpDown1.Location = new System.Drawing.Point(49, 30);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(139, 26);
             this.numericUpDown1.TabIndex = 1;
@@ -52,7 +52,7 @@ namespace TouristApp
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnOk.Location = new System.Drawing.Point(23, 53);
+            this.btnOk.Location = new System.Drawing.Point(49, 79);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(137, 47);
             this.btnOk.TabIndex = 1;
@@ -64,13 +64,13 @@ namespace TouristApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(178, 112);
+            this.ClientSize = new System.Drawing.Size(246, 157);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.numericUpDown1);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(194, 151);
+            this.MaximumSize = new System.Drawing.Size(262, 196);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(194, 151);
+            this.MinimumSize = new System.Drawing.Size(262, 196);
             this.Name = "CountChoosingForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -151,8 +151,15 @@ namespace TouristApp
                     if (orders == null)
                         ccf = new CountChoosingForm(product.Quantity, 0);
                     else
-                        ccf = new CountChoosingForm(product.Quantity, orders.Quantity);
-
+                    {
+                        if (product.Quantity > orders.Quantity)
+                            ccf = new CountChoosingForm(product.Quantity, orders.Quantity);
+                        else
+                        {
+                            MessageBox.Show("В ваших заказах уже есть такой предмет в максимальном доступном количестве");
+                            return;
+                        }
+                    }
                     if (ccf.ShowDialog() == DialogResult.OK)
                     {
                         quantity = ccf.Count;
@@ -229,8 +236,15 @@ namespace TouristApp
                     if (bookedTickets == null)
                         ccf = new CountChoosingForm(ev.Quantity, 0);
                     else
-                        ccf = new CountChoosingForm(ev.Quantity, bookedTickets.Quantity);
-
+                    {
+                        if (ev.Quantity > bookedTickets.Quantity)
+                            ccf = new CountChoosingForm(ev.Quantity, bookedTickets.Quantity);
+                        else
+                        {
+                            MessageBox.Show("В ваших забронированных билетах уже есть такой предмет в максимальном доступном количестве");
+                            return;
+                        }
+                    }
                     if (ccf.ShowDialog() == DialogResult.OK)
                     {
                         quantity = ccf.Count;
@@ -271,50 +285,6 @@ namespace TouristApp
             }
         }
 
-        private void историяПокупокToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Visible = true;
-            panel1.Visible = false; CurrentObject = new Order();
-            contextMenuStrip1.Items.Clear();
-            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
-            List<Order> orders = new List<Order>();
-            dataGridView1.Columns.Add("", "Код заказа");
-            dataGridView1.Columns.Add("", "Название товара");
-            dataGridView1.Columns.Add("", "Кол-во");
-            dataGridView1.Columns.Add("", "Цена");
-            dataGridView1.Columns.Add("", "Дата заказа");
-            dataGridView1.Columns.Add("", "Оплачен?");
-            var cmd = new SqlCommand("select * from Orders where login=@login", sqlcon);
-            cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
-            cmd.ExecuteNonQuery();
-            using (var dr = cmd.ExecuteReader())
-            {
-                while (dr.Read())
-                {
-                    orders.Add(new Order(int.Parse(dr["order_id"].ToString()), int.Parse(dr["product_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["dateOrder"].ToString(), dr["login"].ToString(), bool.Parse(dr["isDone"].ToString())));
-                }
-            }
-
-            int i = 0;
-            foreach (var item in orders)
-            {
-                cmd = new SqlCommand("select * from Products where product_id=@product_id", sqlcon);
-                cmd.Parameters.AddWithValue("@product_id", item.Product_id);
-                cmd.ExecuteNonQuery();
-                using (var dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        dataGridView1.Rows.Add(new object[] { item.Product_id, dr["name"].ToString(), item.Quantity, item.Cost, item.DateOrder, item.IsDone });
-                        dataGridView1.Rows[i].Tag = item;
-                        i++;
-                    }
-                }
-            }
-        }
-
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.RowCount > 0 && CurrentObject is Order)
@@ -340,62 +310,6 @@ namespace TouristApp
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-        private void забронированныеБилетыToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Visible = true;
-            panel1.Visible = false; CurrentObject = new BookedTicket();
-            contextMenuStrip1.Items.Clear();
-            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
-            List<BookedTicket> bookedTickets = new List<BookedTicket>();
-            List<WorkPlace> workPlaces = new List<WorkPlace>();
-            dataGridView1.Columns.Add("", "Код мероприятия");
-            dataGridView1.Columns.Add("", "Название");
-            dataGridView1.Columns.Add("", "Кол-во билетов");
-            dataGridView1.Columns.Add("", "Цена");
-            dataGridView1.Columns.Add("", "Дата проведения");
-            dataGridView1.Columns.Add("", "Место проведения");
-            dataGridView1.Columns.Add("", "Оплачено?");
-            var cmd = new SqlCommand("select * from BookedTickets where login=@login", sqlcon);
-            cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
-            cmd.ExecuteNonQuery();
-            using (var dr = cmd.ExecuteReader())
-            {
-                while (dr.Read())
-                {
-                    bookedTickets.Add(new BookedTicket(int.Parse(dr["item_id"].ToString()), int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString(), bool.Parse(dr["isPaid"].ToString())));
-                }
-            }
-
-            cmd = new SqlCommand("select * from WorkPlaces", sqlcon);
-            cmd.ExecuteNonQuery();
-            using (var dr = cmd.ExecuteReader())
-            {
-                while (dr.Read())
-                {
-                    workPlaces.Add(new WorkPlace(int.Parse(dr["id"].ToString()), dr["building_id"].ToString(), dr["place_id"].ToString()));
-                }
-            }
-
-            int i = 0;
-            foreach (var item in bookedTickets)
-            {
-                cmd = new SqlCommand("select * from Events where id=@id", sqlcon);
-                cmd.Parameters.AddWithValue("@id", item.Event_id);
-                cmd.ExecuteNonQuery();
-                using (var dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        dataGridView1.Rows.Add(new object[] { item.Event_id, dr["name"].ToString(), item.Quantity, item.Cost, dr["date"].ToString(),
-                            (from c in workPlaces where c.Id == int.Parse(dr["workPlace_id"].ToString()) select c.Building_id).ToList()[0], item.IsPaid });
-                        dataGridView1.Rows[i].Tag = item;
-                        i++;
-                    }
-                }
-            }
         }
         private void FindTable(string table)
         {
@@ -1485,6 +1399,176 @@ namespace TouristApp
                 MessageBox.Show("Ошибка в формировании запроса");
             }
 
+        }
+
+        private void редактироватьЗаказToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurrentObject is Order)
+            {
+                var obj = dataGridView1.CurrentRow.Tag as Order;
+                int maxQuantity = 0;
+                if (obj.IsDone == false)
+                {
+                    var cmd = new SqlCommand("Select quantity from Products where product_id=@product_id", sqlcon);
+                    cmd.Parameters.AddWithValue("@product_id", obj.Product_id);
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            maxQuantity = int.Parse(dr["quantity"].ToString());
+                        }
+                    }
+
+                    CountChoosingForm ccf = new CountChoosingForm(maxQuantity);
+                    ccf.ShowDialog();
+                    if (ccf.DialogResult == DialogResult.OK)
+                    {
+                        obj.Quantity = ccf.Count;
+                        cmd = new SqlCommand("UPDATE Orders SET quantity=@quantity where order_id=@order_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@quantity", obj.Quantity);
+                        cmd.Parameters.AddWithValue("@order_id", obj.Order_id);
+                        cmd.ExecuteNonQuery();
+                        историяПокупокToolStripMenuItem1_Click(this, e);
+                    }
+                }
+                else
+                    MessageBox.Show("Информацию о выкупленных заказах нельзя редактировать");
+            }
+            if (CurrentObject is BookedTicket)
+            {
+                var obj = dataGridView1.CurrentRow.Tag as BookedTicket;
+                int maxQuantity = 0;
+                if (obj.IsPaid == false)
+                {
+                    var cmd = new SqlCommand("Select quantity from Events where id=@id", sqlcon);
+                    cmd.Parameters.AddWithValue("@id", obj.Event_id);
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            maxQuantity = int.Parse(dr["quantity"].ToString());
+                        }
+                    }
+
+                    CountChoosingForm ccf = new CountChoosingForm(maxQuantity);
+                    ccf.ShowDialog();
+                    if (ccf.DialogResult == DialogResult.OK)
+                    {
+                        obj.Quantity = ccf.Count;
+                        cmd = new SqlCommand("UPDATE BookedTickets SET quantity=@quantity where item_id=@item_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@quantity", obj.Quantity);
+                        cmd.Parameters.AddWithValue("@item_id", obj.Item_id);
+                        cmd.ExecuteNonQuery();
+                        забронированныеБилетыToolStripMenuItem1_Click(this, e);
+                    }
+                }
+                else
+                    MessageBox.Show("Информацию о выкупленных заказах нельзя редактировать");
+            }
+
+        }
+
+        private void историяПокупокToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Visible = true;
+            panel1.Visible = false; CurrentObject = new Order();
+            contextMenuStrip1.Items.Clear();
+            contextMenuStrip1.Items.Add(редактироватьЗаказToolStripMenuItem);
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            List<Order> orders = new List<Order>();
+            dataGridView1.Columns.Add("", "Код заказа");
+            dataGridView1.Columns.Add("", "Название товара");
+            dataGridView1.Columns.Add("", "Кол-во");
+            dataGridView1.Columns.Add("", "Цена");
+            dataGridView1.Columns.Add("", "Дата заказа");
+            dataGridView1.Columns.Add("", "Оплачен?");
+            var cmd = new SqlCommand("select * from Orders where login=@login", sqlcon);
+            cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
+            cmd.ExecuteNonQuery();
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    orders.Add(new Order(int.Parse(dr["order_id"].ToString()), int.Parse(dr["product_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["dateOrder"].ToString(), dr["login"].ToString(), bool.Parse(dr["isDone"].ToString())));
+                }
+            }
+
+            int i = 0;
+            foreach (var item in orders)
+            {
+                cmd = new SqlCommand("select * from Products where product_id=@product_id", sqlcon);
+                cmd.Parameters.AddWithValue("@product_id", item.Product_id);
+                cmd.ExecuteNonQuery();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        dataGridView1.Rows.Add(new object[] { item.Product_id, dr["name"].ToString(), item.Quantity, item.Cost, item.DateOrder, item.IsDone });
+                        dataGridView1.Rows[i].Tag = item;
+                        i++;
+                    }
+                }
+            }
+        }
+
+        private void забронированныеБилетыToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Visible = true;
+            panel1.Visible = false; CurrentObject = new BookedTicket();
+            contextMenuStrip1.Items.Clear();
+            contextMenuStrip1.Items.Add(редактироватьЗаказToolStripMenuItem);
+            contextMenuStrip1.Items.Add(удалитьToolStripMenuItem);
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            List<BookedTicket> bookedTickets = new List<BookedTicket>();
+            List<WorkPlace> workPlaces = new List<WorkPlace>();
+            dataGridView1.Columns.Add("", "Код мероприятия");
+            dataGridView1.Columns.Add("", "Название");
+            dataGridView1.Columns.Add("", "Кол-во билетов");
+            dataGridView1.Columns.Add("", "Цена");
+            dataGridView1.Columns.Add("", "Дата проведения");
+            dataGridView1.Columns.Add("", "Место проведения");
+            dataGridView1.Columns.Add("", "Оплачено?");
+            var cmd = new SqlCommand("select * from BookedTickets where login=@login", sqlcon);
+            cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
+            cmd.ExecuteNonQuery();
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    bookedTickets.Add(new BookedTicket(int.Parse(dr["item_id"].ToString()), int.Parse(dr["event_id"].ToString()), int.Parse(dr["quantity"].ToString()), decimal.Parse(dr["cost"].ToString()), dr["login"].ToString(), bool.Parse(dr["isPaid"].ToString())));
+                }
+            }
+
+            cmd = new SqlCommand("select * from WorkPlaces", sqlcon);
+            cmd.ExecuteNonQuery();
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    workPlaces.Add(new WorkPlace(int.Parse(dr["id"].ToString()), dr["building_id"].ToString(), dr["place_id"].ToString()));
+                }
+            }
+
+            int i = 0;
+            foreach (var item in bookedTickets)
+            {
+                cmd = new SqlCommand("select * from Events where id=@id", sqlcon);
+                cmd.Parameters.AddWithValue("@id", item.Event_id);
+                cmd.ExecuteNonQuery();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        dataGridView1.Rows.Add(new object[] { item.Event_id, dr["name"].ToString(), item.Quantity, item.Cost, dr["date"].ToString(),
+                            (from c in workPlaces where c.Id == int.Parse(dr["workPlace_id"].ToString()) select c.Building_id).ToList()[0], item.IsPaid });
+                        dataGridView1.Rows[i].Tag = item;
+                        i++;
+                    }
+                }
+            }
         }
     }
 }
