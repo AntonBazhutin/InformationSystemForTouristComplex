@@ -31,7 +31,6 @@ namespace AppIS
         {
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxRights = new System.Windows.Forms.ComboBox();
-            this.labelWarning = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxId = new System.Windows.Forms.ComboBox();
@@ -42,7 +41,7 @@ namespace AppIS
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(69, 93);
+            this.label3.Location = new System.Drawing.Point(63, 52);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 18);
             this.label3.TabIndex = 66;
@@ -55,27 +54,16 @@ namespace AppIS
             this.comboBoxRights.Items.AddRange(new object[] {
             "Полные",
             "Ограниченные"});
-            this.comboBoxRights.Location = new System.Drawing.Point(139, 93);
+            this.comboBoxRights.Location = new System.Drawing.Point(133, 52);
             this.comboBoxRights.Name = "comboBoxRights";
             this.comboBoxRights.Size = new System.Drawing.Size(100, 21);
             this.comboBoxRights.TabIndex = 65;
-            // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(72, 161);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 64;
-            this.labelWarning.Text = "Заполните все поля!";
             // 
             // btnSubmit
             // 
             this.btnSubmit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSubmit.Location = new System.Drawing.Point(102, 184);
+            this.btnSubmit.Location = new System.Drawing.Point(81, 104);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(105, 41);
             this.btnSubmit.TabIndex = 63;
@@ -87,24 +75,24 @@ namespace AppIS
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(80, 45);
+            this.label1.Location = new System.Drawing.Point(18, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 18);
+            this.label1.Size = new System.Drawing.Size(109, 18);
             this.label1.TabIndex = 61;
-            this.label1.Text = "Код ";
+            this.label1.Text = "Код вида прав";
             // 
             // comboBoxId
             // 
             this.comboBoxId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxId.FormattingEnabled = true;
-            this.comboBoxId.Location = new System.Drawing.Point(140, 45);
+            this.comboBoxId.Location = new System.Drawing.Point(133, 15);
             this.comboBoxId.Name = "comboBoxId";
             this.comboBoxId.Size = new System.Drawing.Size(100, 21);
             this.comboBoxId.TabIndex = 67;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(140, 45);
+            this.textBox1.Location = new System.Drawing.Point(133, 15);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(100, 20);
@@ -114,17 +102,16 @@ namespace AppIS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(310, 262);
+            this.ClientSize = new System.Drawing.Size(254, 168);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.comboBoxId);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxRights);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(326, 301);
-            this.MinimumSize = new System.Drawing.Size(326, 301);
+            this.MaximumSize = new System.Drawing.Size(270, 207);
+            this.MinimumSize = new System.Drawing.Size(270, 207);
             this.Name = "UserPowerRegisterForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -138,7 +125,6 @@ namespace AppIS
 
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBoxRights;
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxId;

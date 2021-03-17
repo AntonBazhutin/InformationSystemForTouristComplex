@@ -12,19 +12,23 @@ namespace AppIS
 {
     public partial class TouristRegisterForm : Form
     {
-        private string safeString = " 0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+
+        List<int> rooms = new List<int>();
         private bool IsFilled { get; set; }
         private Tourist tourist;
         public Tourist AddingTourist { get { return tourist; } set { tourist = value; } }
-        public TouristRegisterForm(int room_id)
+        public TouristRegisterForm(int room_id, List<int> rooms)
         {
+            this.rooms = rooms;
             AddingTourist = new Tourist(room_id);
             IsFilled = false;
             InitializeComponent();
         }
 
-        public TouristRegisterForm(Tourist t)
+        public TouristRegisterForm(Tourist t, List<int> rooms)
         {
+            this.rooms = rooms;
             AddingTourist = t;
             IsFilled = true;
             InitializeComponent();
@@ -33,36 +37,44 @@ namespace AppIS
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             AddingTourist = new Tourist(txtBxLogin.Text, txtBxPassword.Text, txtBxName.Text, txtBxSurname.Text, txtBxThirdname.Text, dateTimeDateOfBirth.Text,
-                   txtBxEmail.Text, dateTimeComing.Text, dateTimeLeaving.Text, txtBxCountry.Text, int.Parse(textBxRoom_id.Text));
+                   txtBxEmail.Text, dateTimeComing.Text, dateTimeLeaving.Text, txtBxCountry.Text, int.Parse(comboBox1.SelectedItem.ToString()));
         }
 
         private void TouristRegisterForm_Load(object sender, EventArgs e)
         {
-            int count = 0;
-            foreach (var c in Controls)
+            if (!IsFilled)
             {
-                if (c is TextBox)
+                int count = 0;
+                foreach (var c in Controls)
                 {
-                    TextBox txtbx = c as TextBox;
-                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
-                        count++;
-                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    if (c is TextBox)
                     {
-                        if (!safeString.Contains(txtbx.Text[i]))
+                        TextBox txtbx = c as TextBox;
+                        if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                             count++;
+                        for (int i = 0; i < txtbx.Text.Length; i++)
+                        {
+                            if (!safeString.Contains(txtbx.Text[i]))
+                                count++;
+                        }
                     }
                 }
-            }
 
-            if (count == 0)
-            {
-                btnSubmit.Enabled = true;
+                if (count == 0)
+                {
+                    labelWarning.Visible = false;
+                    btnSubmit.Enabled = true;
+                }
+                else
+                {
+                    labelWarning.Visible = true;
+                    btnSubmit.Enabled = false;
+                }
             }
-            else
+            foreach (var item in rooms)
             {
-                btnSubmit.Enabled = false;
+                comboBox1.Items.Add(item);
             }
-            textBxRoom_id.ReadOnly = true;
             if (IsFilled)
             {
                 txtBxCountry.Text = AddingTourist.Country;
@@ -73,7 +85,8 @@ namespace AppIS
                 txtBxLogin.Text = AddingTourist.Login;
                 txtBxName.Text = AddingTourist.Name;
                 txtBxPassword.Text = AddingTourist.Password;
-                textBxRoom_id.Text = AddingTourist.Room_id.ToString();
+                comboBox1.Text = AddingTourist.Room_id.ToString();
+                comboBox1.SelectedItem = AddingTourist.Room_id;
                 txtBxSurname.Text = AddingTourist.Surname;
                 txtBxThirdname.Text = AddingTourist.Thirdname;
                 txtBxPassword.ReadOnly = true;
@@ -83,7 +96,7 @@ namespace AppIS
             }
             else
             {
-                textBxRoom_id.Text = AddingTourist.Room_id.ToString();
+                comboBox1.SelectedItem = comboBox1.Items[0].ToString();
                 Text = "Заселение туриста";
                 btnSubmit.Text = "Заселить";
             }
@@ -115,10 +128,12 @@ namespace AppIS
 
             if (count == 0)
             {
+                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
+                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }

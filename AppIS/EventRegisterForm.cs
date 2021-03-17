@@ -12,7 +12,7 @@ namespace AppIS
 {
     public partial class EventRegisterForm : Form
     {
-        private string safeString = " 0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
         List<int> workPlace_ids = new List<int>();
         public bool IsFilled { get; set; }
         private Event event_;
@@ -41,31 +41,35 @@ namespace AppIS
 
         private void EventRegisterForm_Load(object sender, EventArgs e)
         {
-            int count = 0;
-            foreach (var c in Controls)
+            if (!IsFilled)
             {
-                if (c is TextBox)
+                int count = 0;
+                foreach (var c in Controls)
                 {
-                    TextBox txtbx = c as TextBox;
-                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
-                        count++;
-                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    if (c is TextBox)
                     {
-                        if (!safeString.Contains(txtbx.Text[i]))
+                        TextBox txtbx = c as TextBox;
+                        if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                             count++;
+                        for (int i = 0; i < txtbx.Text.Length; i++)
+                        {
+                            if (!safeString.Contains(txtbx.Text[i]))
+                                count++;
+                        }
                     }
                 }
-            }
 
-            if (count == 0)
-            {
-                btnSubmit.Enabled = true;
+                if (count == 0)
+                {
+                    labelWarning.Visible = false;
+                    btnSubmit.Enabled = true;
+                }
+                else
+                {
+                    labelWarning.Visible = true;
+                    btnSubmit.Enabled = false;
+                }
             }
-            else
-            {
-                btnSubmit.Enabled = false;
-            }
-
             foreach (var item in workPlace_ids)
             {
                 comboBoxWorkPlace_id.Items.Add(item);
@@ -113,10 +117,12 @@ namespace AppIS
 
             if (count == 0)
             {
+                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
+                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }

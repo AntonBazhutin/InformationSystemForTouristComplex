@@ -91,7 +91,7 @@ namespace TouristApp
             dataGridView1.Rows.Clear();
 
             var cmd = new SqlCommand("Select * from Events", sqlcon);
-            dataGridView1.Columns.Add("", "Код");
+            dataGridView1.Columns.Add("", "Код мероприятия");
             dataGridView1.Columns.Add("", "Название");
             dataGridView1.Columns.Add("", "Цена");
             dataGridView1.Columns.Add("", "Кол-во билетов");
@@ -1069,7 +1069,7 @@ namespace TouristApp
                         {
                             if (inputText.ToLower() == "true")
                                 outPut = true;
-                            if(inputText.ToLower() == "false")
+                            if (inputText.ToLower() == "false")
                                 outPut = false;
                         }
                         if (attribute == "Код здания")

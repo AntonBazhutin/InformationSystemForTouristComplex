@@ -38,13 +38,13 @@ namespace AppIS
             this.txtBxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtBxEventId = new System.Windows.Forms.TextBox();
-            this.labelWarning = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.numericUpDownCountOfTickets = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownPrice = new System.Windows.Forms.NumericUpDown();
             this.comboBoxWorkPlace_id = new System.Windows.Forms.ComboBox();
+            this.labelWarning = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountOfTickets)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrice)).BeginInit();
             this.SuspendLayout();
@@ -119,11 +119,11 @@ namespace AppIS
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(117, 9);
+            this.label1.Location = new System.Drawing.Point(24, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 18);
+            this.label1.Size = new System.Drawing.Size(131, 18);
             this.label1.TabIndex = 71;
-            this.label1.Text = "Код";
+            this.label1.Text = "Код мероприятия";
             // 
             // txtBxEventId
             // 
@@ -132,17 +132,6 @@ namespace AppIS
             this.txtBxEventId.Size = new System.Drawing.Size(100, 20);
             this.txtBxEventId.TabIndex = 70;
             this.txtBxEventId.TextChanged += new System.EventHandler(this.txtBxEventId_TextChanged);
-            // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(61, 199);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 83;
-            this.labelWarning.Text = "Заполните все поля!";
             // 
             // btnSubmit
             // 
@@ -222,17 +211,27 @@ namespace AppIS
             this.comboBoxWorkPlace_id.Size = new System.Drawing.Size(100, 21);
             this.comboBoxWorkPlace_id.TabIndex = 89;
             // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(70, 206);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(158, 13);
+            this.labelWarning.TabIndex = 90;
+            this.labelWarning.Text = "Проверьте вводимые данные";
+            // 
             // EventRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 286);
+            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.comboBoxWorkPlace_id);
             this.Controls.Add(this.numericUpDownPrice);
             this.Controls.Add(this.numericUpDownCountOfTickets);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label11);
@@ -268,12 +267,12 @@ namespace AppIS
         private System.Windows.Forms.TextBox txtBxName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBxEventId;
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.NumericUpDown numericUpDownCountOfTickets;
         private System.Windows.Forms.NumericUpDown numericUpDownPrice;
         private System.Windows.Forms.ComboBox comboBoxWorkPlace_id;
+        private System.Windows.Forms.Label labelWarning;
     }
 }

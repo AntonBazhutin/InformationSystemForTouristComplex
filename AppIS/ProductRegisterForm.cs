@@ -12,7 +12,7 @@ namespace AppIS
 {
     public partial class ProductRegisterForm : Form
     {
-        private string safeString = " 0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
 
         public bool IsFilled { get; set; }
         private Product product;
@@ -31,29 +31,34 @@ namespace AppIS
         }
         private void ProductRegisterForm_Load(object sender, EventArgs e)
         {
-            int count = 0;
-            foreach (var c in Controls)
+            if (!IsFilled)
             {
-                if (c is TextBox)
+                int count = 0;
+                foreach (var c in Controls)
                 {
-                    TextBox txtbx = c as TextBox;
-                    if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
-                        count++;
-                    for (int i = 0; i < txtbx.Text.Length; i++)
+                    if (c is TextBox)
                     {
-                        if (!safeString.Contains(txtbx.Text[i]))
+                        TextBox txtbx = c as TextBox;
+                        if (txtbx.Text.Length < 1 || txtbx.Text == string.Empty)
                             count++;
+                        for (int i = 0; i < txtbx.Text.Length; i++)
+                        {
+                            if (!safeString.Contains(txtbx.Text[i]))
+                                count++;
+                        }
                     }
                 }
-            }
 
-            if (count == 0)
-            {
-                btnSubmit.Enabled = true;
-            }
-            else
-            {
-                btnSubmit.Enabled = false;
+                if (count == 0)
+                {
+                    labelWarning.Visible = false;
+                    btnSubmit.Enabled = true;
+                }
+                else
+                {
+                    labelWarning.Visible = true;
+                    btnSubmit.Enabled = false;
+                }
             }
             if (IsFilled)
             {
@@ -103,10 +108,12 @@ namespace AppIS
 
             if (count == 0)
             {
+                labelWarning.Visible = false;
                 btnSubmit.Enabled = true;
             }
             else
             {
+                labelWarning.Visible = true;
                 btnSubmit.Enabled = false;
             }
         }

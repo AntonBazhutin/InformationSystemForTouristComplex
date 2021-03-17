@@ -29,7 +29,6 @@ namespace AppIS
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelWarning = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -49,18 +48,8 @@ namespace AppIS
             this.comboBxWorkPlace_id = new System.Windows.Forms.ComboBox();
             this.comboBxProfession_id = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.labelWarning = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(314, 171);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 47;
-            this.labelWarning.Text = "Заполните все поля!";
             // 
             // label11
             // 
@@ -241,16 +230,26 @@ namespace AppIS
             this.dateTimePicker1.TabIndex = 52;
             this.dateTimePicker1.Value = new System.DateTime(2003, 1, 1, 0, 0, 0, 0);
             // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(313, 176);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(158, 13);
+            this.labelWarning.TabIndex = 53;
+            this.labelWarning.Text = "Проверьте вводимые данные";
+            // 
             // WorkerRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 277);
+            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.comboBxProfession_id);
             this.Controls.Add(this.comboBxWorkPlace_id);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label9);
@@ -280,8 +279,6 @@ namespace AppIS
         }
 
         #endregion
-
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label9;
@@ -301,5 +298,6 @@ namespace AppIS
         private System.Windows.Forms.ComboBox comboBxWorkPlace_id;
         private System.Windows.Forms.ComboBox comboBxProfession_id;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label labelWarning;
     }
 }

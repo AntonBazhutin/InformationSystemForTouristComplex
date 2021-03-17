@@ -34,7 +34,6 @@ namespace AppIS
             this.label5 = new System.Windows.Forms.Label();
             this.txtBxCost = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.labelWarning = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.txtBxQuantity = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,7 +48,7 @@ namespace AppIS
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(83, 162);
+            this.label7.Location = new System.Drawing.Point(71, 150);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(87, 18);
             this.label7.TabIndex = 91;
@@ -57,7 +56,7 @@ namespace AppIS
             // 
             // txtBxLogin
             // 
-            this.txtBxLogin.Location = new System.Drawing.Point(182, 134);
+            this.txtBxLogin.Location = new System.Drawing.Point(170, 122);
             this.txtBxLogin.Name = "txtBxLogin";
             this.txtBxLogin.ReadOnly = true;
             this.txtBxLogin.Size = new System.Drawing.Size(100, 20);
@@ -68,7 +67,7 @@ namespace AppIS
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(43, 133);
+            this.label5.Location = new System.Drawing.Point(31, 121);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 18);
             this.label5.TabIndex = 87;
@@ -76,7 +75,7 @@ namespace AppIS
             // 
             // txtBxCost
             // 
-            this.txtBxCost.Location = new System.Drawing.Point(182, 105);
+            this.txtBxCost.Location = new System.Drawing.Point(170, 93);
             this.txtBxCost.Name = "txtBxCost";
             this.txtBxCost.ReadOnly = true;
             this.txtBxCost.Size = new System.Drawing.Size(100, 20);
@@ -87,28 +86,17 @@ namespace AppIS
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(83, 104);
+            this.label4.Location = new System.Drawing.Point(71, 92);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(86, 18);
             this.label4.TabIndex = 85;
             this.label4.Text = "Стоимость";
             // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(90, 231);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 84;
-            this.labelWarning.Text = "Заполните все поля!";
-            // 
             // btnSubmit
             // 
             this.btnSubmit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSubmit.Location = new System.Drawing.Point(127, 254);
+            this.btnSubmit.Location = new System.Drawing.Point(91, 212);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(105, 41);
             this.btnSubmit.TabIndex = 83;
@@ -118,7 +106,7 @@ namespace AppIS
             // 
             // txtBxQuantity
             // 
-            this.txtBxQuantity.Location = new System.Drawing.Point(182, 79);
+            this.txtBxQuantity.Location = new System.Drawing.Point(170, 67);
             this.txtBxQuantity.Name = "txtBxQuantity";
             this.txtBxQuantity.ReadOnly = true;
             this.txtBxQuantity.Size = new System.Drawing.Size(100, 20);
@@ -129,7 +117,7 @@ namespace AppIS
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(109, 78);
+            this.label3.Location = new System.Drawing.Point(97, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 18);
             this.label3.TabIndex = 81;
@@ -139,7 +127,7 @@ namespace AppIS
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(30, 53);
+            this.label2.Location = new System.Drawing.Point(18, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(139, 18);
             this.label2.TabIndex = 80;
@@ -149,7 +137,7 @@ namespace AppIS
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(83, 29);
+            this.label1.Location = new System.Drawing.Point(71, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 18);
             this.label1.TabIndex = 79;
@@ -157,7 +145,7 @@ namespace AppIS
             // 
             // txtBxEvent_id
             // 
-            this.txtBxEvent_id.Location = new System.Drawing.Point(182, 53);
+            this.txtBxEvent_id.Location = new System.Drawing.Point(170, 41);
             this.txtBxEvent_id.Name = "txtBxEvent_id";
             this.txtBxEvent_id.ReadOnly = true;
             this.txtBxEvent_id.Size = new System.Drawing.Size(100, 20);
@@ -166,7 +154,7 @@ namespace AppIS
             // 
             // txtBxOrder_id
             // 
-            this.txtBxOrder_id.Location = new System.Drawing.Point(182, 27);
+            this.txtBxOrder_id.Location = new System.Drawing.Point(170, 15);
             this.txtBxOrder_id.Name = "txtBxOrder_id";
             this.txtBxOrder_id.ReadOnly = true;
             this.txtBxOrder_id.Size = new System.Drawing.Size(100, 20);
@@ -180,7 +168,7 @@ namespace AppIS
             this.comboBox1.Items.AddRange(new object[] {
             "Да",
             "Нет"});
-            this.comboBox1.Location = new System.Drawing.Point(182, 163);
+            this.comboBox1.Location = new System.Drawing.Point(170, 151);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(100, 21);
             this.comboBox1.TabIndex = 92;
@@ -189,14 +177,13 @@ namespace AppIS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 320);
+            this.ClientSize = new System.Drawing.Size(296, 265);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBxLogin);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtBxCost);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.txtBxQuantity);
             this.Controls.Add(this.label3);
@@ -205,8 +192,8 @@ namespace AppIS
             this.Controls.Add(this.txtBxEvent_id);
             this.Controls.Add(this.txtBxOrder_id);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(361, 359);
-            this.MinimumSize = new System.Drawing.Size(361, 359);
+            this.MaximumSize = new System.Drawing.Size(312, 304);
+            this.MinimumSize = new System.Drawing.Size(312, 304);
             this.Name = "BookedTicketRegisterForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -223,7 +210,6 @@ namespace AppIS
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtBxCost;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.TextBox txtBxQuantity;
         private System.Windows.Forms.Label label3;

@@ -48,11 +48,11 @@ namespace AppIS
             this.txtBxCountry = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
-            this.labelWarning = new System.Windows.Forms.Label();
             this.dateTimeComing = new System.Windows.Forms.DateTimePicker();
             this.dateTimeLeaving = new System.Windows.Forms.DateTimePicker();
             this.dateTimeDateOfBirth = new System.Windows.Forms.DateTimePicker();
-            this.textBxRoom_id = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.labelWarning = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtBxName
@@ -155,7 +155,6 @@ namespace AppIS
             this.txtBxLogin.Name = "txtBxLogin";
             this.txtBxLogin.Size = new System.Drawing.Size(100, 20);
             this.txtBxLogin.TabIndex = 12;
-            this.txtBxLogin.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label8
             // 
@@ -173,7 +172,6 @@ namespace AppIS
             this.txtBxPassword.Name = "txtBxPassword";
             this.txtBxPassword.Size = new System.Drawing.Size(100, 20);
             this.txtBxPassword.TabIndex = 14;
-            this.txtBxPassword.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label9
             // 
@@ -191,7 +189,6 @@ namespace AppIS
             this.txtBxEmail.Name = "txtBxEmail";
             this.txtBxEmail.Size = new System.Drawing.Size(100, 20);
             this.txtBxEmail.TabIndex = 16;
-            this.txtBxEmail.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label10
             // 
@@ -209,7 +206,6 @@ namespace AppIS
             this.txtBxCountry.Name = "txtBxCountry";
             this.txtBxCountry.Size = new System.Drawing.Size(100, 20);
             this.txtBxCountry.TabIndex = 19;
-            this.txtBxCountry.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // btnSubmit
             // 
@@ -235,17 +231,6 @@ namespace AppIS
             this.label11.TabIndex = 22;
             this.label11.Text = "Номер комнаты";
             // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(310, 168);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 23;
-            this.labelWarning.Text = "Заполните все поля!";
-            // 
             // dateTimeComing
             // 
             this.dateTimeComing.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -270,24 +255,35 @@ namespace AppIS
             this.dateTimeDateOfBirth.Size = new System.Drawing.Size(100, 20);
             this.dateTimeDateOfBirth.TabIndex = 27;
             // 
-            // textBxRoom_id
+            // comboBox1
             // 
-            this.textBxRoom_id.Location = new System.Drawing.Point(144, 178);
-            this.textBxRoom_id.Name = "textBxRoom_id";
-            this.textBxRoom_id.Size = new System.Drawing.Size(100, 20);
-            this.textBxRoom_id.TabIndex = 28;
-            this.textBxRoom_id.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(145, 178);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(99, 21);
+            this.comboBox1.TabIndex = 28;
+            // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(309, 165);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(158, 13);
+            this.labelWarning.TabIndex = 29;
+            this.labelWarning.Text = "Проверьте вводимые данные";
             // 
             // TouristRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 277);
-            this.Controls.Add(this.textBxRoom_id);
+            this.Controls.Add(this.labelWarning);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.dateTimeDateOfBirth);
             this.Controls.Add(this.dateTimeLeaving);
             this.Controls.Add(this.dateTimeComing);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.txtBxCountry);
@@ -342,10 +338,10 @@ namespace AppIS
         private System.Windows.Forms.TextBox txtBxCountry;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.DateTimePicker dateTimeComing;
         private System.Windows.Forms.DateTimePicker dateTimeLeaving;
         private System.Windows.Forms.DateTimePicker dateTimeDateOfBirth;
-        private System.Windows.Forms.TextBox textBxRoom_id;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label labelWarning;
     }
 }

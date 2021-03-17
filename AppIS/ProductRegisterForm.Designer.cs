@@ -31,7 +31,6 @@ namespace AppIS
         {
             this.label5 = new System.Windows.Forms.Label();
             this.txtBxQuantity = new System.Windows.Forms.TextBox();
-            this.labelWarning = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtBxType = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
@@ -43,6 +42,7 @@ namespace AppIS
             this.label1 = new System.Windows.Forms.Label();
             this.txtBxProductId = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.labelWarning = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,17 +63,6 @@ namespace AppIS
             this.txtBxQuantity.Size = new System.Drawing.Size(100, 20);
             this.txtBxQuantity.TabIndex = 68;
             this.txtBxQuantity.TextChanged += new System.EventHandler(this.txtBxProductId_TextChanged);
-            // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(71, 201);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 67;
-            this.labelWarning.Text = "Заполните все поля!";
             // 
             // label11
             // 
@@ -155,11 +144,11 @@ namespace AppIS
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(105, 13);
+            this.label1.Location = new System.Drawing.Point(41, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 18);
+            this.label1.Size = new System.Drawing.Size(104, 18);
             this.label1.TabIndex = 51;
-            this.label1.Text = "Код";
+            this.label1.Text = "Код продукта";
             // 
             // txtBxProductId
             // 
@@ -196,15 +185,25 @@ namespace AppIS
             0,
             0});
             // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(70, 208);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(158, 13);
+            this.labelWarning.TabIndex = 71;
+            this.labelWarning.Text = "Проверьте вводимые данные";
+            // 
             // ProductRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 277);
+            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtBxQuantity);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtBxType);
             this.Controls.Add(this.btnSubmit);
@@ -232,7 +231,6 @@ namespace AppIS
 
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtBxQuantity;
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtBxType;
         private System.Windows.Forms.Button btnSubmit;
@@ -244,5 +242,6 @@ namespace AppIS
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBxProductId;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label labelWarning;
     }
 }

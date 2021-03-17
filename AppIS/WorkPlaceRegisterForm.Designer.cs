@@ -34,9 +34,9 @@ namespace AppIS
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
-            this.labelWarning = new System.Windows.Forms.Label();
             this.comboBxBuilding_id = new System.Windows.Forms.ComboBox();
             this.txtBxPlace_id = new System.Windows.Forms.TextBox();
+            this.labelWarning = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtBxId
@@ -89,17 +89,6 @@ namespace AppIS
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(49, 143);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 48;
-            this.labelWarning.Text = "Заполните все поля!";
-            // 
             // comboBxBuilding_id
             // 
             this.comboBxBuilding_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -117,14 +106,24 @@ namespace AppIS
             this.txtBxPlace_id.TabIndex = 51;
             this.txtBxPlace_id.TextChanged += new System.EventHandler(this.txtBxId_TextChanged);
             // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(62, 150);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(158, 13);
+            this.labelWarning.TabIndex = 52;
+            this.labelWarning.Text = "Проверьте вводимые данные";
+            // 
             // WorkPlaceRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 229);
+            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.txtBxPlace_id);
             this.Controls.Add(this.comboBxBuilding_id);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -149,8 +148,8 @@ namespace AppIS
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSubmit;
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.ComboBox comboBxBuilding_id;
         private System.Windows.Forms.TextBox txtBxPlace_id;
+        private System.Windows.Forms.Label labelWarning;
     }
 }

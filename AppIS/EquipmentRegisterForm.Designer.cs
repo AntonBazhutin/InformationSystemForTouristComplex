@@ -29,7 +29,6 @@ namespace AppIS
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelWarning = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,25 +38,15 @@ namespace AppIS
             this.label5 = new System.Windows.Forms.Label();
             this.comboBxProfession_id = new System.Windows.Forms.ComboBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.labelWarning = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // labelWarning
-            // 
-            this.labelWarning.AutoSize = true;
-            this.labelWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWarning.ForeColor = System.Drawing.Color.Red;
-            this.labelWarning.Location = new System.Drawing.Point(66, 210);
-            this.labelWarning.Name = "labelWarning";
-            this.labelWarning.Size = new System.Drawing.Size(168, 20);
-            this.labelWarning.TabIndex = 56;
-            this.labelWarning.Text = "Заполните все поля!";
             // 
             // btnSubmit
             // 
             this.btnSubmit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSubmit.Location = new System.Drawing.Point(103, 233);
+            this.btnSubmit.Location = new System.Drawing.Point(101, 194);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(105, 41);
             this.btnSubmit.TabIndex = 55;
@@ -69,7 +58,7 @@ namespace AppIS
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(20, 95);
+            this.label3.Location = new System.Drawing.Point(20, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 18);
             this.label3.TabIndex = 53;
@@ -79,7 +68,7 @@ namespace AppIS
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(76, 55);
+            this.label2.Location = new System.Drawing.Point(76, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 18);
             this.label2.TabIndex = 52;
@@ -89,15 +78,15 @@ namespace AppIS
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(113, 16);
+            this.label1.Location = new System.Drawing.Point(16, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 18);
+            this.label1.Size = new System.Drawing.Size(140, 18);
             this.label1.TabIndex = 51;
-            this.label1.Text = "Код";
+            this.label1.Text = "Код оборудования";
             // 
             // txtBxName
             // 
-            this.txtBxName.Location = new System.Drawing.Point(162, 55);
+            this.txtBxName.Location = new System.Drawing.Point(162, 49);
             this.txtBxName.Name = "txtBxName";
             this.txtBxName.Size = new System.Drawing.Size(100, 20);
             this.txtBxName.TabIndex = 50;
@@ -115,7 +104,7 @@ namespace AppIS
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(25, 149);
+            this.label5.Location = new System.Drawing.Point(25, 119);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(118, 18);
             this.label5.TabIndex = 59;
@@ -125,14 +114,14 @@ namespace AppIS
             // 
             this.comboBxProfession_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBxProfession_id.FormattingEnabled = true;
-            this.comboBxProfession_id.Location = new System.Drawing.Point(162, 150);
+            this.comboBxProfession_id.Location = new System.Drawing.Point(162, 120);
             this.comboBxProfession_id.Name = "comboBxProfession_id";
             this.comboBxProfession_id.Size = new System.Drawing.Size(100, 21);
             this.comboBxProfession_id.TabIndex = 60;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(162, 92);
+            this.numericUpDown1.Location = new System.Drawing.Point(162, 84);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -152,15 +141,25 @@ namespace AppIS
             0,
             0});
             // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(74, 168);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(158, 13);
+            this.labelWarning.TabIndex = 62;
+            this.labelWarning.Text = "Проверьте вводимые данные";
+            // 
             // EquipmentRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 286);
+            this.ClientSize = new System.Drawing.Size(299, 242);
+            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.comboBxProfession_id);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.labelWarning);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -168,8 +167,8 @@ namespace AppIS
             this.Controls.Add(this.txtBxName);
             this.Controls.Add(this.txtBxId);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(320, 325);
-            this.MinimumSize = new System.Drawing.Size(320, 325);
+            this.MaximumSize = new System.Drawing.Size(315, 281);
+            this.MinimumSize = new System.Drawing.Size(315, 281);
             this.Name = "EquipmentRegisterForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -182,8 +181,6 @@ namespace AppIS
         }
 
         #endregion
-
-        private System.Windows.Forms.Label labelWarning;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -193,5 +190,6 @@ namespace AppIS
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBxProfession_id;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label labelWarning;
     }
 }
