@@ -2659,7 +2659,10 @@ namespace AppIS
                         }
                         if (attribute == "Занят?")
                         {
-                            outPut = bool.Parse(inputText);
+                            if (inputText.ToLower() == "true")
+                                outPut = true;
+                            if (inputText.ToLower() == "false")
+                                outPut = false;
                         }
                         if (attribute == "Код здания")
                         {
@@ -2708,9 +2711,12 @@ namespace AppIS
                         {
                             outPut = inputText;
                         }
-                        if (attribute == "Оплачен ?")
+                        if (attribute == "Оплачен?")
                         {
-                            outPut = bool.Parse(inputText);
+                            if (inputText.ToLower() == "true")
+                                outPut = true;
+                            if (inputText.ToLower() == "false")
+                                outPut = false;
                         }
                     }
                     break;
@@ -2730,7 +2736,10 @@ namespace AppIS
                         }
                         if (attribute == "Оплачен?")
                         {
-                            outPut = bool.Parse(inputText);
+                            if (inputText.ToLower() == "true")
+                                outPut = true;
+                            if (inputText.ToLower() == "false")
+                                outPut = false;
                         }
                     }
                     break;
@@ -2767,7 +2776,6 @@ namespace AppIS
                     }
                     break;
             }
-
 
         }
         private void btnSearch_Click(object sender, EventArgs e)
