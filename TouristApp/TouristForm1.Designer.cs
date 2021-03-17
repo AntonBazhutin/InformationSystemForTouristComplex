@@ -31,8 +31,10 @@ namespace TouristApp
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TouristForm1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tooStripTxtBxName = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -47,10 +49,33 @@ namespace TouristApp
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.конструкторЗапросовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtbxExtraSomeText = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbBxExtraSign = new System.Windows.Forms.ComboBox();
+            this.comboBoxObj = new System.Windows.Forms.ComboBox();
+            this.cmbBoxExtraAttribute = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxAttribute = new System.Windows.Forms.ComboBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.comboBoxSign = new System.Windows.Forms.ComboBox();
+            this.cmbBoxAndOr = new System.Windows.Forms.ComboBox();
+            this.txtBxSomeText = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dgwSearchResults = new System.Windows.Forms.DataGridView();
+            this.label4 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwSearchResults)).BeginInit();
             this.SuspendLayout();
             // 
             // tooStripTxtBxName
@@ -98,7 +123,8 @@ namespace TouristApp
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ОпцииToolStripMenuItem});
+            this.ОпцииToolStripMenuItem,
+            this.поискToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(903, 28);
@@ -159,24 +185,24 @@ namespace TouristApp
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle29;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 28);
             this.dataGridView1.MultiSelect = false;
@@ -209,11 +235,250 @@ namespace TouristApp
             this.удалитьToolStripMenuItem.Text = "Удалить заказ";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
+            // поискToolStripMenuItem
+            // 
+            this.поискToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.конструкторЗапросовToolStripMenuItem});
+            this.поискToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic);
+            this.поискToolStripMenuItem.Name = "поискToolStripMenuItem";
+            this.поискToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
+            this.поискToolStripMenuItem.Text = "Поиск";
+            // 
+            // конструкторЗапросовToolStripMenuItem
+            // 
+            this.конструкторЗапросовToolStripMenuItem.Name = "конструкторЗапросовToolStripMenuItem";
+            this.конструкторЗапросовToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.конструкторЗапросовToolStripMenuItem.Text = "Конструктор запросов";
+            this.конструкторЗапросовToolStripMenuItem.Click += new System.EventHandler(this.конструкторЗапросовToolStripMenuItem_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.dgwSearchResults);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Location = new System.Drawing.Point(0, 26);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(903, 528);
+            this.panel1.TabIndex = 14;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnSearch);
+            this.groupBox1.Controls.Add(this.txtbxExtraSomeText);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.cmbBxExtraSign);
+            this.groupBox1.Controls.Add(this.comboBoxObj);
+            this.groupBox1.Controls.Add(this.cmbBoxExtraAttribute);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.comboBoxAttribute);
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.comboBoxSign);
+            this.groupBox1.Controls.Add(this.cmbBoxAndOr);
+            this.groupBox1.Controls.Add(this.txtBxSomeText);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.Location = new System.Drawing.Point(12, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(877, 92);
+            this.groupBox1.TabIndex = 34;
+            this.groupBox1.TabStop = false;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearch.Location = new System.Drawing.Point(6, 11);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(106, 30);
+            this.btnSearch.TabIndex = 21;
+            this.btnSearch.Text = "Найти";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtbxExtraSomeText
+            // 
+            this.txtbxExtraSomeText.Enabled = false;
+            this.txtbxExtraSomeText.Location = new System.Drawing.Point(740, 59);
+            this.txtbxExtraSomeText.Name = "txtbxExtraSomeText";
+            this.txtbxExtraSomeText.Size = new System.Drawing.Size(131, 20);
+            this.txtbxExtraSomeText.TabIndex = 33;
+            this.txtbxExtraSomeText.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtbxExtraSomeText_MouseClick);
+            this.txtbxExtraSomeText.TextChanged += new System.EventHandler(this.txtbxExtraSomeText_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(118, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(131, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Искомая сущность:";
+            // 
+            // cmbBxExtraSign
+            // 
+            this.cmbBxExtraSign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBxExtraSign.Enabled = false;
+            this.cmbBxExtraSign.FormattingEnabled = true;
+            this.cmbBxExtraSign.Location = new System.Drawing.Point(650, 58);
+            this.cmbBxExtraSign.Name = "cmbBxExtraSign";
+            this.cmbBxExtraSign.Size = new System.Drawing.Size(60, 21);
+            this.cmbBxExtraSign.TabIndex = 32;
+            // 
+            // comboBoxObj
+            // 
+            this.comboBoxObj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxObj.FormattingEnabled = true;
+            this.comboBoxObj.Location = new System.Drawing.Point(255, 19);
+            this.comboBoxObj.Name = "comboBoxObj";
+            this.comboBoxObj.Size = new System.Drawing.Size(140, 21);
+            this.comboBoxObj.TabIndex = 1;
+            this.comboBoxObj.SelectedValueChanged += new System.EventHandler(this.comboBoxObj_SelectedValueChanged);
+            // 
+            // cmbBoxExtraAttribute
+            // 
+            this.cmbBoxExtraAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxExtraAttribute.Enabled = false;
+            this.cmbBoxExtraAttribute.FormattingEnabled = true;
+            this.cmbBoxExtraAttribute.Location = new System.Drawing.Point(490, 58);
+            this.cmbBoxExtraAttribute.Name = "cmbBoxExtraAttribute";
+            this.cmbBoxExtraAttribute.Size = new System.Drawing.Size(145, 21);
+            this.cmbBoxExtraAttribute.TabIndex = 31;
+            this.cmbBoxExtraAttribute.SelectedValueChanged += new System.EventHandler(this.cmbBoxExtraAttribute_SelectedValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(421, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(66, 16);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Атрибут:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(421, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 16);
+            this.label6.TabIndex = 30;
+            this.label6.Text = "Атрибут:";
+            // 
+            // comboBoxAttribute
+            // 
+            this.comboBoxAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAttribute.FormattingEnabled = true;
+            this.comboBoxAttribute.Location = new System.Drawing.Point(490, 18);
+            this.comboBoxAttribute.Name = "comboBoxAttribute";
+            this.comboBoxAttribute.Size = new System.Drawing.Size(145, 21);
+            this.comboBoxAttribute.TabIndex = 15;
+            this.comboBoxAttribute.SelectedValueChanged += new System.EventHandler(this.comboBoxAttribute_SelectedValueChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox1.Location = new System.Drawing.Point(5, 58);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(113, 20);
+            this.checkBox1.TabIndex = 27;
+            this.checkBox1.Text = "Доп. условие";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // comboBoxSign
+            // 
+            this.comboBoxSign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSign.FormattingEnabled = true;
+            this.comboBoxSign.Location = new System.Drawing.Point(650, 18);
+            this.comboBoxSign.Name = "comboBoxSign";
+            this.comboBoxSign.Size = new System.Drawing.Size(60, 21);
+            this.comboBoxSign.TabIndex = 19;
+            // 
+            // cmbBoxAndOr
+            // 
+            this.cmbBoxAndOr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxAndOr.Enabled = false;
+            this.cmbBoxAndOr.FormattingEnabled = true;
+            this.cmbBoxAndOr.Location = new System.Drawing.Point(255, 58);
+            this.cmbBoxAndOr.Name = "cmbBoxAndOr";
+            this.cmbBoxAndOr.Size = new System.Drawing.Size(140, 21);
+            this.cmbBoxAndOr.TabIndex = 26;
+            // 
+            // txtBxSomeText
+            // 
+            this.txtBxSomeText.Location = new System.Drawing.Point(740, 19);
+            this.txtBxSomeText.Name = "txtBxSomeText";
+            this.txtBxSomeText.Size = new System.Drawing.Size(131, 20);
+            this.txtBxSomeText.TabIndex = 20;
+            this.txtBxSomeText.Text = "Введите значение...";
+            this.txtBxSomeText.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtBxSomeText_MouseClick);
+            this.txtBxSomeText.TextChanged += new System.EventHandler(this.txtBxSomeText_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(135, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 16);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Доп. параметр:";
+            // 
+            // dgwSearchResults
+            // 
+            this.dgwSearchResults.AllowUserToAddRows = false;
+            this.dgwSearchResults.AllowUserToDeleteRows = false;
+            this.dgwSearchResults.AllowUserToOrderColumns = true;
+            this.dgwSearchResults.AllowUserToResizeRows = false;
+            this.dgwSearchResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgwSearchResults.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwSearchResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            this.dgwSearchResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgwSearchResults.DefaultCellStyle = dataGridViewCellStyle28;
+            this.dgwSearchResults.Location = new System.Drawing.Point(12, 131);
+            this.dgwSearchResults.MultiSelect = false;
+            this.dgwSearchResults.Name = "dgwSearchResults";
+            this.dgwSearchResults.ReadOnly = true;
+            this.dgwSearchResults.RowHeadersVisible = false;
+            this.dgwSearchResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgwSearchResults.Size = new System.Drawing.Size(877, 376);
+            this.dgwSearchResults.TabIndex = 24;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(12, 108);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(164, 20);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "Результаты поиска :";
+            // 
             // TouristForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 579);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -232,6 +497,11 @@ namespace TouristApp
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwSearchResults)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,6 +522,26 @@ namespace TouristApp
         private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem забронированныеБилетыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem поискToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem конструкторЗапросовToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtbxExtraSomeText;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbBxExtraSign;
+        private System.Windows.Forms.ComboBox comboBoxObj;
+        private System.Windows.Forms.ComboBox cmbBoxExtraAttribute;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBoxAttribute;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox comboBoxSign;
+        private System.Windows.Forms.ComboBox cmbBoxAndOr;
+        private System.Windows.Forms.TextBox txtBxSomeText;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dgwSearchResults;
+        private System.Windows.Forms.Label label4;
     }
 }
 
