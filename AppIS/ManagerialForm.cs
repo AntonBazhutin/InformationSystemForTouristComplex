@@ -87,6 +87,8 @@ namespace AppIS
 
             if (isEmpty == string.Empty)
             {
+                тестированиеToolStripMenuItem.Enabled = false;
+                тестированиеToolStripMenuItem.Visible = false;
                 Text = "Форма сотрудника комплекса";
                 туристыToolStripMenuItem.Enabled = false;
                 туристыToolStripMenuItem.Visible = false;
@@ -111,6 +113,8 @@ namespace AppIS
 
                 if (limitPower)
                 {
+                    тестированиеToolStripMenuItem.Enabled = false;
+                    тестированиеToolStripMenuItem.Visible = false;
                     Text = "Форма работника на ресепшене";
 
                     работникиToolStripMenuItem.Visible = false;
@@ -1899,6 +1903,29 @@ namespace AppIS
                         }
                     }
 
+
+                    List<int> deleting = new List<int>();
+                    foreach (var item in workPlaces)
+                    {
+                        cmd = new SqlCommand("select id from Events where workPlace_id=@workPlace_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@workPlace_id", item);
+                        cmd.ExecuteNonQuery();
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                deleting.Add(int.Parse(dr["id"].ToString()));
+                            }
+                        }
+                    }
+
+                    foreach (var item in deleting)
+                    {
+                        cmd = new SqlCommand("delete from BookedTickets where event_id=@event_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@event_id", item);
+                        cmd.ExecuteNonQuery();
+                    }
+
                     foreach (var item in tourists)
                     {
                         cmd = new SqlCommand("delete from Orders where login=@login", sqlcon);
@@ -2016,6 +2043,7 @@ namespace AppIS
                         {
                             if (events[x].Id == tickets[j].Event_id)
                             {
+                                ticket = new TreeNode();
                                 ticket.Text = $"({tickets[j].Event_id}) {events[x].Name} - {tickets[j].Quantity} шт. {tickets[j].Cost}р - Оплачен? {tickets[j].isPaid}";
                             }
                         }
@@ -3286,6 +3314,317 @@ namespace AppIS
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void очищениеБДToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cmd = new SqlCommand("delete from Workdays", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Equipment", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from UsersPower", sqlcon);
+            cmd.ExecuteNonQuery();
+            //cmd = new SqlCommand("delete from Workers where login != @login", sqlcon);
+            //cmd.Parameters.AddWithValue("@login", PersonalInfo.Login);
+            cmd = new SqlCommand("delete from Workers", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Professions", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Orders", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Products", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from BookedTickets", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Events", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Tourists", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Rooms", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from WorkPlaces", sqlcon);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("delete from Buildings", sqlcon);
+            cmd.ExecuteNonQuery();
+
+            List<string> feNames = new List<string>() { "Евгений", "Мария", "Наталья", "Александра", "Елена", "Влада", "Екатерина", "Маргарита", "Анна", "Дарья", "Светлана" };
+            List<string> feSurname = new List<string>() { "Елизарова", "Волощина", "Крапчевникова", "Гариянова", "Дубнина", "Грищенко", "Сгущенка", "Омнакова", "Калынина" };
+            List<string> feThirdname = new List<string>() { "Александровна", "Дмитриевна", "Евгеньевна", "Алексеевна", "Владимировна", "Марсельевна", "Григорьевна", "Тарасовна" };
+            List<string> maName = new List<string>() { "Артем", "Алексей", "Александр", "Владимир", "Олег", "Григорий", "Дмитрий", "Павел", "Прохор", "Генннадий" };
+            List<string> maSurname = new List<string>() { "Елизаров", "Волощин", "Крапчевников", "Гариянов", "Дубнин", "Грищенко", "Сгущенка", "Омнаков", "Калынин" };
+            List<string> maThirdname = new List<string>() { "Александрович", "Дмитриевич", "Евгеньевич", "Алексеевич", "Владимирович", "Марсельевич", "Григорьевич", "Тарасович" };
+            List<string> professions = new List<string>() { "Администратор", "Плотник", "Садовник", "Сис-админ", "Менеджер", "Повар", "Охранник", "Кассир", "Директор", "Бухгалтер" };
+            List<string> equipments = new List<string>() { "Дрель", "Швабра", "Планшет", "Отвертка", "Лестница" };
+            List<string> events = new List<string>() { "Бальные_танцы", "Рисование", "Дискотека", "Водное_поло", "Крокодил", "Вечер_поэзии" };
+            List<string> products = new List<string>() { "Пицца", "Сок", "Вода_питьевая", "Спагетти", "Суп", "Рыба", "Кекс", "Торт" };
+            List<string> buildings = new List<string>() { "Корпус_1", "Корпус_2", "Корпус_3" };
+            List<string> places = new List<string>() { "Этаж_1", "Этаж_2", "Этаж_3" };
+            List<string> countries = new List<string>() { "Россия", "Украина", "Сингапур", "Ямайка", "Индия", "Китай", "Япония", "Америка", "Германия", "Чехия", "Франция" };
+            Random rand = new Random();
+            cmd = new SqlCommand("", sqlcon);
+
+            foreach (var item in buildings)
+            {
+                cmd = new SqlCommand("Insert into Buildings(id,rooms) Values(@id,@rooms)", sqlcon);
+                cmd.Parameters.AddWithValue("@id", item);
+                cmd.Parameters.AddWithValue("@rooms", rand.Next(7, 12));
+                cmd.ExecuteNonQuery();
+            }
+            int counter = 1;
+
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                for (int j = 0; j < places.Count; j++)
+                {
+                    cmd = new SqlCommand("Insert into WorkPlaces(id,place_id,building_id) Values(@id,@place_id,@building_id)", sqlcon);
+                    cmd.Parameters.AddWithValue("@id", counter);
+                    cmd.Parameters.AddWithValue("@place_id", places[j]);
+                    cmd.Parameters.AddWithValue("@building_id", buildings[i]);
+                    cmd.ExecuteNonQuery();
+                    counter++;
+                }
+            }
+            counter = 1;
+
+            foreach (var item in professions)
+            {
+                cmd = new SqlCommand("Insert into Professions(id,name) Values(@id,@name)", sqlcon);
+                cmd.Parameters.AddWithValue("@id", counter);
+                cmd.Parameters.AddWithValue("@name", item);
+                cmd.ExecuteNonQuery();
+                counter++;
+            }
+
+            counter = 1;
+
+            foreach (var item in equipments)
+            {
+                cmd = new SqlCommand("Insert into Equipment(id,name,quantity,profession_id) Values(@id,@name,@quantity,@profession_id)", sqlcon);
+                cmd.Parameters.AddWithValue("@id", counter);
+                cmd.Parameters.AddWithValue("@name", item);
+                cmd.Parameters.AddWithValue("@quantity", rand.Next(15, 50));
+                cmd.Parameters.AddWithValue("@profession_id", rand.Next(1, professions.Count - 1));
+                cmd.ExecuteNonQuery();
+                counter++;
+            }
+
+            cmd = new SqlCommand("Insert into UsersPower(profession_id,limitPower) Values(@profession_id,@limitPower)", sqlcon);
+            cmd.Parameters.AddWithValue("@profession_id", 1);
+            cmd.Parameters.AddWithValue("@limitPower", false);
+            cmd.ExecuteNonQuery();
+
+            cmd = new SqlCommand("Insert into UsersPower(profession_id,limitPower) Values(@profession_id,@limitPower)", sqlcon);
+            cmd.Parameters.AddWithValue("@profession_id", 8);
+            cmd.Parameters.AddWithValue("@limitPower", true);
+            cmd.ExecuteNonQuery();
+
+            for (int i = 0; i < rand.Next(6, 16); i++)
+            {
+                cmd = new SqlCommand(
+                         "Insert into Workers(login,password,profession_id,name,surname,thirdname,dateOfBirth,workPlace_id,phoneNumber) " +
+                         "Values(@login,@password,@profession_id,@name,@surname,@thirdname,@dateOfBirth,@workPlace_id,@phoneNumber)"
+                         , sqlcon);
+
+                cmd.Parameters.AddWithValue("@login", $"{i + 1}123");
+                cmd.Parameters.AddWithValue("@password", $"{i + 1}_pass");
+                cmd.Parameters.AddWithValue("@profession_id", rand.Next(1, professions.Count - 1));
+                int gen = rand.Next(0, 3000);
+                if (gen > 1500)
+                    cmd.Parameters.AddWithValue("@name", maName[rand.Next(0, maName.Count - 1)]);
+                else
+                    cmd.Parameters.AddWithValue("@name", feNames[rand.Next(0, feNames.Count - 1)]);
+                if (gen > 1500)
+                    cmd.Parameters.AddWithValue("@surname", maSurname[rand.Next(0, maSurname.Count - 1)]);
+                else
+                    cmd.Parameters.AddWithValue("@surname", feSurname[rand.Next(0, feSurname.Count - 1)]);
+                if (gen > 1500)
+                    cmd.Parameters.AddWithValue("@thirdname", maThirdname[rand.Next(0, maThirdname.Count - 1)]);
+                else
+                    cmd.Parameters.AddWithValue("@thirdname", feThirdname[rand.Next(0, feThirdname.Count - 1)]);
+                cmd.Parameters.AddWithValue("@dateOfBirth", $"{rand.Next(1, 28)}.{rand.Next(1, 12)}.{rand.Next(1975, 2002)}");
+                cmd.Parameters.AddWithValue("@workPlace_id", rand.Next(1, 9));
+                cmd.Parameters.AddWithValue("@phoneNumber", $"79{rand.Next(1, 9)}{rand.Next(1, 9)}{rand.Next(1, 9)}{rand.Next(1, 9)}" +
+                    $"{rand.Next(1, 9)}{rand.Next(1, 9)}{rand.Next(1, 9)}{rand.Next(1, 9)}{rand.Next(1, 9)}");
+
+                cmd.ExecuteNonQuery();
+            }
+
+            List<string> logins = new List<string>();
+            cmd = new SqlCommand("Select login from Workers", sqlcon);
+            cmd.ExecuteNonQuery();
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    logins.Add(dr["login"].ToString());
+                }
+            }
+
+            foreach (var item in logins)
+            {
+                cmd = new SqlCommand("Insert into Workdays(worker_login,workDays) Values(@worker_login,@workDays)", sqlcon);
+                cmd.Parameters.AddWithValue("@worker_login", item);
+                cmd.Parameters.AddWithValue("@workDays", "ПН,ВТ,СР,ЧТ,ПТ");
+                cmd.ExecuteNonQuery();
+            }
+
+            List<Building> builds = new List<Building>();
+            cmd = new SqlCommand("Select * from Buildings", sqlcon);
+            cmd.ExecuteNonQuery();
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    builds.Add(new Building(dr["id"].ToString(), int.Parse(dr["rooms"].ToString())));
+                }
+            }
+
+            counter = 1;
+
+            List<int> rooms = new List<int>();
+
+            for (int i = 0; i < builds.Count; i++)
+            {
+                for (int j = 0; j < builds[i].Rooms; j++)
+                {
+                    cmd = new SqlCommand("Insert into Rooms(id,price,beds,isAvailable,building_id) Values(@id,@price,@beds,@isAvailable,@building_id)", sqlcon);
+                    rooms.Add(counter);
+                    cmd.Parameters.AddWithValue("@id", counter);
+                    cmd.Parameters.AddWithValue("@price", rand.Next(1500, 3500));
+                    cmd.Parameters.AddWithValue("@beds", rand.Next(1, 4));
+                    cmd.Parameters.AddWithValue("@isAvailable", true);
+                    cmd.Parameters.AddWithValue("@building_id", builds[i].Id);
+                    cmd.ExecuteNonQuery();
+                    counter++;
+                }
+            }
+
+            for (int i = 0; i < rand.Next(10, 17); i++)
+            {
+                cmd = new SqlCommand("Insert into Tourists(login,password,email,name,surname,thirdname,dateOfBirth,dateOfComing,dateOfLeaving,country,room_id) " +
+                    "Values(@login,@password,@email,@name,@surname,@thirdname,@dateOfBirth,@dateOfComing,@dateOfLeaving,@country,@room_id)", sqlcon);
+
+                cmd.Parameters.AddWithValue("@login", $"{i + 1}_010");
+                cmd.Parameters.AddWithValue("@password", $"{i + 1}_pass");
+                cmd.Parameters.AddWithValue("@email", $"customer{i + 1}@mail.com");
+                int gen = rand.Next(0, 3000);
+                if (gen > 1500)
+                    cmd.Parameters.AddWithValue("@name", maName[rand.Next(0, maName.Count - 1)]);
+                else
+                    cmd.Parameters.AddWithValue("@name", feNames[rand.Next(0, feNames.Count - 1)]);
+                if (gen > 1500)
+                    cmd.Parameters.AddWithValue("@surname", maSurname[rand.Next(0, maSurname.Count - 1)]);
+                else
+                    cmd.Parameters.AddWithValue("@surname", feSurname[rand.Next(0, feSurname.Count - 1)]);
+                if (gen > 1500)
+                    cmd.Parameters.AddWithValue("@thirdname", maThirdname[rand.Next(0, maThirdname.Count - 1)]);
+                else
+                    cmd.Parameters.AddWithValue("@thirdname", feThirdname[rand.Next(0, feThirdname.Count - 1)]);
+                cmd.Parameters.AddWithValue("@dateOfBirth", $"{rand.Next(1, 28)}.{rand.Next(1, 12)}.{rand.Next(1975, 2002)}");
+                cmd.Parameters.AddWithValue("@dateOfComing", $"{rand.Next(1, 28)}.{rand.Next(5, 8)}.{rand.Next(2019, 2020)}");
+                cmd.Parameters.AddWithValue("@dateOfLeaving", $"{rand.Next(1, 28)}.{rand.Next(8, 12)}.{rand.Next(2019, 2020)}");
+                cmd.Parameters.AddWithValue("@country", countries[rand.Next(0, countries.Count - 1)]);
+                cmd.Parameters.AddWithValue("@room_id", rooms[rand.Next(1, rooms.Count - 1)]);
+                cmd.ExecuteNonQuery();
+            }
+
+            counter = 1;
+
+            for (int i = 0; i < events.Count; i++)
+            {
+                cmd = new SqlCommand(
+                          "Insert into Events(id,name,price,description,date,workPlace_id,quantity) " +
+                          "Values(@id,@name,@price,@description,@date,@workPlace_id,@quantity)"
+                          , sqlcon);
+
+                cmd.Parameters.AddWithValue("@id", counter);
+                cmd.Parameters.AddWithValue("@name", events[i]);
+                cmd.Parameters.AddWithValue("@price", rand.Next(150, 1500));
+                cmd.Parameters.AddWithValue("@quantity", rand.Next(50, 200));
+                cmd.Parameters.AddWithValue("@description", "SomeText");
+                cmd.Parameters.AddWithValue("@date", $"{rand.Next(1, 28)}.{rand.Next(1, 12)}.{2020}");
+                cmd.Parameters.AddWithValue("@workPlace_id", rand.Next(1, 9));
+                cmd.ExecuteNonQuery();
+                counter++;
+            }
+            counter = 1;
+
+            List<int> productsC = new List<int>();
+            for (int i = 0; i < products.Count; i++)
+            {
+                cmd = new SqlCommand(
+                           "Insert into Products(product_id,name,price,description,type,quantity) " +
+                           "Values(@product_id,@name,@price,@description,@type,@quantity)"
+                           , sqlcon);
+
+                productsC.Add(counter);
+                cmd.Parameters.AddWithValue("@product_id", counter);
+                cmd.Parameters.AddWithValue("@name", products[i]);
+                cmd.Parameters.AddWithValue("@price", rand.Next(100, 500));
+                cmd.Parameters.AddWithValue("@description", "SomeText");
+                cmd.Parameters.AddWithValue("@type", "SomeType");
+                cmd.Parameters.AddWithValue("@quantity", rand.Next(500, 1000));
+                cmd.ExecuteNonQuery();
+                counter++;
+            }
+
+            List<string> touristsLogins = new List<string>();
+
+            cmd = new SqlCommand("Select login from Tourists", sqlcon);
+
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    touristsLogins.Add(dr["login"].ToString());
+                }
+            }
+
+            counter = 1;
+
+            for (int i = 0; i < touristsLogins.Count; i++)
+            {
+                cmd = new SqlCommand(
+                                "Insert into Orders(order_id,product_id,quantity,cost,login,dateOrder,isDone) " +
+                                "Values(@order_id,@product_id,@quantity,@cost,@login,@dateOrder,@isDone)"
+                                , sqlcon);
+                cmd.Parameters.AddWithValue("@order_id", counter);
+                cmd.Parameters.AddWithValue("@product_id", productsC[rand.Next(1, productsC.Count - 1)]);
+                cmd.Parameters.AddWithValue("@quantity", 3);
+                cmd.Parameters.AddWithValue("@cost", 150);
+                cmd.Parameters.AddWithValue("@login", touristsLogins[i]);
+                cmd.Parameters.AddWithValue("@dateOrder", $"{rand.Next(1, 28)}.{rand.Next(1, 12)}.{2020}");
+                int trueOffalse = rand.Next(0, 1000);
+                if (trueOffalse > 501)
+                    cmd.Parameters.AddWithValue("@isDone", true);
+                else
+                    cmd.Parameters.AddWithValue("@isDone", false);
+                cmd.ExecuteNonQuery();
+                counter++;
+            }
+            counter = 1;
+
+            for (int i = 0; i < touristsLogins.Count; i++)
+            {
+                cmd = new SqlCommand(
+                           "Insert into BookedTickets(item_id,event_id,quantity,cost,login,isPaid) " +
+                           "Values(@item_id,@event_id,@quantity,@cost,@login,@isPaid)"
+                           , sqlcon);
+                cmd.Parameters.AddWithValue("@item_id", counter);
+                cmd.Parameters.AddWithValue("@event_id", rand.Next(1, events.Count - 1));
+                cmd.Parameters.AddWithValue("@quantity", rand.Next(1, 6));
+                cmd.Parameters.AddWithValue("@cost", rand.Next(150, 2450));
+                cmd.Parameters.AddWithValue("@login", touristsLogins[i]);
+                int trueOffalse = rand.Next(0, 1000);
+                if (trueOffalse > 501)
+                    cmd.Parameters.AddWithValue("@isPaid", true);
+                else
+                    cmd.Parameters.AddWithValue("@isPaid", false);
+                cmd.ExecuteNonQuery();
+                counter++;
+            }
+            MessageBox.Show("Перезапись данных в БД прошла успешно!\nДля обеспечения дальнейшей работы программу требуется закрыть");
+            this.Close();
         }
     }
 }
