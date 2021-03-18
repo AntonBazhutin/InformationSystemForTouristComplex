@@ -31,10 +31,10 @@ namespace AppIS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagerialForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,42 +175,42 @@ namespace AppIS
             // рабочиеМестаToolStripMenuItem
             // 
             this.рабочиеМестаToolStripMenuItem.Name = "рабочиеМестаToolStripMenuItem";
-            this.рабочиеМестаToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.рабочиеМестаToolStripMenuItem.Size = new System.Drawing.Size(284, 24);
             this.рабочиеМестаToolStripMenuItem.Text = "Рабочие места";
             this.рабочиеМестаToolStripMenuItem.Click += new System.EventHandler(this.рабочиеМестаToolStripMenuItem_Click);
             // 
             // профессииToolStripMenuItem
             // 
             this.профессииToolStripMenuItem.Name = "профессииToolStripMenuItem";
-            this.профессииToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.профессииToolStripMenuItem.Size = new System.Drawing.Size(284, 24);
             this.профессииToolStripMenuItem.Text = "Профессии";
             this.профессииToolStripMenuItem.Click += new System.EventHandler(this.профессииToolStripMenuItem_Click);
             // 
             // оборудованиеToolStripMenuItem
             // 
             this.оборудованиеToolStripMenuItem.Name = "оборудованиеToolStripMenuItem";
-            this.оборудованиеToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.оборудованиеToolStripMenuItem.Size = new System.Drawing.Size(284, 24);
             this.оборудованиеToolStripMenuItem.Text = "Оборудование";
             this.оборудованиеToolStripMenuItem.Click += new System.EventHandler(this.оборудованиеToolStripMenuItem_Click);
             // 
             // рабочиеДниToolStripMenuItem
             // 
             this.рабочиеДниToolStripMenuItem.Name = "рабочиеДниToolStripMenuItem";
-            this.рабочиеДниToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.рабочиеДниToolStripMenuItem.Size = new System.Drawing.Size(284, 24);
             this.рабочиеДниToolStripMenuItem.Text = "Смены работников";
             this.рабочиеДниToolStripMenuItem.Click += new System.EventHandler(this.рабочиеДниToolStripMenuItem_Click);
             // 
             // зданияНаТерриторииToolStripMenuItem
             // 
             this.зданияНаТерриторииToolStripMenuItem.Name = "зданияНаТерриторииToolStripMenuItem";
-            this.зданияНаТерриторииToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.зданияНаТерриторииToolStripMenuItem.Size = new System.Drawing.Size(284, 24);
             this.зданияНаТерриторииToolStripMenuItem.Text = "Здания на территории";
             this.зданияНаТерриторииToolStripMenuItem.Click += new System.EventHandler(this.зданияНаТерриторииToolStripMenuItem_Click);
             // 
             // комнатыToolStripMenuItem
             // 
             this.комнатыToolStripMenuItem.Name = "комнатыToolStripMenuItem";
-            this.комнатыToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.комнатыToolStripMenuItem.Size = new System.Drawing.Size(284, 24);
             this.комнатыToolStripMenuItem.Text = "Комнаты";
             this.комнатыToolStripMenuItem.Click += new System.EventHandler(this.комнатыToolStripMenuItem_Click);
             // 
@@ -266,14 +266,14 @@ namespace AppIS
             // продуктыToolStripMenuItem
             // 
             this.продуктыToolStripMenuItem.Name = "продуктыToolStripMenuItem";
-            this.продуктыToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.продуктыToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
             this.продуктыToolStripMenuItem.Text = "Продукты";
             this.продуктыToolStripMenuItem.Click += new System.EventHandler(this.продуктыToolStripMenuItem_Click);
             // 
             // мероприятияToolStripMenuItem1
             // 
             this.мероприятияToolStripMenuItem1.Name = "мероприятияToolStripMenuItem1";
-            this.мероприятияToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
+            this.мероприятияToolStripMenuItem1.Size = new System.Drawing.Size(172, 24);
             this.мероприятияToolStripMenuItem1.Text = "Мероприятия";
             this.мероприятияToolStripMenuItem1.Click += new System.EventHandler(this.мероприятияToolStripMenuItem1_Click);
             // 
@@ -353,24 +353,24 @@ namespace AppIS
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip2;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 28);
             this.dataGridView1.MultiSelect = false;
@@ -461,6 +461,7 @@ namespace AppIS
             this.groupBox1.Size = new System.Drawing.Size(877, 92);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // btnSearch
             // 
@@ -613,24 +614,24 @@ namespace AppIS
             this.dgwSearchResults.AllowUserToResizeRows = false;
             this.dgwSearchResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgwSearchResults.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgwSearchResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwSearchResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgwSearchResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwSearchResults.ContextMenuStrip = this.contextMenuStrip2;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgwSearchResults.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgwSearchResults.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgwSearchResults.Location = new System.Drawing.Point(12, 131);
             this.dgwSearchResults.MultiSelect = false;
             this.dgwSearchResults.Name = "dgwSearchResults";

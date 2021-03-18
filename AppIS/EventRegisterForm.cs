@@ -74,7 +74,7 @@ namespace AppIS
             {
                 comboBoxWorkPlace_id.Items.Add(item);
             }
-            comboBoxWorkPlace_id.Text = workPlace_ids[0].ToString();
+            comboBoxWorkPlace_id.Text = comboBoxWorkPlace_id.Items[0].ToString();
             if (IsFilled)
             {
                 txtBxDescription.Text = AddingEvent.Description;

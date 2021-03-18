@@ -1016,6 +1016,12 @@ namespace AppIS
                     }
                 }
 
+                if (building_ids.Count == 0)
+                {
+                    MessageBox.Show("Требуется здание, чтобы создать рабочее место");
+                    return;
+                }
+
                 WorkPlaceRegisterForm wpRegister = new WorkPlaceRegisterForm(wp.Id + 1, building_ids);
                 if (wpRegister.ShowDialog() == DialogResult.OK)
                 {
@@ -1094,6 +1100,13 @@ namespace AppIS
                         professions.Add(int.Parse(dr["id"].ToString()));
                     }
                 }
+
+                if (professions.Count == 0)
+                {
+                    MessageBox.Show("Требуется профессия, чтобы добавить оборудование");
+                    return;
+                }
+
                 EquipmentRegisterForm equipRegister = new EquipmentRegisterForm(eq.Id + 1, professions);
 
                 if (equipRegister.ShowDialog() == DialogResult.OK)
@@ -1135,6 +1148,13 @@ namespace AppIS
                             logins.Add(dr["login"].ToString());
                     }
                 }
+
+                if (logins.Count == 0)
+                {
+                    MessageBox.Show("Требуется работник, для создания его рабочих дней");
+                    return;
+                }
+
                 if (logins.Count > 0)
                 {
                     WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(logins);
@@ -1156,6 +1176,7 @@ namespace AppIS
                 }
                 else
                     MessageBox.Show("У всех работников уже есть расписание рабочих дней");
+
             }
             if (CurrentObject is Product)
             {
@@ -1191,15 +1212,20 @@ namespace AppIS
                     ev = dataGridView1.Rows[dataGridView1.RowCount - 1].Tag as Event;
 
                 List<int> workPlace_ids = new List<int>();
-                cmd = new SqlCommand("Select * from Events", sqlcon);
+                cmd = new SqlCommand("Select id from WorkPlaces", sqlcon);
                 cmd.ExecuteNonQuery();
-
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
                         workPlace_ids.Add(int.Parse(dr["id"].ToString()));
                     }
+                }
+
+                if (workPlace_ids.Count == 0)
+                {
+                    MessageBox.Show("Нет рабочего места для проведения мероприятия");
+                    return;
                 }
 
                 EventRegisterForm equipRegister = new EventRegisterForm(ev.Id + 1, workPlace_ids);
@@ -1268,6 +1294,12 @@ namespace AppIS
                         if (!onCheck.Contains(int.Parse(dr["id"].ToString())))
                             professions.Add(int.Parse(dr["id"].ToString()));
                     }
+                }
+
+                if (professions.Count == 0)
+                {
+                    MessageBox.Show("Требуется профессия, чтобы добавить права пользователя");
+                    return;
                 }
 
                 if (professions.Count > 0)
@@ -1776,6 +1808,8 @@ namespace AppIS
                 {
                     Product pr = obj as Product;
 
+                    cmd = new SqlCommand("delete from Orders where product_id=@product_id", sqlcon);
+
                     cmd = new SqlCommand(
                         "delete from Products where product_id=@product_id"
                         , sqlcon);
@@ -1799,13 +1833,105 @@ namespace AppIS
                 }
                 if (obj is Building)
                 {
-                    Building ev = obj as Building;
+                    Building b = obj as Building;
+
+                    List<int> workPlaces = new List<int>();
+                    cmd = new SqlCommand("select id from WorkPlaces where building_id=@building_id", sqlcon);
+                    cmd.Parameters.AddWithValue("@building_id", b.Id);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            workPlaces.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+
+                    List<Worker> workers = new List<Worker>();
+                    foreach (var item in workPlaces)
+                    {
+                        cmd = new SqlCommand("select * from Workers where workPlace_id=@workPlace_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@workPlace_id", item);
+                        cmd.ExecuteNonQuery();
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                workers.Add(new Worker("", "", "", "", int.Parse(dr["profession_id"].ToString()), int.Parse(dr["workPlace_id"].ToString()), "", dr["login"].ToString(), ""));
+                            }
+                        }
+                    }
+
+                    foreach (var item in workers)
+                    {
+                        cmd = new SqlCommand("delete from Workdays where worker_login=@worker_login", sqlcon);
+                        cmd.Parameters.AddWithValue("@worker_login", item.Login);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand("delete from Workers where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", item.Login);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    List<int> rooms_ids = new List<int>();
+                    cmd = new SqlCommand("select id from Rooms where building_id=@building_id", sqlcon);
+                    cmd.Parameters.AddWithValue("@building_id", b.Id);
+                    cmd.ExecuteNonQuery();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            rooms_ids.Add(int.Parse(dr["id"].ToString()));
+                        }
+                    }
+
+                    List<string> tourists = new List<string>();
+                    foreach (var item in rooms_ids)
+                    {
+                        cmd = new SqlCommand("select login from Tourists where room_id=@room_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@room_id", item);
+                        cmd.ExecuteNonQuery();
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                tourists.Add(dr["login"].ToString());
+                            }
+                        }
+                    }
+
+                    foreach (var item in tourists)
+                    {
+                        cmd = new SqlCommand("delete from Orders where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", item);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand("delete from BookedTickets where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", item);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand("delete from Tourists where login=@login", sqlcon);
+                        cmd.Parameters.AddWithValue("@login", item);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    foreach (var item in workPlaces)
+                    {
+                        cmd = new SqlCommand("delete from Events where workPlace_id=@workPlace_id", sqlcon);
+                        cmd.Parameters.AddWithValue("@workPlace_id", item);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    cmd = new SqlCommand("delete from Rooms where building_id=@building_id", sqlcon);
+                    cmd.Parameters.AddWithValue("@building_id", b.Id);
+                    cmd.ExecuteNonQuery();
+
+                    cmd = new SqlCommand("delete from WorkPlaces where building_id=@building_id", sqlcon);
+                    cmd.Parameters.AddWithValue("@building_id", b.Id);
+                    cmd.ExecuteNonQuery();
 
                     cmd = new SqlCommand(
                         "delete from Buildings where id=@id"
                         , sqlcon);
 
-                    cmd.Parameters.AddWithValue("@id", ev.Id);
+                    cmd.Parameters.AddWithValue("@id", b.Id);
                     cmd.ExecuteNonQuery();
                     зданияНаТерриторииToolStripMenuItem_Click(this, e);
                 }
@@ -3155,6 +3281,11 @@ namespace AppIS
             }
             else
                 MessageBox.Show("Чтобы создать отчет, таблица не должна быть пустой");
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
