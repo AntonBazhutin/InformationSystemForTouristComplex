@@ -101,11 +101,9 @@ namespace AppIS
                 оборудованиеToolStripMenuItem.Enabled = false;
                 профессииToolStripMenuItem.Visible = false;
                 профессииToolStripMenuItem.Enabled = false;
-                зданияНаТерриторииToolStripMenuItem.Enabled = false;
-                комнатыToolStripMenuItem.Enabled = false;
-                зданияНаТерриторииToolStripMenuItem.Visible = false;
-                комнатыToolStripMenuItem.Visible = false;
                 contextMenuStrip2.Items.Clear();
+                территорияКомплексаToolStripMenuItem.Visible = false;
+                праваПользователейToolStripMenuItem.Visible = false;
             }
             else
             {
@@ -116,7 +114,8 @@ namespace AppIS
                     тестированиеToolStripMenuItem.Enabled = false;
                     тестированиеToolStripMenuItem.Visible = false;
                     Text = "Форма работника на ресепшене";
-
+                    территорияКомплексаToolStripMenuItem.Visible = false;
+                    праваПользователейToolStripMenuItem.Visible = false;
                     работникиToolStripMenuItem.Visible = false;
                 }
                 else
@@ -1153,12 +1152,6 @@ namespace AppIS
                     }
                 }
 
-                if (logins.Count == 0)
-                {
-                    MessageBox.Show("Требуется работник, для создания его рабочих дней");
-                    return;
-                }
-
                 if (logins.Count > 0)
                 {
                     WorkDayRegisterForm equipRegister = new WorkDayRegisterForm(logins);
@@ -1179,7 +1172,7 @@ namespace AppIS
                     }
                 }
                 else
-                    MessageBox.Show("У всех работников уже есть расписание рабочих дней");
+                    MessageBox.Show("У всех существующих работников уже есть расписание рабочих дней.\nДля добавления новой смены создайте нового работника или удалите текущую запись");
 
             }
             if (CurrentObject is Product)
@@ -1270,7 +1263,7 @@ namespace AppIS
                     cmd.Parameters.AddWithValue("@id", created.Id);
                     cmd.Parameters.AddWithValue("@rooms", created.Rooms);
                     cmd.ExecuteNonQuery();
-                    зданияНаТерриторииToolStripMenuItem_Click(this, e);
+                    зданияНаТерриторииToolStripMenuItem1_Click(this, e);
                 }
             }
             if (CurrentObject is UserPower)
@@ -1401,7 +1394,7 @@ namespace AppIS
                         cmd.ExecuteNonQuery();
                     }
 
-                    комнатыToolStripMenuItem_Click(this, e);
+                    комнатыToolStripMenuItem1_Click(this, e);
                 }
             }
         }
@@ -1639,7 +1632,7 @@ namespace AppIS
                         cmd.Parameters.AddWithValue("@id", created.Id);
                         cmd.Parameters.AddWithValue("@rooms", created.Rooms);
                         cmd.ExecuteNonQuery();
-                        зданияНаТерриторииToolStripMenuItem_Click(this, e);
+                        зданияНаТерриторииToolStripMenuItem1_Click(this, e);
                     }
                 }
                 if (obj is Room)
@@ -1657,7 +1650,7 @@ namespace AppIS
                         cmd.Parameters.AddWithValue("@beds", created.Beds);
                         cmd.Parameters.AddWithValue("@isAvailable", created.IsAvailable);
                         cmd.ExecuteNonQuery();
-                        комнатыToolStripMenuItem_Click(this, e);
+                        комнатыToolStripMenuItem1_Click(this, e);
                     }
                 }
             }
@@ -1960,7 +1953,7 @@ namespace AppIS
 
                     cmd.Parameters.AddWithValue("@id", b.Id);
                     cmd.ExecuteNonQuery();
-                    зданияНаТерриторииToolStripMenuItem_Click(this, e);
+                    зданияНаТерриторииToolStripMenuItem1_Click(this, e);
                 }
                 if (obj is Room)
                 {
@@ -1972,7 +1965,7 @@ namespace AppIS
 
                     cmd.Parameters.AddWithValue("@id", ev.Id);
                     cmd.ExecuteNonQuery();
-                    комнатыToolStripMenuItem_Click(this, e);
+                    комнатыToolStripMenuItem1_Click(this, e);
                 }
             }
         }
@@ -2057,59 +2050,6 @@ namespace AppIS
                         tourist.Nodes.Add(ticket);
                         treeView1.Nodes.Add(tourist);
                     }
-                }
-            }
-        }
-
-        private void зданияНаТерриторииToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            panel1.Visible = false;
-            contextMenuStrip1.Visible = false;
-            CurrentObject = new Building();
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
-            treeView1.Visible = false;
-            dataGridView1.Visible = true;
-
-            var cmd = new SqlCommand("Select * from Buildings", sqlcon);
-            dataGridView1.Columns.Add("", "Код здания");
-            dataGridView1.Columns.Add("", "Кол-во комнат");
-            int i = 0;
-            using (var dr = cmd.ExecuteReader())
-            {
-                while (dr.Read())
-                {
-                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["rooms"].ToString() });
-                    dataGridView1.Rows[i].Tag = new Building(dr["id"].ToString(), int.Parse(dr["rooms"].ToString()));
-                    i++;
-                }
-            }
-        }
-
-        private void комнатыToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            panel1.Visible = false;
-            contextMenuStrip1.Visible = false;
-            CurrentObject = new Room();
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
-            treeView1.Visible = false;
-            dataGridView1.Visible = true;
-
-            var cmd = new SqlCommand("Select * from Rooms", sqlcon);
-            dataGridView1.Columns.Add("", "Номер комнаты");
-            dataGridView1.Columns.Add("", "Цена");
-            dataGridView1.Columns.Add("", "Кол-во кроватей");
-            dataGridView1.Columns.Add("", "Свободна?");
-            dataGridView1.Columns.Add("", "Код здания");
-            int i = 0;
-            using (var dr = cmd.ExecuteReader())
-            {
-                while (dr.Read())
-                {
-                    dataGridView1.Rows.Add(dr["id"].ToString(), dr["price"].ToString(), dr["beds"].ToString(), dr["isAvailable"].ToString(), dr["building_id"].ToString());
-                    dataGridView1.Rows[i].Tag = new Room(int.Parse(dr["id"].ToString()), decimal.Parse(dr["price"].ToString()), int.Parse(dr["beds"].ToString()), bool.Parse(dr["isAvailable"].ToString()), dr["building_id"].ToString());
-                    i++;
                 }
             }
         }
@@ -2842,7 +2782,7 @@ namespace AppIS
                             outPut = inputText;
 
                         if (attribute == "Код профессии" || attribute == "Код рабочего места")
-                            outPut = int.Parse(outPut);
+                            outPut = int.Parse(inputText);
                     }
                     break;
                 case "Рабочие места":
@@ -3499,6 +3439,8 @@ namespace AppIS
                 }
             }
 
+            List<int> occupiedRoomsIds = new List<int>();
+
             for (int i = 0; i < rand.Next(10, 17); i++)
             {
                 cmd = new SqlCommand("Insert into Tourists(login,password,email,name,surname,thirdname,dateOfBirth,dateOfComing,dateOfLeaving,country,room_id) " +
@@ -3524,7 +3466,17 @@ namespace AppIS
                 cmd.Parameters.AddWithValue("@dateOfComing", $"{rand.Next(1, 28)}.{rand.Next(5, 8)}.{rand.Next(2019, 2020)}");
                 cmd.Parameters.AddWithValue("@dateOfLeaving", $"{rand.Next(1, 28)}.{rand.Next(8, 12)}.{rand.Next(2019, 2020)}");
                 cmd.Parameters.AddWithValue("@country", countries[rand.Next(0, countries.Count - 1)]);
-                cmd.Parameters.AddWithValue("@room_id", rooms[rand.Next(1, rooms.Count - 1)]);
+                int occupiedRoomId = rooms[rand.Next(1, rooms.Count - 1)];
+                cmd.Parameters.AddWithValue("@room_id", occupiedRoomId);
+                occupiedRoomsIds.Add(occupiedRoomId);
+                cmd.ExecuteNonQuery();
+            }
+
+            foreach (var item in occupiedRoomsIds)
+            {
+                cmd = new SqlCommand("UPDATE Rooms set isAvailable=@isAvailable where id=@id", sqlcon);
+                cmd.Parameters.AddWithValue("@isAvailable", false);
+                cmd.Parameters.AddWithValue("@id", item);
                 cmd.ExecuteNonQuery();
             }
 
@@ -3625,6 +3577,59 @@ namespace AppIS
             }
             MessageBox.Show("Перезапись данных в БД прошла успешно!\nДля обеспечения дальнейшей работы программу требуется закрыть");
             this.Close();
+        }
+
+        private void зданияНаТерриторииToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+            contextMenuStrip1.Visible = false;
+            CurrentObject = new Building();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            treeView1.Visible = false;
+            dataGridView1.Visible = true;
+
+            var cmd = new SqlCommand("Select * from Buildings", sqlcon);
+            dataGridView1.Columns.Add("", "Код здания");
+            dataGridView1.Columns.Add("", "Кол-во комнат");
+            int i = 0;
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    dataGridView1.Rows.Add(new object[] { dr["id"].ToString(), dr["rooms"].ToString() });
+                    dataGridView1.Rows[i].Tag = new Building(dr["id"].ToString(), int.Parse(dr["rooms"].ToString()));
+                    i++;
+                }
+            }
+        }
+
+        private void комнатыToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+            contextMenuStrip1.Visible = false;
+            CurrentObject = new Room();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            treeView1.Visible = false;
+            dataGridView1.Visible = true;
+
+            var cmd = new SqlCommand("Select * from Rooms", sqlcon);
+            dataGridView1.Columns.Add("", "Номер комнаты");
+            dataGridView1.Columns.Add("", "Цена");
+            dataGridView1.Columns.Add("", "Кол-во кроватей");
+            dataGridView1.Columns.Add("", "Свободна?");
+            dataGridView1.Columns.Add("", "Код здания");
+            int i = 0;
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    dataGridView1.Rows.Add(dr["id"].ToString(), dr["price"].ToString(), dr["beds"].ToString(), dr["isAvailable"].ToString(), dr["building_id"].ToString());
+                    dataGridView1.Rows[i].Tag = new Room(int.Parse(dr["id"].ToString()), decimal.Parse(dr["price"].ToString()), int.Parse(dr["beds"].ToString()), bool.Parse(dr["isAvailable"].ToString()), dr["building_id"].ToString());
+                    i++;
+                }
+            }
         }
     }
 }

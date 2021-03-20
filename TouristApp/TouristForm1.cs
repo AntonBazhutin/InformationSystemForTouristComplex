@@ -1000,7 +1000,7 @@ namespace TouristApp
                             outPut = inputText;
 
                         if (attribute == "Код профессии" || attribute == "Код рабочего места")
-                            outPut = int.Parse(outPut);
+                            outPut = int.Parse(inputText);
                     }
                     break;
                 case "Рабочие места":
