@@ -87,6 +87,7 @@ namespace AppIS
 
             if (isEmpty == string.Empty)
             {
+                btnCreate.Visible = false;
                 тестированиеToolStripMenuItem.Enabled = false;
                 тестированиеToolStripMenuItem.Visible = false;
                 Text = "Форма сотрудника комплекса";
@@ -111,6 +112,7 @@ namespace AppIS
 
                 if (limitPower)
                 {
+                    btnCreate.Visible = false;
                     тестированиеToolStripMenuItem.Enabled = false;
                     тестированиеToolStripMenuItem.Visible = false;
                     Text = "Форма работника на ресепшене";
