@@ -931,7 +931,7 @@ namespace TouristApp
                 cmbBoxExtraAttribute.Enabled = true;
                 FillExtraAttributes();
                 cmbBxExtraSign.Enabled = true;
-                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=" });
+                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=", "<", ">" });
                 cmbBxExtraSign.Text = cmbBxExtraSign.Items[0].ToString();
                 txtbxExtraSomeText.Enabled = true;
                 txtbxExtraSomeText.Text = "Введите значение...";
@@ -971,7 +971,7 @@ namespace TouristApp
                 txtBxSomeText.Enabled = true;
                 comboBoxSign.Enabled = true;
                 comboBoxSign.Items.Clear();
-                comboBoxSign.Items.AddRange(new string[] { "=", "!=" });
+                comboBoxSign.Items.AddRange(new string[] { "=", "!=", "<", ">" });
                 comboBoxSign.Text = comboBoxSign.Items[0].ToString();
                 checkBox1.Enabled = true;
             }

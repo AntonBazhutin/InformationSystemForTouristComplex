@@ -2719,7 +2719,7 @@ namespace AppIS
                 cmbBoxExtraAttribute.Enabled = true;
                 FillExtraAttributes();
                 cmbBxExtraSign.Enabled = true;
-                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=" });
+                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=" ,"<",">"});
                 cmbBxExtraSign.Text = cmbBxExtraSign.Items[0].ToString();
                 txtbxExtraSomeText.Enabled = true;
                 txtbxExtraSomeText.Text = "Введите значение...";
@@ -2753,7 +2753,7 @@ namespace AppIS
                 txtBxSomeText.Enabled = true;
                 comboBoxSign.Enabled = true;
                 comboBoxSign.Items.Clear();
-                comboBoxSign.Items.AddRange(new string[] { "=", "!=" });
+                comboBoxSign.Items.AddRange(new string[] { "=", "!=", "<", ">" });
                 comboBoxSign.Text = comboBoxSign.Items[0].ToString();
                 checkBox1.Enabled = true;
             }
@@ -3075,7 +3075,7 @@ namespace AppIS
                             dgwSearchResults.Columns.Add("", "Номер комнаты");
                             dgwSearchResults.Columns.Add("", "Цена");
                             dgwSearchResults.Columns.Add("", "Кол-во в кроватей");
-                            dgwSearchResults.Columns.Add("", "Свободен?");
+                            dgwSearchResults.Columns.Add("", "Занят?");
                             dgwSearchResults.Columns.Add("", "Код здания");
                         }
                         break;
