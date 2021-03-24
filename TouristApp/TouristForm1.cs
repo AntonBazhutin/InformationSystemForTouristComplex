@@ -116,7 +116,7 @@ namespace TouristApp
             {
                 var cmd = new SqlCommand("Select * from Orders", sqlcon);
                 cmd.ExecuteNonQuery();
-                int count = 0;
+                int count = 1;
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
@@ -203,7 +203,7 @@ namespace TouristApp
             {
                 var cmd = new SqlCommand("Select * from BookedTickets", sqlcon);
                 cmd.ExecuteNonQuery();
-                int count = 0;
+                int count = 1;
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
@@ -291,7 +291,7 @@ namespace TouristApp
             {
                 int index = dataGridView1.CurrentRow.Index;
                 Order deleteElem = dataGridView1.CurrentRow.Tag as Order;
-                var cmd = new SqlCommand("delete from Orders where  order_id=@order_id", sqlcon);
+                var cmd = new SqlCommand("delete from Orders where order_id=@order_id", sqlcon);
                 cmd.Parameters.AddWithValue("@order_id", deleteElem.Order_id);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.RemoveAt(index);

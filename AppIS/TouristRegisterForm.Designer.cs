@@ -155,6 +155,7 @@ namespace AppIS
             this.txtBxLogin.Name = "txtBxLogin";
             this.txtBxLogin.Size = new System.Drawing.Size(100, 20);
             this.txtBxLogin.TabIndex = 12;
+            this.txtBxLogin.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label8
             // 
@@ -172,6 +173,7 @@ namespace AppIS
             this.txtBxPassword.Name = "txtBxPassword";
             this.txtBxPassword.Size = new System.Drawing.Size(100, 20);
             this.txtBxPassword.TabIndex = 14;
+            this.txtBxPassword.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label9
             // 
@@ -189,6 +191,7 @@ namespace AppIS
             this.txtBxEmail.Name = "txtBxEmail";
             this.txtBxEmail.Size = new System.Drawing.Size(100, 20);
             this.txtBxEmail.TabIndex = 16;
+            this.txtBxEmail.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // label10
             // 
@@ -206,6 +209,7 @@ namespace AppIS
             this.txtBxCountry.Name = "txtBxCountry";
             this.txtBxCountry.Size = new System.Drawing.Size(100, 20);
             this.txtBxCountry.TabIndex = 19;
+            this.txtBxCountry.TextChanged += new System.EventHandler(this.txtBxName_TextChanged);
             // 
             // btnSubmit
             // 

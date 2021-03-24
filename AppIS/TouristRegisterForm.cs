@@ -12,7 +12,7 @@ namespace AppIS
 {
     public partial class TouristRegisterForm : Form
     {
-        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'@";
 
         List<int> rooms = new List<int>();
         private bool IsFilled { get; set; }
@@ -75,6 +75,7 @@ namespace AppIS
             {
                 comboBox1.Items.Add(item);
             }
+            comboBox1.Text = comboBox1.Items[0].ToString();
             if (IsFilled)
             {
                 txtBxCountry.Text = AddingTourist.Country;

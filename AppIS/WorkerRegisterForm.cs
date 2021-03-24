@@ -13,7 +13,7 @@ namespace AppIS
 {
     public partial class WorkerRegisterForm : Form
     {
-        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
+        private string safeString = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'@";
         List<int> Profession_ids = new List<int>();
         List<int> Workplace_ids = new List<int>();
         public bool IsFilled { get; set; }
@@ -72,7 +72,7 @@ namespace AppIS
             {
                 comboBxProfession_id.Items.Add(item);
             }
-            comboBxProfession_id.Text = Profession_ids[0].ToString();
+            comboBxProfession_id.Text = comboBxProfession_id.Items[0].ToString();
             foreach (var item in Workplace_ids)
             {
                 comboBxWorkPlace_id.Items.Add(item);
