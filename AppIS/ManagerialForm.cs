@@ -2545,6 +2545,8 @@ namespace AppIS
         private string safeString = " 0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnmЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю_-,.'";
         private void конструкторЗапросовToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            dgwSearchResults.Rows.Clear();
+            dgwSearchResults.Columns.Clear();
             comboBoxObj.Items.Clear();
             treeView1.Visible = false;
             dataGridView1.Visible = false;

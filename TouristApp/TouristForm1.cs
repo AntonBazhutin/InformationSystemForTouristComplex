@@ -877,6 +877,8 @@ namespace TouristApp
         }
         private void конструкторЗапросовToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            dgwSearchResults.Rows.Clear();
+            dgwSearchResults.Columns.Clear();
             comboBoxObj.Items.Clear();
             dataGridView1.Visible = false;
             panel1.Visible = true;
