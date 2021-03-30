@@ -964,12 +964,12 @@ namespace AppIS
                         {
                             emptyNodes++;
                             room.BackColor = Color.ForestGreen;
-                            room.Text = $"Номер ({rooms[j].Id}) Свободен, Кроватей : {rooms[j].Beds}, Цена {rooms[j].Price}p";
+                            room.Text = $"Номер Комнаты ({rooms[j].Id}) - [Свободна, Кроватей : {rooms[j].Beds}, Цена {rooms[j].Price}p]";
                         }
                         else
                         {
                             room.BackColor = Color.Red;
-                            room.Text = $"Номер ({rooms[j].Id}) Занят";
+                            room.Text = $"Номер Комнаты ({rooms[j].Id}) - [Занята]";
                         }
 
 
@@ -2234,7 +2234,7 @@ namespace AppIS
                                 Attribute = "price";
                             if (attribute == "Количество кроватей")
                                 Attribute = "beds";
-                            if (attribute == "Занят?")
+                            if (attribute == "Свободна?")
                                 Attribute = "isAvailable";
                             if (attribute == "Код здания")
                                 Attribute = "building_id";
@@ -2428,7 +2428,7 @@ namespace AppIS
                             ExtraAttribute = "price";
                         if (attribute == "Количество кроватей")
                             ExtraAttribute = "beds";
-                        if (attribute == "Занят?")
+                        if (attribute == "Свободна?")
                             ExtraAttribute = "isAvailable";
                         if (attribute == "Код здания")
                             ExtraAttribute = "building_id";
@@ -2602,7 +2602,7 @@ namespace AppIS
                     comboBoxAttribute.Items.AddRange(new string[] { "Код здания", "Количество комнат", "Не заполнять" });
                     break;
                 case "Комнаты":
-                    comboBoxAttribute.Items.AddRange(new string[] { "Номер комнаты", "Цена", "Количество кроватей", "Занят?", "Код здания", "Не заполнять" });
+                    comboBoxAttribute.Items.AddRange(new string[] { "Номер комнаты", "Цена", "Количество кроватей", "Свободна?", "Код здания", "Не заполнять" });
                     break;
                 case "Права пользователей":
                     comboBoxAttribute.Items.AddRange(new string[] { "Код профессии", "Ограниченные права?", "Не заполнять" });
@@ -2653,7 +2653,7 @@ namespace AppIS
                     cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код здания", "Количество комнат" });
                     break;
                 case "Комнаты":
-                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Номер комнаты", "Цена", "Количество кроватей", "Занят?", "Код здания" });
+                    cmbBoxExtraAttribute.Items.AddRange(new string[] { "Номер комнаты", "Цена", "Количество кроватей", "Свободна?", "Код здания" });
                     break;
                 case "Права пользователей":
                     cmbBoxExtraAttribute.Items.AddRange(new string[] { "Код профессии", "Ограниченные права?" });
@@ -2721,7 +2721,7 @@ namespace AppIS
                 cmbBoxExtraAttribute.Enabled = true;
                 FillExtraAttributes();
                 cmbBxExtraSign.Enabled = true;
-                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=" ,"<",">"});
+                cmbBxExtraSign.Items.AddRange(new string[] { "=", "!=", "<", ">" });
                 cmbBxExtraSign.Text = cmbBxExtraSign.Items[0].ToString();
                 txtbxExtraSomeText.Enabled = true;
                 txtbxExtraSomeText.Text = "Введите значение...";
@@ -2849,7 +2849,7 @@ namespace AppIS
                         {
                             outPut = decimal.Parse(inputText);
                         }
-                        if (attribute == "Занят?")
+                        if (attribute == "Свободна?")
                         {
                             if (inputText.ToLower() == "true")
                                 outPut = true;
@@ -3077,7 +3077,7 @@ namespace AppIS
                             dgwSearchResults.Columns.Add("", "Номер комнаты");
                             dgwSearchResults.Columns.Add("", "Цена");
                             dgwSearchResults.Columns.Add("", "Кол-во в кроватей");
-                            dgwSearchResults.Columns.Add("", "Занят?");
+                            dgwSearchResults.Columns.Add("", "Свободна?");
                             dgwSearchResults.Columns.Add("", "Код здания");
                         }
                         break;
@@ -3227,27 +3227,35 @@ namespace AppIS
         {
             if (dgwSearchResults.Rows.Count > 0)
             {
-                var app = new Application();
-                app.Visible = true;
-
-                var wb = app.Workbooks.Add();
-                var ws = (Worksheet)wb.Worksheets[1];
-
-                for (int i = 1; i < dgwSearchResults.Columns.Count + 1; i++)
+                try
                 {
-                    ws.Cells[1, i].Value = dgwSearchResults.Columns[i - 1].HeaderText;
-                    ws.Cells[1, i].EntireColumn.ColumnWidth = dgwSearchResults.Columns[i - 1].Width / 5;
-                    ws.Cells[1, i].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-                }
+                    var app = new Application();
+                    app.Visible = true;
 
-                for (int i = 0; i < dgwSearchResults.Rows.Count; i++)
-                {
-                    for (int j = 0; j < dgwSearchResults.Columns.Count; j++)
+                    var wb = app.Workbooks.Add();
+                    var ws = (Worksheet)wb.Worksheets[1];
+
+                    for (int i = 1; i < dgwSearchResults.Columns.Count + 1; i++)
                     {
-                        ws.Cells[i + 2, j + 1].Value = dgwSearchResults.Rows[i].Cells[j].Value.ToString();
-                        ws.Cells[i + 2, j + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                        ws.Cells[1, i].Value = dgwSearchResults.Columns[i - 1].HeaderText;
+                        ws.Cells[1, i].EntireColumn.ColumnWidth = dgwSearchResults.Columns[i - 1].Width / 5;
+                        ws.Cells[1, i].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                    }
+
+                    for (int i = 0; i < dgwSearchResults.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dgwSearchResults.Columns.Count; j++)
+                        {
+                            ws.Cells[i + 2, j + 1].Value = dgwSearchResults.Rows[i].Cells[j].Value.ToString();
+                            ws.Cells[i + 2, j + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                        }
                     }
                 }
+                catch (Exception)
+                {
+
+                }
+
             }
             else
                 MessageBox.Show("Чтобы создать отчет, таблица не должна быть пустой");

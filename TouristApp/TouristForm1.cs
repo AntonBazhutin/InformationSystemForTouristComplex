@@ -1580,4 +1580,3 @@ namespace TouristApp
         }
     }
 }
-
